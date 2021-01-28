@@ -17,7 +17,10 @@ class WatchlistCoordinator: MainCoordinator {
     @objc func updateWatchlistCount() {
         guard let watchlistCount = self.watchlistController?.watchlist().count
         else { return }
-        self.watchlistTabBarItem?.badgeValue = String(watchlistCount)
+        
+        if watchlistCount > 0 {
+            self.watchlistTabBarItem?.badgeValue = String(watchlistCount)
+        } else { self.watchlistTabBarItem?.badgeValue = nil }
     }
     
     
