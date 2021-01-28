@@ -30,8 +30,5 @@ class WatchlistViewController: MoviesListViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let historyButton = UIBarButtonItem.init(image: UIImage.init(systemName: "clock"), style: .plain, target: self, action: #selector(showWatchHistory))
-        
-        navigationItem.rightBarButtonItem = historyButton
     }
 }

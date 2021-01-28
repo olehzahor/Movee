@@ -85,8 +85,7 @@ class MovieDetailsViewController: UIViewController, GenericCollectionViewControl
         
     fileprivate func setupNavigationBarButtons() {
         guard let movie = movieController.movie,
-              let watchlistController = watchlistController,
-              let watchHistoryController = watchHistoryController
+              let watchlistController = watchlistController
         else { return }
 
         let addToWatchlistButton = UIBarButtonItem(
@@ -100,55 +99,9 @@ class MovieDetailsViewController: UIViewController, GenericCollectionViewControl
             style: .plain,
             target: self,
             action: #selector(removeFromWatchlist))
-        
-        let moveToHistoryButton = UIBarButtonItem(
-            image: UIImage(systemName: "eye"),
-            style: .plain,
-            target: self,
-            action: #selector(addToWatchHistory))
-        
-        let removeFromHistoryButton = UIBarButtonItem(
-            image: UIImage(systemName: "eye.slash"),
-            style: .plain,
-            target: self,
-            action: #selector(removeFromWatchHistory))
-        
-        
-        var buttons = [UIBarButtonItem]()
-        let isInWatchList = watchlistController.contains(movie)
-        let isInWatchHistory = watchHistoryController.contains(movie)
-        
-        if !isInWatchList, !isInWatchHistory {
-            buttons.append(addToWatchlistButton)
-        } else if isInWatchList, !isInWatchHistory {
-            buttons += [removeFromWatchlistButton, moveToHistoryButton]
-        } else if !isInWatchList, isInWatchHistory {
-            buttons += [addToWatchlistButton, removeFromHistoryButton]
-        }
-        
-        self.navigationItem.rightBarButtonItems = buttons
-        
-        //navigationItem.rightBarButtonItems = buttons
-
-//        if !watchlistController.contains(movie) {
-//            navigationItem.rightBarButtonItems = [addToWatchlistButton]
-//        } else {
-//            navigationItem.rightBarButtonItems = [removeFromWatchlistButton]
-//            if !watchHistoryController.items.contains(movieController.movie!) {
-//                navigationItem.rightBarButtonItems?.append(moveToHistoryButton)
-//            } else {
-//                navigationItem.rightBarButtonItems?.append(removeFromHistoryButton)
-//            }
-//        }
-//
-
-        
-//        let watchlistButton = UIBarButtonItem(
-//            barButtonSystemItem: .bookmarks,
-//            target: self,
-//            action: #selector(showWatchlist))
-        
-        
+                
+        self.navigationItem.rightBarButtonItem =
+            watchlistController.contains(movie) ? removeFromWatchlistButton : addToWatchlistButton
     }
     
     
