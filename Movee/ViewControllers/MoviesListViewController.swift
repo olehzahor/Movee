@@ -45,7 +45,6 @@ class MoviesListViewController: UIViewController, GenericCollectionViewControlle
 
     
     fileprivate func setupNavigationItem() {
-        navigationController?.navigationBar.prefersLargeTitles = true
         title = moviesController?.title
     }
     

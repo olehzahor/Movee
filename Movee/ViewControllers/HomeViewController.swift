@@ -19,19 +19,11 @@ class HomeViewController: UIViewController, GenericCollectionViewController, Coo
     
     var discoverController = DiscoverController(lists: Bundle.main.decode(from: "home"))
     var watchlistController: WatchlistController?
-    
-    //var testWLC: MoviesListController!
-    
+        
     var moviesControllers: [MoviesListController] = []
     
     private var watchlistSection: String? {
         return watchlistController?.title
-    }
-    
-    func createLayout() -> UICollectionViewLayout {
-        return UICollectionViewCompositionalLayout { (sectionIndex, layoutEnvironment) -> NSCollectionLayoutSection? in
-            return GenericLayouts.createHorizontalListSection(height: 187, width: 110, addHeader: true)
-        }
     }
     
     @objc func updateWatchlist() {
@@ -48,13 +40,16 @@ class HomeViewController: UIViewController, GenericCollectionViewController, Coo
         registerHeader(SectionHeader.self)
     }
     
+    fileprivate func addObserverForWatchlistUpdates() {
+        NotificationCenter.default.addObserver(self, selector: #selector(self.updateWatchlist), name: WatchlistController.ncUpdateName, object: nil)
+    }
+    
     fileprivate func loadWatchList(completion: (() -> Void)? = nil) {
         guard let watchlistController = watchlistController else { return }
         watchlistController.load { controller in
             self.update(with: controller)
             completion?()
         }
-        NotificationCenter.default.addObserver(self, selector: #selector(self.updateWatchlist), name: WatchlistController.ncUpdateName, object: nil)
     }
     
     fileprivate func loadLists() {
@@ -72,9 +67,6 @@ class HomeViewController: UIViewController, GenericCollectionViewController, Coo
                 self.updateSnapshot(from: controller)
             }
             self.dataSource.apply(self.snapshot)
-            //{
-               //if #available(iOS 14.3, *) { self.dataSource.apply(self.snapshot) }
-            //}
         }
 
     }
@@ -95,11 +87,20 @@ class HomeViewController: UIViewController, GenericCollectionViewController, Coo
         super.viewDidLoad()
         
         setupCollectionView()
+        addObserverForWatchlistUpdates()
         manageMoviesControllers()
         
         title = "Explore"
     }
     
+}
+
+extension HomeViewController {
+    func createLayout() -> UICollectionViewLayout {
+        return UICollectionViewCompositionalLayout { (sectionIndex, layoutEnvironment) -> NSCollectionLayoutSection? in
+            return GenericLayouts.createHorizontalListSection(height: 187, width: 110, addHeader: true)
+        }
+    }
 }
 
 extension HomeViewController: UICollectionViewDelegate {
@@ -138,10 +139,22 @@ extension HomeViewController {
     @discardableResult
     func updateSnapshot(from controller: MoviesListController) -> Snapshot {
         let section = controller.title
+        
+        if controller.movies.count == 0 {
+            if snapshot.sectionIdentifiers.contains(section) {
+                snapshot.deleteSections([section])
+            }
+            return snapshot
+        }
+        
         if snapshot.sectionIdentifiers.contains(section) {
             snapshot.deleteItems(snapshot.itemIdentifiers(inSection: section))
         } else {
-            snapshot.appendSections([section])
+            if section == watchlistSection, let firstSection = snapshot.sectionIdentifiers.first {
+                snapshot.insertSections([section], beforeSection: firstSection)
+            } else {
+                snapshot.appendSections([section])
+            }
         }
         
         var items = MovieContainer.createContainers(from: controller.movies, listName: controller.title)
