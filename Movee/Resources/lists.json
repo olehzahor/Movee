@@ -1,0 +1,183 @@
+[
+   {
+      "path":"discover/movie",
+      "nestedLists":[],
+      "query":"vote_count.gte=7000&sort_by=vote_average.desc",
+      "name":"Top Movies of All Time"
+   },
+   {
+      "name":"Top Movies by Genre",
+      "nestedLists":[
+         {
+            "path":"discover/movie",
+            "nestedLists":[
+               
+            ],
+            "query":"with_genres=28&sort_by=vote_count.desc",
+            "name":"Top Action Movies"
+         },
+         {
+            "path":"discover/movie",
+            "nestedLists":[
+               
+            ],
+            "query":"with_genres=12&sort_by=vote_count.desc",
+            "name":"Top Adventure Movies"
+         },
+         {
+            "path":"discover/movie",
+            "nestedLists":[
+               
+            ],
+            "query":"with_genres=16&sort_by=vote_count.desc",
+            "name":"Top Animation Movies"
+         },
+         {
+            "path":"discover/movie",
+            "nestedLists":[
+               
+            ],
+            "query":"with_genres=35&sort_by=vote_count.desc",
+            "name":"Top Comedy Movies"
+         },
+         {
+            "path":"discover/movie",
+            "nestedLists":[
+               
+            ],
+            "query":"with_genres=80&sort_by=vote_count.desc",
+            "name":"Top Crime Movies"
+         },
+         {
+            "path":"discover/movie",
+            "nestedLists":[
+               
+            ],
+            "query":"with_genres=99&sort_by=vote_count.desc",
+            "name":"Top Documentary Movies"
+         },
+         {
+            "path":"discover/movie",
+            "nestedLists":[
+               
+            ],
+            "query":"with_genres=18&sort_by=vote_count.desc",
+            "name":"Top Drama Movies"
+         },
+         {
+            "path":"discover/movie",
+            "nestedLists":[
+               
+            ],
+            "query":"with_genres=10751&sort_by=vote_count.desc",
+            "name":"Top Family Movies"
+         },
+         {
+            "path":"discover/movie",
+            "nestedLists":[
+               
+            ],
+            "query":"with_genres=14&sort_by=vote_count.desc",
+            "name":"Top Fantasy Movies"
+         },
+         {
+            "path":"discover/movie",
+            "nestedLists":[
+               
+            ],
+            "query":"with_genres=36&sort_by=vote_count.desc",
+            "name":"Top History Movies"
+         },
+         {
+            "path":"discover/movie",
+            "nestedLists":[
+               
+            ],
+            "query":"with_genres=27&sort_by=vote_count.desc",
+            "name":"Top Horror Movies"
+         },
+         {
+            "path":"discover/movie",
+            "nestedLists":[
+               
+            ],
+            "query":"with_genres=10402&sort_by=vote_count.desc",
+            "name":"Top Music Movies"
+         },
+         {
+            "path":"discover/movie",
+            "nestedLists":[
+               
+            ],
+            "query":"with_genres=9648&sort_by=vote_count.desc",
+            "name":"Top Mystery Movies"
+         },
+         {
+            "path":"discover/movie",
+            "nestedLists":[
+               
+            ],
+            "query":"with_genres=10749&sort_by=vote_count.desc",
+            "name":"Top Romance Movies"
+         },
+         {
+            "path":"discover/movie",
+            "nestedLists":[
+               
+            ],
+            "query":"with_genres=878&sort_by=vote_count.desc",
+            "name":"Top Science Fiction Movies"
+         },
+         {
+            "path":"discover/movie",
+            "nestedLists":[
+               
+            ],
+            "query":"with_genres=10770&sort_by=vote_count.desc",
+            "name":"Top TV Movie Movies"
+         },
+         {
+            "path":"discover/movie",
+            "nestedLists":[
+               
+            ],
+            "query":"with_genres=53&sort_by=vote_count.desc",
+            "name":"Top Thriller Movies"
+         },
+         {
+            "path":"discover/movie",
+            "nestedLists":[
+               
+            ],
+            "query":"with_genres=10752&sort_by=vote_count.desc",
+            "name":"Top War Movies"
+         },
+         {
+            "path":"discover/movie",
+            "nestedLists":[
+               
+            ],
+            "query":"with_genres=37&sort_by=vote_count.desc",
+            "name":"Top Western Movies"
+         }
+      ]
+   },
+   {
+      "path":"discover/movie",
+      "nestedLists":[],
+      "query":"primary_release_date.lte=2021-12-31&vote_average.gte=6&primary_release_date.gte=2021-01-01&sort_by=vote_count.desc",
+      "name":"Best Movies of 2021"
+   },
+   {
+      "path":"discover/movie",
+      "nestedLists":[],
+      "query":"primary_release_date.lte=2020-12-31&vote_average.gte=6&primary_release_date.gte=2020-01-01&sort_by=vote_count.desc",
+      "name":"Best Movies of 2020"
+   },
+   {
+      "path":"discover/movie",
+      "nestedLists":[],
+      "query":"sort_by=vote_average.desc&primary_release_date.lte=2099-12-31&primary_release_date.gte=2000-01-01&vote_count.gte=3000",
+      "name":"Greatest Movies of 21st Century"
+   },
+]
