@@ -12,7 +12,6 @@ class MainCoordinator: Coordinator {
     var childCoordinators = [Coordinator]()
     var navigationController: UINavigationController
     var watchlistController: WatchlistController?
-    lazy var watchHistoryController = WatchHistoryController()
     
     var navigationBarAppearance: UINavigationBarAppearance? {
         didSet {
@@ -63,7 +62,6 @@ class MainCoordinator: Coordinator {
         vc.coordinator = self
         vc.movie = movie
         vc.watchlistController = watchlistController
-        vc.watchHistoryController = watchHistoryController
         navigationController.pushViewController(vc, animated: true)
     }
     
@@ -121,11 +119,6 @@ class MainCoordinator: Coordinator {
         }
     }
     
-    func showWatchHistory() {
-        createAndPush(MoviesListViewController.self) {
-            $0.setMoviesController(self.watchHistoryController)
-        }
-    }
 
     
 }

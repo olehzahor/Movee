@@ -10,6 +10,8 @@ import Foundation
 class JSONPersistenceController<T: Codable&Hashable>: PersistenceController {
     lazy private var encoder = JSONEncoder()
     lazy private var decoder = JSONDecoder()
+    
+    private(set) var isDataLoaded: Bool = false
 
     var filename: String = ""
     var items = [T]()
@@ -26,9 +28,10 @@ class JSONPersistenceController<T: Codable&Hashable>: PersistenceController {
     
     
     internal func loadData() {
-        if let savedWatchlist = Data.load(fromFile: filename) {
-            if let loadedWatchlist = try? decoder.decode([ItemType].self, from: savedWatchlist) {
-                self.items = loadedWatchlist
+        if let savedItems = Data.load(fromFile: filename) {
+            if let loadedItems = try? decoder.decode([ItemType].self, from: savedItems) {
+                self.items = loadedItems
+                isDataLoaded = true
             }
         }
     }

@@ -9,7 +9,6 @@ import Foundation
 
 class SearchHistoryController: JSONPersistenceController<Movie>, MoviesListController {
     var title: String { return "Search History" }
-    var isDataLoaded = false
     
     func addMovie(_ movie: Movie) {
         addItem(movie.short)

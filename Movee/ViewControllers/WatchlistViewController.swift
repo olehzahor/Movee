@@ -39,10 +39,6 @@ class WatchlistViewController: MoviesListViewController {
         }
     }
     
-    @objc func showWatchHistory() {
-        coordinator?.showWatchHistory()
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupEmptyListPlaceholder()

@@ -19,15 +19,15 @@ class WatchlistController: JSONPersistenceController<WatchlistItem>  {
 
     public var sortingKey: SortingKey = .date
     public var sortAscending: Bool = true
-    
-    private var isDataLoaded: Bool = false
-    
+        
     override func saveData() {
         super.saveData()
         NotificationCenter.default.post(name: Self.ncUpdateName, object: nil)
     }
     
     func addMovie(_ movie: Movie) {
+        guard !items.contains(where: { $0.movie.id == movie.id }) else { return }
+        
         let newItem = WatchlistItem(movie: movie.short, added: Date())
         addItem(newItem)
         saveData()
@@ -84,7 +84,7 @@ extension WatchlistController: MoviesListController {
     }
     
     var movies: [Movie] {
-        return watchlist().compactMap { $0.movie }
+        return watchlist().compactMap({ $0.movie })
     }
     
     func loadMore(completion: CompletionHandler) { }
