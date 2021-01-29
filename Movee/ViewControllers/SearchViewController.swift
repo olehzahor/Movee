@@ -9,8 +9,9 @@ import UIKit
 
 class SearchViewController: UITableViewController, Coordinated {
     var coordinator: SearchCoordinator?
-    var discoverController: DiscoverController! {
+    var discoverController: DiscoverController? {
         didSet {
+            guard let discoverController = discoverController else { return }
             isSearchBarVisible = !discoverController.isNested
             isTopSectionVisible = !discoverController.isNested
             if discoverController.isNested {
@@ -18,6 +19,7 @@ class SearchViewController: UITableViewController, Coordinated {
             }
         }
     }
+    
     var searchHistoryController = SearchHistoryController()
     
     var isSearchBarVisible = true
@@ -49,12 +51,8 @@ class SearchViewController: UITableViewController, Coordinated {
     }
 
     override func viewDidLoad() {
-        if discoverController == nil {
-            fatalError("No discover controller found...")
-        }
-        
         navigationController?.navigationBar.prefersLargeTitles = true
-        title = discoverController.name ?? "Search"
+        title = discoverController?.name ?? "Search"
         
         tableView.separatorStyle = .none
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
@@ -67,18 +65,22 @@ class SearchViewController: UITableViewController, Coordinated {
 
 extension SearchViewController {
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return isTopSectionVisible ? 2 : 1
+        var numberOfSections = 0
+        
+        if discoverController != nil { numberOfSections += 1 }
+        if isTopSectionVisible { numberOfSections += 1 }
+        
+        return numberOfSections
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        guard isTopSectionVisible else { return nil }
-        return section == 0 ? nil : "Discover"
+        return section == 1 ? "Discover" : nil
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0, isTopSectionVisible {
             return topSectionItems.count
-        } else { return discoverController.lists.count }
+        } else { return discoverController?.lists.count ?? 0 }
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -88,8 +90,8 @@ extension SearchViewController {
         if indexPath.section == 0, isTopSectionVisible {
             cell.textLabel?.text = topSectionItems[indexPath.row].key
         } else {
-            let list = discoverController.lists[indexPath.row]
-            cell.textLabel?.text = list.name
+            let list = discoverController?.lists[indexPath.row]
+            cell.textLabel?.text = list?.name
         }
         
         cell.accessoryType = .disclosureIndicator
@@ -99,15 +101,14 @@ extension SearchViewController {
     
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
         if indexPath.section == 0, isTopSectionVisible {
             topSectionItems[indexPath.row].value()
         } else {
-            let list = discoverController.lists[indexPath.row]
+            guard let list = discoverController?.lists[indexPath.row] else { return }
             if let controller = list.moviesController {
                 coordinator?.showCustomMoviesList(moviesController: controller)
             } else {
-                coordinator?.showNestedDiscoverList(discoverController: discoverController.moved(to: list))
+                coordinator?.showNestedDiscoverList(discoverController: discoverController?.moved(to: list))
             }
         }
     }

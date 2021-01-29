@@ -71,6 +71,7 @@
 		049EC686259A59900078CFD2 /* NSNumber+Dollars.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049EC685259A59900078CFD2 /* NSNumber+Dollars.swift */; };
 		04A09B65256435D4002CB6A2 /* MovieDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A09B64256435D4002CB6A2 /* MovieDetailsViewController.swift */; };
 		04A09B69256442AD002CB6A2 /* MoviesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A09B68256442AD002CB6A2 /* MoviesViewController.swift */; };
+		04BF016325C47B5700C8A501 /* EmptyPlaceholder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04BF016225C47B5700C8A501 /* EmptyPlaceholder.swift */; };
 		04C0579325AA1CFE00C5C0DB /* Bundle+Decoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C0579225AA1CFE00C5C0DB /* Bundle+Decoding.swift */; };
 		04C0579725AA1EB600C5C0DB /* lists.json in Resources */ = {isa = PBXBuildFile; fileRef = 04C0579625AA1EB600C5C0DB /* lists.json */; };
 		04C0579A25AA22D100C5C0DB /* DiscoverListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C0579925AA22D100C5C0DB /* DiscoverListItem.swift */; };
@@ -93,7 +94,6 @@
 		04C621D42559722A002B52A6 /* DecriptionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C621D32559722A002B52A6 /* DecriptionCell.swift */; };
 		04C621D825597B53002B52A6 /* BackdropView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C621D725597B53002B52A6 /* BackdropView.swift */; };
 		04C621DD25599E9B002B52A6 /* MovieDetailsLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C621DC25599E9B002B52A6 /* MovieDetailsLayout.swift */; };
-		04CBE6E72583D5AE00F94F41 /* DiscoverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CBE6E62583D5AE00F94F41 /* DiscoverViewController.swift */; };
 		04CBE6EA2583D6C700F94F41 /* DiscoverController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CBE6E92583D6C700F94F41 /* DiscoverController.swift */; };
 		04D57F7025BDEE7B00B6EB92 /* PersistenceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04D57F6F25BDEE7B00B6EB92 /* PersistenceController.swift */; };
 		04D57F7425BDEE9D00B6EB92 /* JSONPersistenceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04D57F7325BDEE9D00B6EB92 /* JSONPersistenceController.swift */; };
@@ -191,6 +191,7 @@
 		049EC685259A59900078CFD2 /* NSNumber+Dollars.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSNumber+Dollars.swift"; sourceTree = "<group>"; };
 		04A09B64256435D4002CB6A2 /* MovieDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailsViewController.swift; sourceTree = "<group>"; };
 		04A09B68256442AD002CB6A2 /* MoviesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviesViewController.swift; sourceTree = "<group>"; };
+		04BF016225C47B5700C8A501 /* EmptyPlaceholder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyPlaceholder.swift; sourceTree = "<group>"; };
 		04C0579225AA1CFE00C5C0DB /* Bundle+Decoding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+Decoding.swift"; sourceTree = "<group>"; };
 		04C0579625AA1EB600C5C0DB /* lists.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = lists.json; sourceTree = "<group>"; };
 		04C0579925AA22D100C5C0DB /* DiscoverListItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverListItem.swift; sourceTree = "<group>"; };
@@ -214,7 +215,6 @@
 		04C621D725597B53002B52A6 /* BackdropView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackdropView.swift; sourceTree = "<group>"; };
 		04C621DC25599E9B002B52A6 /* MovieDetailsLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailsLayout.swift; sourceTree = "<group>"; };
 		04CA4D5725545E8E00E67FA1 /* Movee.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Movee.entitlements; sourceTree = "<group>"; };
-		04CBE6E62583D5AE00F94F41 /* DiscoverViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverViewController.swift; sourceTree = "<group>"; };
 		04CBE6E92583D6C700F94F41 /* DiscoverController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverController.swift; sourceTree = "<group>"; };
 		04D57F6F25BDEE7B00B6EB92 /* PersistenceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceController.swift; sourceTree = "<group>"; };
 		04D57F7325BDEE9D00B6EB92 /* JSONPersistenceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONPersistenceController.swift; sourceTree = "<group>"; };
@@ -420,7 +420,6 @@
 				049A2AFE2576BB0E00028CBD /* Generics */,
 				0419FCFD2581186600AA07F8 /* WatchlistViewController.swift */,
 				04676F232585049D004DE20F /* FiltersViewController.swift */,
-				04CBE6E62583D5AE00F94F41 /* DiscoverViewController.swift */,
 				044C917F25A3765F00B4C29A /* SearchViewController.swift */,
 				04E84D6125ACB8FA0007C96A /* HomeViewController.swift */,
 			);
@@ -576,6 +575,7 @@
 				042EA5DB2596438C008899FF /* DateRangePicker.swift */,
 				04E84D6625ACDF6B0007C96A /* SeeAllCell.swift */,
 				04E84D6925ACE54D0007C96A /* LabelCell.swift */,
+				04BF016225C47B5700C8A501 /* EmptyPlaceholder.swift */,
 			);
 			path = Generics;
 			sourceTree = "<group>";
@@ -753,7 +753,6 @@
 				0450F09E25AB81CD00C97AA3 /* Coordinated.swift in Sources */,
 				042EA5E225966076008899FF /* FilterController.swift in Sources */,
 				044A2C9F25990AA6000D1355 /* TrailerCell.swift in Sources */,
-				04CBE6E72583D5AE00F94F41 /* DiscoverViewController.swift in Sources */,
 				04C05B192582944C0046BA4D /* MainCoordinator.swift in Sources */,
 				04A09B65256435D4002CB6A2 /* MovieDetailsViewController.swift in Sources */,
 				0448C83D2585078900A43D8A /* OptionCell.swift in Sources */,
@@ -812,6 +811,7 @@
 				0400B46D256D613100B164B7 /* SectionHeader.swift in Sources */,
 				0447C224255DBC5E0008F257 /* CreditsViewModel.swift in Sources */,
 				04C0579A25AA22D100C5C0DB /* DiscoverListItem.swift in Sources */,
+				04BF016325C47B5700C8A501 /* EmptyPlaceholder.swift in Sources */,
 				042EA5DC2596438C008899FF /* DateRangePicker.swift in Sources */,
 				04C0579325AA1CFE00C5C0DB /* Bundle+Decoding.swift in Sources */,
 				0473784425BF2FAF00C50D6C /* WatchHistoryController.swift in Sources */,

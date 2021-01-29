@@ -100,13 +100,3 @@ extension Movie {
         return movie
     }
 }
-
-//extension Movie: Hashable, Equatable {
-////    func hash(into hasher: inout Hasher) {
-////        hasher.combine(id)
-////    }
-////
-////    static func == (lhs: Movie, rhs: Movie) -> Bool {
-////        return lhs.id == rhs.id
-////    }
-//}

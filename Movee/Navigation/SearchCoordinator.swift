@@ -27,10 +27,16 @@ class SearchCoordinator: MainCoordinator {
     }
     
     override func start() {
-        createAndPush(SearchViewController.self) {
-            $0.discoverController = DiscoverController(
-                lists: Bundle.main.decode(from: "lists"))
-            $0.tabBarItem = .init(tabBarSystemItem: .search, tag: 2)
+        createAndPush(SearchViewController.self) { vc in
+            DispatchQueue.global(qos: .background).async {
+                let lists: [DiscoverListItem] = Bundle.main.decode(from: "lists")
+                //sleep(5)
+                DispatchQueue.main.async {
+                    vc.discoverController = DiscoverController(
+                        lists: lists)
+                }
+            }
+            vc.tabBarItem = .init(tabBarSystemItem: .search, tag: 2)
         }
 //        createAndPush(DiscoverViewController.self, animated: false) {
 //            $0.tabBarItem = .init(title: "Explore", image: nil, tag: 2)
