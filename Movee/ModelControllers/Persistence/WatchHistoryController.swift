@@ -10,6 +10,11 @@ import Foundation
 class WatchHistoryController: SearchHistoryController {
     override var title: String { return "Watch History" }
     
+    override func addItem(_ item: Movie) {
+        guard !items.contains(item) else { return }
+        super.addItem(item)
+    }
+    
     func removeMovie(_ movie: Movie) {
         items.removeAll { $0.id == movie.id }
         saveData()

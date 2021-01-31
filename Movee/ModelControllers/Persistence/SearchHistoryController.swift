@@ -11,6 +11,7 @@ class SearchHistoryController: JSONPersistenceController<Movie>, MoviesListContr
     var title: String { return "Search History" }
     
     func addMovie(_ movie: Movie) {
+        guard !items.contains(movie) else { return }
         addItem(movie.short)
     }
     

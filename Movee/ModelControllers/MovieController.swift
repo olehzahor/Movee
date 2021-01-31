@@ -13,6 +13,8 @@ class MovieController {
 
     var errorHandler: ErrorHandler?
     var updateHandler: UpdateHandler?
+    
+    private(set) var isDetailsFetched = false
 
     private(set) var movie: Movie? {
         didSet {
@@ -23,6 +25,8 @@ class MovieController {
     private var movieId: Int?
     
     var generalInfo: [[String: String]] {
+        guard isDetailsFetched else { return [] }
+        
         var rows = [[String: String]]()
         if let releaseDate = Movie.dateFromDateString(movie?.release_date) {
             let formatter = DateFormatter()
@@ -97,10 +101,11 @@ class MovieController {
     private func fetchDetails() {
         guard let movieId = movieId else { return }
         
-        TMDBClient.shared.getMovieDetails(id: movieId) { result in
+        let _ = TMDBClient.shared.getMovieDetails(id: movieId) { result in
             switch result {
             case .success(let movie):
                 self.movie = movie
+                self.isDetailsFetched = true
                 self.updateHandler?(self)
             case .failure(let error):
                 self.errorHandler?(error)
