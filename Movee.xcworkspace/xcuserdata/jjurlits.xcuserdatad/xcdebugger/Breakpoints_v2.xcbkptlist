@@ -1029,22 +1029,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "FA80414F-A2BD-421B-B14A-851B6472CC4F"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Movee/Networking/Endpoints.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "96"
-            endingLineNumber = "96"
-            landmarkName = "init()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "05C5E0BE-007E-44E3-866F-72561F2B0B3B"
             shouldBeEnabled = "No"
             ignoreCount = "0"
@@ -1052,8 +1036,8 @@
             filePath = "Movee/Networking/Endpoints.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "77"
-            endingLineNumber = "77"
+            startingLineNumber = "89"
+            endingLineNumber = "89"
             landmarkName = "poster(path:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1068,9 +1052,9 @@
             filePath = "Movee/Networking/Endpoints.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "85"
-            endingLineNumber = "85"
-            landmarkName = "poster(path:)"
+            startingLineNumber = "97"
+            endingLineNumber = "97"
+            landmarkName = "backdrop(path:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

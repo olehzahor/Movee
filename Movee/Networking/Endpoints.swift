@@ -8,7 +8,7 @@
 import Foundation
 
 struct Endpoints {
-    static let shared = Endpoints()
+    //static let shared = Endpoints()
     let locale: String
     
     private var baseComponents: URLComponents {
@@ -73,11 +73,11 @@ struct Endpoints {
             "search/movie?api_key=\(apiKey)&language=\(locale)&page=\(page)&include_adult=false&query=\(encodedQuery)"
     }
     
-    func poster(path: String) -> URL? {
+    func image(path: String, size: String) -> URL? {
         var components = URLComponents()
         components.scheme = "https"
         components.host = "image.tmdb.org"
-        components.path = "/t/p/w500\(path)"
+        components.path = "/t/p/\(size)\(path)"
         components.queryItems?.append(
             URLQueryItem(name: "language", value: self.locale))
         components.queryItems?.append(
@@ -85,14 +85,32 @@ struct Endpoints {
         return components.url
     }
     
-    private init(apiKey key: String, locale: String) {
+//    func poster(path: String) -> URL? {
+//        var components = URLComponents()
+//        components.scheme = "https"
+//        components.host = "image.tmdb.org"
+//        components.path = "/t/p/w500\(path)"
+//        components.queryItems?.append(
+//            URLQueryItem(name: "language", value: self.locale))
+//        components.queryItems?.append(
+//            URLQueryItem(name: "include_image_language", value: "en,null"))
+//        return components.url
+//    }
+//
+//    func backdrop(path: String) -> URL? {
+//        var components = URLComponents()
+//        components.scheme = "https"
+//        components.host = "image.tmdb.org"
+//        components.path = "/t/p/w870\(path)"
+//        components.queryItems?.append(
+//            URLQueryItem(name: "language", value: self.locale))
+//        components.queryItems?.append(
+//            URLQueryItem(name: "include_image_language", value: "en,null"))
+//        return components.url
+//    }
+
+    init(apiKey key: String, locale: String) {
         self.apiKey = key
         self.locale = locale
     }
-    
-    private init() {
-        self.apiKey = "d65446acbb59f68418c9bf8dc9347056"
-        self.locale = "ru-RU"
-    }
-    
 }

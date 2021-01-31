@@ -53,12 +53,12 @@ class MovieViewModel {
 
     var posterURL: URL? {
         guard let posterPath = movie.poster_path else { return nil }
-        return Endpoints.shared.poster(path: posterPath)
+        return TMDBClient.shared.fullPosterUrl(path: posterPath)
     }
     
     var backdropURL: URL? {
         guard let backdropPath = movie.backdrop_path else { return nil }
-        return URL(string: "https://image.tmdb.org/t/p/w780\(backdropPath)")
+        return TMDBClient.shared.fullBackdropUrl(path: backdropPath)
     }
     
     var posterPlaceholder: UIImage? {
