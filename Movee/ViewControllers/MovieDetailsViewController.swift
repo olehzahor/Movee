@@ -8,47 +8,11 @@
 import UIKit
 
 class MovieDetailsViewController: UIViewController, GenericCollectionViewController, Coordinated {
-    private var savedNavBarAlpha: CGFloat = 0
-    private lazy var navBarShadowAlpha: CGFloat = {
-        return navBarAppearance.shadowColor?.rgba.alpha ?? 1
-    }()
-    
-    private var navBarAlpha: CGFloat = 0.0 {
-        didSet {
-            setupNavBarAppearance()
-        }
-    }
-    
-    func setupNavBarAppearance() {
-        guard movieController.isBackdropAvaiable else { return }
-        navBarAppearance.backgroundColor = UIColor.systemBackground.withAlphaComponent(navBarAlpha)
-        navBarAppearance.shadowColor =
-            navBarAppearance.shadowColor?.withAlphaComponent(navBarShadowAlpha * navBarAlpha)
-        
-        let titleTextAlpha: CGFloat = navBarAlpha < 0.9 ? 0 : (navBarAlpha - 0.9) * 10
-        let titleTextColor = UIColor.label.withAlphaComponent(titleTextAlpha)
-        navBarAppearance.titleTextAttributes = [.foregroundColor:titleTextColor]
-        
-        navigationItem.standardAppearance = navBarAppearance
-        navigationItem.scrollEdgeAppearance = navBarAppearance
-        navigationItem.compactAppearance = navBarAppearance
-        manageNavbarTintColor()
-
-    }
-    
-    private var navBarAppearance: UINavigationBarAppearance = {
-        let appearance = UINavigationBarAppearance()
-        appearance.configureWithOpaqueBackground()
-        appearance.backgroundColor = .systemBackground
-        return appearance
-    }()
-    
-    weak var coordinator: MainCoordinator?
-    
     typealias DataSource = UICollectionViewDiffableDataSource<Section, AnyHashable>
     typealias Snapshot = NSDiffableDataSourceSnapshot<Section, AnyHashable>
-    private(set) lazy var dataSource = createDataSource()
 
+    weak var coordinator: MainCoordinator?
+    
     var movie: Movie? {
         didSet { movieId = movie?.id }
     }
@@ -58,65 +22,25 @@ class MovieDetailsViewController: UIViewController, GenericCollectionViewControl
     private(set) var movieController: MovieController!
     
     var watchlistController: WatchlistController?
-    var watchHistoryController: WatchHistoryController?
     
-    func manageNavbarTintColor() {
-        let alpha = navBarAlpha
-        var tintColor = view.tintColor ?? UIColor.label
-        
-        if self.traitCollection.userInterfaceStyle == .dark {
-            tintColor = UIColor.init(
-                hue: tintColor.hsb.hue,
-                saturation: tintColor.hsb.saturation * alpha,
-                brightness: tintColor.hsb.brightness,
-                alpha: 1.0)
-        } else {
-            tintColor = UIColor.init(
-                hue: tintColor.hsb.hue,
-                saturation: tintColor.hsb.saturation,
-                brightness: tintColor.hsb.brightness * alpha,
-                alpha: 1.0)
-        }
-        navigationController?.navigationBar.tintColor = tintColor
+    
+    private(set) lazy var dataSource = createDataSource()
 
-    }
+    private var savedNavBarAlpha: CGFloat = 0
+    private lazy var navBarShadowAlpha: CGFloat = {
+        return navBarAppearance.shadowColor?.rgba.alpha ?? 1
+    }()
     
-    func resetNavbarTintColor() {
-        navigationController?.navigationBar.tintColor = nil
-    }
-    
-        
-    fileprivate func setupNavigationBarButtons() {
-        guard let movie = movieController.movie,
-              let watchlistController = watchlistController
-        else { return }
-
-        let addToWatchlistButton = UIBarButtonItem(
-            image: UIImage(systemName: "bookmark"),
-            style: .plain,
-            target: self,
-            action: #selector(addToWatchlist))
-                
-        let removeFromWatchlistButton = UIBarButtonItem(
-            image: UIImage(systemName: "bookmark.slash"),
-            style: .plain,
-            target: self,
-            action: #selector(removeFromWatchlist))
-                
-        self.navigationItem.rightBarButtonItem =
-            watchlistController.contains(movie) ? removeFromWatchlistButton : addToWatchlistButton
+    private var navBarAlpha: CGFloat = 0.0 {
+        didSet { setupNavBarAppearance() }
     }
         
-    @objc func addToWatchlist() {
-        watchHistoryController?.removeMovie(movieController.movie!)
-        watchlistController?.addMovie(movieController.movie!)
-        setupNavigationBarButtons()
-    }
-    
-    @objc func removeFromWatchlist() {
-        watchlistController?.removeMovie(movieController.movie!)
-        setupNavigationBarButtons()
-    }
+    private var navBarAppearance: UINavigationBarAppearance = {
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithOpaqueBackground()
+        appearance.backgroundColor = .systemBackground
+        return appearance
+    }()
     
     func setupMovieController() {
         if let movie = movie {
@@ -155,7 +79,6 @@ class MovieDetailsViewController: UIViewController, GenericCollectionViewControl
         registerCell(KeyValueCell.self)
     }
     
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         navBarAlpha = savedNavBarAlpha
@@ -174,7 +97,7 @@ class MovieDetailsViewController: UIViewController, GenericCollectionViewControl
         
         
         title = movieController.viewModel?.title
-        navigationItem.titleView?.alpha = 0 // = UIView()
+        navigationItem.titleView?.alpha = 0 
         navigationItem.largeTitleDisplayMode = .never
         setupNavigationBarButtons()
         dataSource.apply(createSnapshot(controller: movieController), animatingDifferences: true)
@@ -183,7 +106,50 @@ class MovieDetailsViewController: UIViewController, GenericCollectionViewControl
     }
 }
 
+//MARK: - Navigation Bar Setup
 extension MovieDetailsViewController {
+    func setupNavBarAppearance() {
+        guard movieController.isBackdropAvaiable else { return }
+        navBarAppearance.backgroundColor = UIColor.systemBackground.withAlphaComponent(navBarAlpha)
+        navBarAppearance.shadowColor =
+            navBarAppearance.shadowColor?.withAlphaComponent(navBarShadowAlpha * navBarAlpha)
+        
+        let titleTextAlpha: CGFloat = navBarAlpha < 0.9 ? 0 : (navBarAlpha - 0.9) * 10
+        let titleTextColor = UIColor.label.withAlphaComponent(titleTextAlpha)
+        navBarAppearance.titleTextAttributes = [.foregroundColor:titleTextColor]
+        
+        navigationItem.standardAppearance = navBarAppearance
+        navigationItem.scrollEdgeAppearance = navBarAppearance
+        navigationItem.compactAppearance = navBarAppearance
+        manageNavbarTintColor()
+
+    }
+
+    func manageNavbarTintColor() {
+        let alpha = navBarAlpha
+        var tintColor = view.tintColor ?? UIColor.label
+        
+        if self.traitCollection.userInterfaceStyle == .dark {
+            tintColor = UIColor.init(
+                hue: tintColor.hsb.hue,
+                saturation: tintColor.hsb.saturation * alpha,
+                brightness: tintColor.hsb.brightness,
+                alpha: 1.0)
+        } else {
+            tintColor = UIColor.init(
+                hue: tintColor.hsb.hue,
+                saturation: tintColor.hsb.saturation,
+                brightness: tintColor.hsb.brightness * alpha,
+                alpha: 1.0)
+        }
+        navigationController?.navigationBar.tintColor = tintColor
+        
+    }
+    
+    func resetNavbarTintColor() {
+        navigationController?.navigationBar.tintColor = nil
+    }
+    
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let contentOffsetY = scrollView.contentOffset.y
         
@@ -202,6 +168,42 @@ extension MovieDetailsViewController {
     }
 }
 
+
+//MARK: - Watchlist Setup
+extension MovieDetailsViewController {
+    @objc func addToWatchlist() {
+        watchlistController?.addMovie(movieController.movie!)
+        setupNavigationBarButtons()
+    }
+    
+    @objc func removeFromWatchlist() {
+        watchlistController?.removeMovie(movieController.movie!)
+        setupNavigationBarButtons()
+    }
+    
+    fileprivate func setupNavigationBarButtons() {
+        guard let movie = movieController.movie,
+              let watchlistController = watchlistController
+        else { return }
+        
+        let addToWatchlistButton = UIBarButtonItem(
+            image: UIImage(systemName: "bookmark"),
+            style: .plain,
+            target: self,
+            action: #selector(addToWatchlist))
+        
+        let removeFromWatchlistButton = UIBarButtonItem(
+            image: UIImage(systemName: "bookmark.slash"),
+            style: .plain,
+            target: self,
+            action: #selector(removeFromWatchlist))
+        
+        self.navigationItem.rightBarButtonItem =
+            watchlistController.contains(movie) ? removeFromWatchlistButton : addToWatchlistButton
+    }
+}
+
+//MARK: - Data Source
 extension MovieDetailsViewController {
     func update(with controller: MovieController) {
         self.movie = controller.movie
@@ -314,7 +316,7 @@ extension MovieDetailsViewController {
 }
 
 
-//MARK: - Nagigation
+//MARK: - Navigation
 extension MovieDetailsViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let section = findSection(at: indexPath, in: dataSource)
