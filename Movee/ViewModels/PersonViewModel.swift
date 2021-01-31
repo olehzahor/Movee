@@ -74,12 +74,10 @@ class PersonViewModel {
 }
 
 extension PersonViewModel {
-    func configure(_ view: PhotoAndNameCell, imageLoaded: (() -> Void)? = nil) {
-        //view.nameLabel.text = name
+    func configure(_ view: PersonPhotoCell, imageLoaded: (() -> Void)? = nil) {
         if imageURL != nil {
             let cachedLowres = SDImageCache.shared.imageFromCache(forKey: imageURL?.absoluteString)
             view.setPhoto(photoUrl: hiresImageURL, placeholder: cachedLowres)
-            //view.imageView.sd_setImage(with: hiresImageURL, placeholderImage: cachedLowres)
         }
     }
     

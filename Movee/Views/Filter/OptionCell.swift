@@ -16,25 +16,14 @@ class OptionCell: ProgrammaticCollectionViewCell, SelfConfiguringView {
     }
     
     var state = State.ignored
-    
-    var option: String? {
-        didSet {
-            //ignore()
-        }
-    }
+    var option: String?
     
     func ignore() {
-        guard let option = option else { return }
         background.backgroundColor = .secondarySystemBackground
-//        label.text = option
-//        state = .ignored
     }
     
     func include() {
-        guard let option = option else { return }
         background.backgroundColor = .systemGreen
-//        label.text = "\(option)"
-//        state = .included
     }
     
     func exclude() {

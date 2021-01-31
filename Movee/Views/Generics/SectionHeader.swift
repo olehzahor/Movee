@@ -31,7 +31,6 @@ class SectionHeader: ProgrammaticCollectionReusableView, SelfConfiguringView {
     
     let actionButton: UIButton = {
         let button = UIButton(type: .system)
-        //button.setTitleColor(tintC, for: .normal)
         button.addTarget(self, action: #selector(seeAllButtonTouched), for: .touchUpInside)
         button.isHidden = true
         return button

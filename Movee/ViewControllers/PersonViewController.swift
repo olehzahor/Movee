@@ -36,12 +36,10 @@ class PersonViewController: UIViewController, GenericCollectionViewController, C
     typealias DataSource = UICollectionViewDiffableDataSource<PersonViewController.Section, AnyHashable>
     private(set) var personController: PersonController!
     var character: Character?
-    //var viewModel: PersonViewModel?
     var photo: UIImage?
     var dataSource: DataSource?
     var snapshot: NSDiffableDataSourceSnapshot<Section, AnyHashable>?
     var collectionView: UICollectionView!
-    //var sections: [Section] = [.photoAndName, .personalInfo, .biography, .knownFor]
     
     override func viewDidLoad() {
         guard let character = character else {
@@ -51,20 +49,8 @@ class PersonViewController: UIViewController, GenericCollectionViewController, C
         
         super.viewDidLoad()
         
-
-        
         personController = PersonController(character: character)
         personController.updateHandler = update(with:)
-        
-//        for navItem in (self.navigationController?.navigationBar.subviews)! {
-//            for itemSubView in navItem.subviews {
-//                if let largeLabel = itemSubView as? UILabel {
-//                    largeLabel.text = self.title
-//                    largeLabel.numberOfLines = 0
-//                    largeLabel.lineBreakMode = .byWordWrapping
-//                }
-//            }
-//        }
 
         setupCollectionView()
         
@@ -76,18 +62,14 @@ class PersonViewController: UIViewController, GenericCollectionViewController, C
         personController.load()
         title = personController.person.name
     }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        //reloadData()
-    }
-    
+        
     func setupCollectionView() {
         collectionView = createCollectionView()
         
         collectionView.delegate = self
         
         registerCell(BiographyCell.self)
-        registerCell(PhotoAndNameCell.self)
+        registerCell(PersonPhotoCell.self)
         registerCell(KeyValueCell.self)
         registerCell(CompactMovieCell.self)
         
@@ -96,7 +78,6 @@ class PersonViewController: UIViewController, GenericCollectionViewController, C
     
     func findSection(at indexPath: IndexPath) -> Section? {
         return dataSource?.snapshot().sectionIdentifiers[indexPath.section]
-        //return sections[indexPath.section]
     }
     
     func findSection(contains item: AnyHashable) -> Section? {
@@ -151,7 +132,7 @@ extension PersonViewController {
             guard let section = self.findSection(contains: item) else { return nil }
             switch section {
             case .photoAndName:
-                let cell = self.dequeueCell(PhotoAndNameCell.self, for: indexPath)
+                let cell = self.dequeueCell(PersonPhotoCell.self, for: indexPath)
                 self.personController.viewModel?.configure(cell)
                 return cell
             
@@ -218,9 +199,3 @@ extension PersonViewController {
         }
     }
 }
-//
-//extension PersonViewController: ViewModelDelegate {
-//    func didFinishLoading() {
-//        reloadData()
-//    }
-//}

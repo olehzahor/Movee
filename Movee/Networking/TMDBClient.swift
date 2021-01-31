@@ -59,18 +59,6 @@ class TMDBClient: ApiService {
         fetch(urlString: urlString, completion: completion)
     }
     
-//    func downloadPosterImage(path: String, completion: @escaping (Result<Data, Error>) -> Void) {
-//        guard let url = endpoints.image(path: path: path) else { return }
-//
-//        let task = URLSession.shared.dataTask(with: url) { data, response, error in
-//            DispatchQueue.main.async {
-//                completion(.success(data!))
-//            }
-//        }
-//        task.resume()
-//
-//    }
-//
     func getMovieDetails(id: Int, completion: @escaping (Result<Movie, Error>) -> Void) -> URLSessionTask? {
         return fetch(url: endpoints.movieDetails(movieId: id),
               completion: completion)

@@ -11,7 +11,6 @@ class TrailerCell: ProgrammaticCollectionViewCell, SelfConfiguringView {
         $0.clipsToBounds = true
         $0.backgroundColor = .secondarySystemBackground
         $0.addOverlay(color: .black, alpha: 0.4)
-        //$0.alpha = 0.5
     }
     
     let playButton: UIButton = createView {

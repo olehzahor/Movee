@@ -111,7 +111,6 @@ class MovieViewModel {
         return formatter.string(from: date)
     }
     
-    //TODO: move genres string generation to movie model
     var infoString: InfoString {
         var short = [year, genresString.short].joined(separator: separator)
         var long = ""
@@ -121,10 +120,6 @@ class MovieViewModel {
             long = [releaseDate, runtime].joined(separator: separator)
             long += "\n" + genresString.long
         }
-//        if let rating = movie.vote_average, let votes = movie.vote_count {
-//            short = "\(rating) \(separator) \(short)"
-//            long += "\n\(rating) (\(votes))"
-//        }
         
         return InfoString(short: short, long: long)
     }
@@ -175,7 +170,6 @@ class MovieViewModel {
     
     init(movie: Movie) {
         self.movie = movie
-        //print("Movie View Model for \(movie.title) created")
     }
 }
 
@@ -191,7 +185,6 @@ extension MovieViewModel {
         view.overviewLabel.text = overview
         view.poster.imageView.sd_setImage(with: posterURL,
                                          placeholderImage: posterPlaceholder)
-        //view.poster.setRating(rating, votes: movie.vote_count)
     }
     
     func configure(_ view: CompactMovieCell) {

@@ -15,7 +15,6 @@ class SeeAllCell: ProgrammaticCollectionViewCell, SelfConfiguringView {
     }
     
     @objc func seeAllButtonTouched() {
-        print("BUTTO")
         action?()
     }
     
@@ -31,10 +30,6 @@ class SeeAllCell: ProgrammaticCollectionViewCell, SelfConfiguringView {
     func setAction(title: String, action: @escaping () -> Void) {
         self.action = action
         actionButton.setTitle(title, for: .normal)
-    }
-    
-    override func prepareForReuse() {
-        //action = nil
     }
     
     override func setupViews() {

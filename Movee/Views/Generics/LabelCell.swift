@@ -15,6 +15,5 @@ class LabelCell: ProgrammaticCollectionViewCell, SelfConfiguringView {
     override func setupViews() {
         addSubview(label)
         label.fillSuperview()
-        print(superview?.frame)
     }
 }

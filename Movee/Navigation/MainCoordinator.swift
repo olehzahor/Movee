@@ -90,7 +90,6 @@ class MainCoordinator: Coordinator {
     func showCustomMoviesList(moviesController: MoviesListController) {
         createAndPush(MoviesListViewController.self) {
             $0.setMoviesController(moviesController)
-            //$0.moviesController = moviesController
         }
     }
     
@@ -118,7 +117,4 @@ class MainCoordinator: Coordinator {
             $0.discoverController = discoverController
         }
     }
-    
-
-    
 }

@@ -8,11 +8,6 @@
 import UIKit
 
 class BackdropView: UICollectionReusableView, SelfConfiguringView {
-//    override var bounds: CGRect {
-//        didSet {
-//            imageView.setNeedsDisplay()
-//        }
-//    }
     private var gradient: CAGradientLayer!
     
     let imageView: UIImageView = {
@@ -21,15 +16,12 @@ class BackdropView: UICollectionReusableView, SelfConfiguringView {
         imageView.sd_imageTransition = .fade
         imageView.clipsToBounds = true
         imageView.alpha = 0.8
-        //imageView.backgroundColor = .red
         
-        //imageView.image = UIImage(named: "backdrop-placeholder")
         return imageView
     }()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-       // backgroundColor = .red
         addSubview(imageView)
         imageView.fillSuperview()
         gradient = CAGradientLayer()

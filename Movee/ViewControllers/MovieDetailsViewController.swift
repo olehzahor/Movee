@@ -15,22 +15,25 @@ class MovieDetailsViewController: UIViewController, GenericCollectionViewControl
     
     private var navBarAlpha: CGFloat = 0.0 {
         didSet {
-            guard movieController.isBackdropAvaiable else { return }
-            navBarAppearance.backgroundColor = UIColor.systemBackground.withAlphaComponent(navBarAlpha)
-            navBarAppearance.shadowColor =
-                navBarAppearance.shadowColor?.withAlphaComponent(navBarShadowAlpha * navBarAlpha)
-            
-            let titleTextAlpha: CGFloat = navBarAlpha < 0.9 ? 0 : (navBarAlpha - 0.9) * 10
-            let titleTextColor = UIColor.label.withAlphaComponent(titleTextAlpha)
-            navBarAppearance.titleTextAttributes = [.foregroundColor:titleTextColor]
-            
-            navigationItem.standardAppearance = navBarAppearance
-            navigationItem.scrollEdgeAppearance = navBarAppearance
-            navigationItem.compactAppearance = navBarAppearance
-            manageNavbarTintColor()
-            
-            
+            setupNavBarAppearance()
         }
+    }
+    
+    func setupNavBarAppearance() {
+        guard movieController.isBackdropAvaiable else { return }
+        navBarAppearance.backgroundColor = UIColor.systemBackground.withAlphaComponent(navBarAlpha)
+        navBarAppearance.shadowColor =
+            navBarAppearance.shadowColor?.withAlphaComponent(navBarShadowAlpha * navBarAlpha)
+        
+        let titleTextAlpha: CGFloat = navBarAlpha < 0.9 ? 0 : (navBarAlpha - 0.9) * 10
+        let titleTextColor = UIColor.label.withAlphaComponent(titleTextAlpha)
+        navBarAppearance.titleTextAttributes = [.foregroundColor:titleTextColor]
+        
+        navigationItem.standardAppearance = navBarAppearance
+        navigationItem.scrollEdgeAppearance = navBarAppearance
+        navigationItem.compactAppearance = navBarAppearance
+        manageNavbarTintColor()
+
     }
     
     private var navBarAppearance: UINavigationBarAppearance = {
@@ -103,37 +106,7 @@ class MovieDetailsViewController: UIViewController, GenericCollectionViewControl
         self.navigationItem.rightBarButtonItem =
             watchlistController.contains(movie) ? removeFromWatchlistButton : addToWatchlistButton
     }
-    
-    
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        setupMovieController()
-        setupCollectionView()
         
-//        dataSource.apply(createSnapshot(controller: movieController), animatingDifferences: true)
-        
-        title = movieController.viewModel?.title
-        navigationItem.titleView?.alpha = 0 // = UIView()
-        navigationItem.largeTitleDisplayMode = .never
-        setupNavigationBarButtons()
-        dataSource.apply(createSnapshot(controller: movieController), animatingDifferences: true)
-        
-        movieController.load()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        navBarAlpha = savedNavBarAlpha
-    }
-
-    override func viewWillDisappear(_ animated: Bool) {
-        savedNavBarAlpha = navBarAlpha
-        self.resetNavbarTintColor()
-    }
-    
-    
-    
     @objc func addToWatchlist() {
         watchHistoryController?.removeMovie(movieController.movie!)
         watchlistController?.addMovie(movieController.movie!)
@@ -143,22 +116,6 @@ class MovieDetailsViewController: UIViewController, GenericCollectionViewControl
     @objc func removeFromWatchlist() {
         watchlistController?.removeMovie(movieController.movie!)
         setupNavigationBarButtons()
-    }
-    
-    @objc func addToWatchHistory() {
-        watchlistController?.removeMovie(movieController.movie!)
-        watchHistoryController?.addMovie(movieController.movie!)
-        setupNavigationBarButtons()
-    }
-    
-    @objc func removeFromWatchHistory() {
-        watchHistoryController?.removeMovie(movieController.movie!)
-        setupNavigationBarButtons()
-
-    }
-    
-    @objc func showWatchlist() {
-        //coordinator?.showWatchlist()
     }
     
     func setupMovieController() {
@@ -197,6 +154,33 @@ class MovieDetailsViewController: UIViewController, GenericCollectionViewControl
         registerCell(TrailerCell.self)
         registerCell(KeyValueCell.self)
     }
+    
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        navBarAlpha = savedNavBarAlpha
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        savedNavBarAlpha = navBarAlpha
+        self.resetNavbarTintColor()
+    }
+
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setupMovieController()
+        setupCollectionView()
+        
+        
+        title = movieController.viewModel?.title
+        navigationItem.titleView?.alpha = 0 // = UIView()
+        navigationItem.largeTitleDisplayMode = .never
+        setupNavigationBarButtons()
+        dataSource.apply(createSnapshot(controller: movieController), animatingDifferences: true)
+        
+        movieController.load()
+    }
 }
 
 extension MovieDetailsViewController {
@@ -217,7 +201,6 @@ extension MovieDetailsViewController {
         }
     }
 }
-
 
 extension MovieDetailsViewController {
     func update(with controller: MovieController) {
@@ -264,11 +247,6 @@ extension MovieDetailsViewController {
             case .description:
                 let cell = self.dequeueCell(DescriptionCell.self, for: indexPath)
                 self.movieController.viewModel?.configure(cell)
-
-//                if let movie = item as? Movie {
-//                    //movie.viewModel.configure(cell)
-//                    //self.navigationItem.titleView = cell.titleLabel
-//                }
                 return cell
             case .trailer:
                 let cell = self.dequeueCell(TrailerCell.self, for: indexPath)
@@ -276,7 +254,6 @@ extension MovieDetailsViewController {
                     cell.placeholder.sd_setImage(with: self.movieController.viewModel?.backdropURL)
                     cell.trailerNameLabel.text = video.name
                     cell.setVideo(id: video.key ?? "")
-                    //cell.loadVideo(id: videoId)
                 }
                 return cell
             case .credits:

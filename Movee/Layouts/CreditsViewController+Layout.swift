@@ -38,8 +38,6 @@ extension CreditsViewController {
             section.boundarySupplementaryItems = [header]
             
             return section
-//            let layout = UICollectionViewCompositionalLayout(section: section)
-//            return layout
         }
         
         
@@ -51,25 +49,12 @@ extension CreditsViewController {
             widthDimension: .fractionalWidth(1.0),
             heightDimension: .estimated(100))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
-        //item.contentInsets.leading = 8
         
         let groupSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1.0),
             heightDimension: .estimated(100))
         let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [item])
-//        group.contentInsets.trailing = 5
-//        group.contentInsets.leading = 5
         let section = NSCollectionLayoutSection(group: group)
-        //section.orthogonalScrollingBehavior = .paging
-        
-//        let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-//                                                heightDimension: .estimated(30.0))
-//        let header = NSCollectionLayoutBoundarySupplementaryItem(
-//            layoutSize: headerSize,
-//            elementKind: UICollectionView.elementKindSectionHeader,
-//            alignment: .top)
-//        section.contentInsets = .init(top: 16, leading: 16, bottom: 16, trailing: 16)
-//        section.boundarySupplementaryItems = [header]
 
         return section
     }

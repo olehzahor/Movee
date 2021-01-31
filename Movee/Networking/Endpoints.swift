@@ -8,9 +8,13 @@
 import Foundation
 
 struct Endpoints {
-    //static let shared = Endpoints()
-    let locale: String
-    
+    private let locale: String
+    private let apiKey: String
+    private let baseURL = "https://api.themoviedb.org/3/"
+    private var postfix: String {
+        return "api_key=\(apiKey)&language=\(locale)"
+    }
+
     private var baseComponents: URLComponents {
         var components = URLComponents()
         components.scheme = "https"
@@ -20,12 +24,6 @@ struct Endpoints {
             URLQueryItem(name: "language", value: locale)
         ]
         return components
-    }
-    
-    private let apiKey: String
-    private let baseURL = "https://api.themoviedb.org/3/"
-    private var postfix: String {
-        return "api_key=\(apiKey)&language=\(locale)"
     }
     
     func customList(page: Int, path: String, params: String) -> URL? {
@@ -84,30 +82,6 @@ struct Endpoints {
             URLQueryItem(name: "include_image_language", value: "en,null"))
         return components.url
     }
-    
-//    func poster(path: String) -> URL? {
-//        var components = URLComponents()
-//        components.scheme = "https"
-//        components.host = "image.tmdb.org"
-//        components.path = "/t/p/w500\(path)"
-//        components.queryItems?.append(
-//            URLQueryItem(name: "language", value: self.locale))
-//        components.queryItems?.append(
-//            URLQueryItem(name: "include_image_language", value: "en,null"))
-//        return components.url
-//    }
-//
-//    func backdrop(path: String) -> URL? {
-//        var components = URLComponents()
-//        components.scheme = "https"
-//        components.host = "image.tmdb.org"
-//        components.path = "/t/p/w870\(path)"
-//        components.queryItems?.append(
-//            URLQueryItem(name: "language", value: self.locale))
-//        components.queryItems?.append(
-//            URLQueryItem(name: "include_image_language", value: "en,null"))
-//        return components.url
-//    }
 
     init(apiKey key: String, locale: String) {
         self.apiKey = key

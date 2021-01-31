@@ -25,7 +25,6 @@ class GenericLayouts {
             widthDimension: .fractionalWidth(1.0),
             heightDimension: itemHeight)
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
-        //item.contentInsets = .init(top: 8, leading: 0, bottom: 8, trailing: 0)
         
         let groupSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1.0),

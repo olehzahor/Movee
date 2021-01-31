@@ -7,18 +7,8 @@
 
 import UIKit
 
-
-
 class MovieCell: UICollectionViewCell, SelfConfiguringView {
     let poster = PosterView()
-//    let posterImageView: PosterView = {
-//        let imageView = UIImageView()
-//        imageView.sd_imageTransition = .fade
-//        imageView.translatesAutoresizingMaskIntoConstraints = false
-//        imageView.contentMode = .scaleAspectFill
-//
-//        return imageView
-//    }()
     
     let titleLabel: UILabel = {
         let label = UILabel()
@@ -59,7 +49,6 @@ class MovieCell: UICollectionViewCell, SelfConfiguringView {
         [poster, titleLabel, infoLabel, overviewLabel].forEach({addSubview($0)})
         
         poster.anchor(top: topAnchor, leading: leadingAnchor, bottom: bottomAnchor, trailing: nil, padding: .init(top: 8, left: 16, bottom: 8, right: 0))
-                               //size: .init(width: 100, height: 150))
         
         poster.widthAnchor.constraint(equalTo: poster.heightAnchor, multiplier: 2/3).isActive = true
         
@@ -72,10 +61,6 @@ class MovieCell: UICollectionViewCell, SelfConfiguringView {
         overviewLabel.setContentCompressionResistancePriority(.defaultLow, for: .vertical)
     }
     
-//    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-//        super.init(style: style, reuseIdentifier: reuseIdentifier)
-//        setupViews()
-//    }
     
     override init(frame: CGRect) {
         print(MovieCell.reuseIdentifier)

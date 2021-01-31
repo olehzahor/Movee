@@ -11,13 +11,14 @@ class KeyValueCell: ProgrammaticCollectionViewCell, SelfConfiguringView {
     let keyLabel: UILabel = createView() {
         $0.font = UIFont.preferredFont(forTextStyle: .callout)
     }
+    
     let valueLabel: UILabel = createView() {
         $0.font = UIFont.preferredFont(forTextStyle: .callout)
         $0.textColor = .secondaryLabel
         $0.numberOfLines = 0
         $0.textAlignment = .right
-        //$0.backgroundColor = .red
     }
+    
     let separator: UIView = createView {
         $0.backgroundColor = .systemGray4
     }

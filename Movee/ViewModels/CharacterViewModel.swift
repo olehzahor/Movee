@@ -54,7 +54,7 @@ extension CharacterViewModel {
         view.label.text = name
         view.subLabel.text = subtitle
     }
-    //TODO: rename title to name in cell class
+
     func configure(_ view: CharacterHorizontalCell) {
         view.imageView.sd_setImage(with: imageURL, placeholderImage: placeholder)
         view.titleLabel.text = name
