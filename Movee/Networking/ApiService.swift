@@ -23,7 +23,6 @@ class ApiService {
         completion: @escaping (Result<T, Error>) -> Void) -> URLSessionTask? {
         guard let url = url else { return nil }
         let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
-            //sleep(1)
             if let error = error {
                 print(error)
                 DispatchQueue.main.async {

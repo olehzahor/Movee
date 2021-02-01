@@ -36,27 +36,30 @@ class TMDBClient: ApiService {
     }
     
     func getRelatedMovies(movieId: Int, page: Int,  completion: @escaping (Result<MoviesPagedResult, Error>) -> Void) -> URLSessionTask? {
-        return fetch(urlString: endpoints.relatedMovies(
-                        movieId: movieId,
-                        page: page),
+        return fetch(url: endpoints.relatedMovies(movieId: movieId, page: page),
                      completion: completion)
     }
     
     func getPopularMovies(page: Int,
                           completion: @escaping (Result<MoviesPagedResult, Error>) -> Void) -> URLSessionTask? {
-        return fetch(urlString: endpoints.popularMovies(page: page),
-              completion: completion)
+        return fetch(url: endpoints.popularMovies(page: page),
+                     completion: completion)
     }
     
     func searchMovies(query: String, page: Int,
                       completion: @escaping (Result<MoviesPagedResult, Error>) -> Void) -> URLSessionTask? {
-        return fetch(urlString: endpoints.searchMovies(query: query, page: page),
+        return fetch(url: endpoints.searchMovies(query: query, page: page),
               completion: completion)
     }
     
     func getGenresList(completion: @escaping (Result<Genres, Error>) -> Void) {
-        let urlString = "https://api.themoviedb.org/3/genre/movie/list?api_key=\(key)&language=en-US"
-        fetch(urlString: urlString, completion: completion)
+//        print("fetching genres")
+//
+//        let urlString = "https://api.themoviedb.org/3/genre/movie/list?api_key=\(key)&language=en-US"
+        //fetch(urlString: urlString, completion: completion)
+        guard let url = endpoints.genresList() else { return }
+        fetch(url: url, completion: completion)
+        
     }
     
     func getMovieDetails(id: Int, completion: @escaping (Result<Movie, Error>) -> Void) -> URLSessionTask? {
@@ -65,7 +68,6 @@ class TMDBClient: ApiService {
     }
     
     func loadGenres(completion: ((Genres) -> ())? = nil) {
-        print("fetching genres")
         getGenresList { (result) in
             switch result {
             case .success(let genres):
