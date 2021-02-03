@@ -9,11 +9,9 @@ import Foundation
 
 class TMDBClient: ApiService {
     typealias PagedReusltCompletionHandler = (Result<MoviesPagedResult, Error>) -> Void
-    
-    let key = "d65446acbb59f68418c9bf8dc9347056"
     var locale: String = "en_US"
     
-    lazy var endpoints = Endpoints(apiKey: key, locale: locale)
+    lazy var endpoints = Endpoints(apiKey: TMDB_API_KEY, locale: locale)
 
     var genres: Genres?
     var genresLoadingCompletionHandler: ((Genres) -> ())?
@@ -32,7 +30,7 @@ class TMDBClient: ApiService {
     }
     
     func getPersonDetails(personId: Int, completion: @escaping (Result<Person, Error>) -> Void) -> URLSessionTask? {
-        return fetch(urlString: endpoints.personDetails(personId: personId), completion: completion)
+        return fetch(url: endpoints.personDetails(personId: personId), completion: completion)
     }
     
     func getRelatedMovies(movieId: Int, page: Int,  completion: @escaping (Result<MoviesPagedResult, Error>) -> Void) -> URLSessionTask? {
@@ -53,10 +51,6 @@ class TMDBClient: ApiService {
     }
     
     func getGenresList(completion: @escaping (Result<Genres, Error>) -> Void) {
-//        print("fetching genres")
-//
-//        let urlString = "https://api.themoviedb.org/3/genre/movie/list?api_key=\(key)&language=en-US"
-        //fetch(urlString: urlString, completion: completion)
         guard let url = endpoints.genresList() else { return }
         fetch(url: url, completion: completion)
         
@@ -92,3 +86,4 @@ class TMDBClient: ApiService {
         super.init()
     }
 }
+

@@ -17,6 +17,7 @@ class SearchViewController: UITableViewController, Coordinated {
             if discoverController.isNested {
                 navigationItem.largeTitleDisplayMode = .never
             }
+            if isViewLoaded { tableView.reloadData() }
         }
     }
     
