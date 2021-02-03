@@ -66,6 +66,7 @@ class ApiService {
             }
         }
         task.resume()
+
         return task
     }
 
