@@ -13,7 +13,7 @@ extension CreditsViewController {
             let width = self.view.bounds.width
             let minimalWidth = CGFloat(200.0)
             
-            let columnsCount = Int(width / minimalWidth)
+            let columnsCount = 1
             
             let itemSize = NSCollectionLayoutSize(
                 widthDimension: .fractionalWidth(1.0),

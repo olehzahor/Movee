@@ -12,7 +12,7 @@ extension MoviesListViewController {
         let width = view.bounds.width
         let minimalWidth = CGFloat(414.0)
         
-        let columnsCount = Int(width / minimalWidth) + 1
+        let columnsCount = 1
         
         let itemSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1.0),
