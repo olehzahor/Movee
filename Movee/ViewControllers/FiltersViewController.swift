@@ -62,7 +62,6 @@ class FiltersViewController: UIViewController, GenericCollectionViewController, 
         registerFooter(HintFooter.self)
         registerHeader(SectionHeader.self)
         
-        registerFooter(DateRangePicker.self)
         
         dataSource.apply(createSnapshot())
     }
@@ -103,21 +102,16 @@ extension FiltersViewController {
             guard let self = self else { return nil }
             guard let section = self.findSection(at: indexPath, in: self.dataSource) else { return nil }
             
-            if kind == UICollectionView.elementKindSectionHeader {
-                let header = self.dequeueHeader(SectionHeader.self, for: indexPath)
-                header.titleLabel.text = section.title
-                
-                if section == .genres {
-                    header.setAction(title: "Show More", secondaryTitle: "Show Less") {
-                        self.isGenresCollapsed = !self.isGenresCollapsed
-                    }
+            let header = self.dequeueHeader(SectionHeader.self, for: indexPath)
+            header.titleLabel.text = section.title
+            
+            if section == .genres {
+                header.setAction(title: "Show More", secondaryTitle: "Show Less") {
+                    self.isGenresCollapsed = !self.isGenresCollapsed
                 }
-                
-                return header
-            } else {
-                let datePicker = self.dequeueFooter(DateRangePicker.self, for: indexPath)
-                return datePicker
             }
+            
+            return header
         }
         
         return dataSource
