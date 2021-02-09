@@ -29,6 +29,7 @@
 		042EA5DF259651B8008899FF /* Date+Tommorow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042EA5DE259651B8008899FF /* Date+Tommorow.swift */; };
 		042EA5E225966076008899FF /* FilterController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042EA5E125966076008899FF /* FilterController.swift */; };
 		0439906025D2D9AB00BE0577 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 0439905F25D2D9AB00BE0577 /* .gitignore */; };
+		0439906325D2DA7900BE0577 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0439906225D2DA7900BE0577 /* Constants.swift */; };
 		043A84EF2594EDFC00574149 /* FiltersViewController+Layout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043A84EE2594EDFC00574149 /* FiltersViewController+Layout.swift */; };
 		043FF804256599C90058BFC4 /* Endpoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043FF803256599C90058BFC4 /* Endpoints.swift */; };
 		0448C83D2585078900A43D8A /* OptionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0448C83C2585078900A43D8A /* OptionCell.swift */; };
@@ -92,7 +93,6 @@
 		04DD6D3825484E6E005FBA8C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 04DD6D3625484E6E005FBA8C /* LaunchScreen.storyboard */; };
 		04DD6D41254852D3005FBA8C /* MovieCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04DD6D40254852D3005FBA8C /* MovieCell.swift */; };
 		04DD6D4425485424005FBA8C /* Movie.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04DD6D4325485424005FBA8C /* Movie.swift */; };
-		04E0EF6925CB0149007855BE /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E0EF6825CB0149007855BE /* Constants.swift */; };
 		04E1261A257D26D800A0737B /* MovieController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E12619257D26D800A0737B /* MovieController.swift */; };
 		04E594B025879BFE002D0ABE /* HintFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E594AF25879BFE002D0ABE /* HintFooter.swift */; };
 		04E594B325879C97002D0ABE /* Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E594B225879C97002D0ABE /* Filter.swift */; };
@@ -132,6 +132,7 @@
 		042EA5DE259651B8008899FF /* Date+Tommorow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Tommorow.swift"; sourceTree = "<group>"; };
 		042EA5E125966076008899FF /* FilterController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterController.swift; sourceTree = "<group>"; };
 		0439905F25D2D9AB00BE0577 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		0439906225D2DA7900BE0577 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		043A84EE2594EDFC00574149 /* FiltersViewController+Layout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FiltersViewController+Layout.swift"; sourceTree = "<group>"; };
 		043FF803256599C90058BFC4 /* Endpoints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Endpoints.swift; sourceTree = "<group>"; };
 		0448C83C2585078900A43D8A /* OptionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionCell.swift; sourceTree = "<group>"; };
@@ -198,7 +199,6 @@
 		04DD6D3925484E6E005FBA8C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		04DD6D40254852D3005FBA8C /* MovieCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieCell.swift; sourceTree = "<group>"; };
 		04DD6D4325485424005FBA8C /* Movie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Movie.swift; sourceTree = "<group>"; };
-		04E0EF6825CB0149007855BE /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		04E12619257D26D800A0737B /* MovieController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieController.swift; sourceTree = "<group>"; };
 		04E594AF25879BFE002D0ABE /* HintFooter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HintFooter.swift; sourceTree = "<group>"; };
 		04E594B225879C97002D0ABE /* Filter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Filter.swift; sourceTree = "<group>"; };
@@ -485,11 +485,11 @@
 				0405EAF12549B3A8007C76DB /* Models */,
 				04DD6D2B25484E6C005FBA8C /* AppDelegate.swift */,
 				04DD6D2D25484E6C005FBA8C /* SceneDelegate.swift */,
+				0439906225D2DA7900BE0577 /* Constants.swift */,
 				04DD6D3125484E6C005FBA8C /* Main.storyboard */,
 				04DD6D3425484E6E005FBA8C /* Assets.xcassets */,
 				04DD6D3625484E6E005FBA8C /* LaunchScreen.storyboard */,
 				04DD6D3925484E6E005FBA8C /* Info.plist */,
-				04E0EF6825CB0149007855BE /* Constants.swift */,
 				044A2CA225991459000D1355 /* YoutubePlayer.swift */,
 			);
 			path = Movee;
@@ -736,7 +736,7 @@
 				04CBE6EA2583D6C700F94F41 /* DiscoverController.swift in Sources */,
 				0400B46D256D613100B164B7 /* SectionHeader.swift in Sources */,
 				04C0579A25AA22D100C5C0DB /* DiscoverListItem.swift in Sources */,
-				04E0EF6925CB0149007855BE /* Constants.swift in Sources */,
+				0439906325D2DA7900BE0577 /* Constants.swift in Sources */,
 				04C0579325AA1CFE00C5C0DB /* Bundle+Decoding.swift in Sources */,
 				0473784425BF2FAF00C50D6C /* WatchHistoryController.swift in Sources */,
 				04DD6D2E25484E6C005FBA8C /* SceneDelegate.swift in Sources */,
