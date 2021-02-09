@@ -26,9 +26,9 @@
 		042A09E1255B0C110040AD3E /* MovieViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042A09E0255B0C110040AD3E /* MovieViewModel.swift */; };
 		042C796F256E9BE300D2C19F /* MovieDetailsViewController+Layout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042C796E256E9BE300D2C19F /* MovieDetailsViewController+Layout.swift */; };
 		042E5A372549DEA4004ADF43 /* MoviesPagedResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042E5A362549DEA4004ADF43 /* MoviesPagedResult.swift */; };
-		042EA5DC2596438C008899FF /* DateRangePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042EA5DB2596438C008899FF /* DateRangePicker.swift */; };
 		042EA5DF259651B8008899FF /* Date+Tommorow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042EA5DE259651B8008899FF /* Date+Tommorow.swift */; };
 		042EA5E225966076008899FF /* FilterController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042EA5E125966076008899FF /* FilterController.swift */; };
+		0439906025D2D9AB00BE0577 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 0439905F25D2D9AB00BE0577 /* .gitignore */; };
 		043A84EF2594EDFC00574149 /* FiltersViewController+Layout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043A84EE2594EDFC00574149 /* FiltersViewController+Layout.swift */; };
 		043FF804256599C90058BFC4 /* Endpoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043FF803256599C90058BFC4 /* Endpoints.swift */; };
 		0448C83D2585078900A43D8A /* OptionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0448C83C2585078900A43D8A /* OptionCell.swift */; };
@@ -129,9 +129,9 @@
 		042A09E0255B0C110040AD3E /* MovieViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieViewModel.swift; sourceTree = "<group>"; };
 		042C796E256E9BE300D2C19F /* MovieDetailsViewController+Layout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MovieDetailsViewController+Layout.swift"; sourceTree = "<group>"; };
 		042E5A362549DEA4004ADF43 /* MoviesPagedResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviesPagedResult.swift; sourceTree = "<group>"; };
-		042EA5DB2596438C008899FF /* DateRangePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateRangePicker.swift; sourceTree = "<group>"; };
 		042EA5DE259651B8008899FF /* Date+Tommorow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Tommorow.swift"; sourceTree = "<group>"; };
 		042EA5E125966076008899FF /* FilterController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterController.swift; sourceTree = "<group>"; };
+		0439905F25D2D9AB00BE0577 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		043A84EE2594EDFC00574149 /* FiltersViewController+Layout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FiltersViewController+Layout.swift"; sourceTree = "<group>"; };
 		043FF803256599C90058BFC4 /* Endpoints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Endpoints.swift; sourceTree = "<group>"; };
 		0448C83C2585078900A43D8A /* OptionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionCell.swift; sourceTree = "<group>"; };
@@ -453,6 +453,7 @@
 		04DD6D1F25484E6C005FBA8C = {
 			isa = PBXGroup;
 			children = (
+				0439905F25D2D9AB00BE0577 /* .gitignore */,
 				04DD6D2A25484E6C005FBA8C /* Movee */,
 				04DD6D2925484E6C005FBA8C /* Products */,
 				B90BF6D7019490A2D1C4DCF5 /* Pods */,
@@ -514,7 +515,6 @@
 				0400B46C256D613100B164B7 /* SectionHeader.swift */,
 				040FD9C6257D48E0005EDF25 /* KeyValueCell.swift */,
 				04E594AF25879BFE002D0ABE /* HintFooter.swift */,
-				042EA5DB2596438C008899FF /* DateRangePicker.swift */,
 				04E84D6625ACDF6B0007C96A /* SeeAllCell.swift */,
 				04E84D6925ACE54D0007C96A /* LabelCell.swift */,
 			);
@@ -611,6 +611,7 @@
 				04DD6D3825484E6E005FBA8C /* LaunchScreen.storyboard in Resources */,
 				04C0579725AA1EB600C5C0DB /* lists.json in Resources */,
 				04DD6D3525484E6E005FBA8C /* Assets.xcassets in Resources */,
+				0439906025D2D9AB00BE0577 /* .gitignore in Resources */,
 				04DD6D3325484E6C005FBA8C /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -736,7 +737,6 @@
 				0400B46D256D613100B164B7 /* SectionHeader.swift in Sources */,
 				04C0579A25AA22D100C5C0DB /* DiscoverListItem.swift in Sources */,
 				04E0EF6925CB0149007855BE /* Constants.swift in Sources */,
-				042EA5DC2596438C008899FF /* DateRangePicker.swift in Sources */,
 				04C0579325AA1CFE00C5C0DB /* Bundle+Decoding.swift in Sources */,
 				0473784425BF2FAF00C50D6C /* WatchHistoryController.swift in Sources */,
 				04DD6D2E25484E6C005FBA8C /* SceneDelegate.swift in Sources */,
@@ -909,7 +909,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = TU4F8N8QXW;
 				INFOPLIST_FILE = Movee/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -932,7 +932,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = TU4F8N8QXW;
 				INFOPLIST_FILE = Movee/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

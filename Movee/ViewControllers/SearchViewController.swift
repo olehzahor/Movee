@@ -124,7 +124,5 @@ extension SearchViewController: UISearchControllerDelegate, UISearchResultsUpdat
         
         let searchController = TMDBMoviesListController.searchResults(query: searchText)
         resultsController?.loadFromController(searchController)
-//        resultsController?.setMoviesController(controller)
-//        controller.load(completion: controller.update(with:))
     }
 }
