@@ -42,6 +42,8 @@ struct Character: Codable, Hashable {
     var popularity: Double = 0
     var known_for_department: String
     var original_name: String?
+    
+    var known_for: [Movie]?
 }
 
 extension Character {
@@ -49,3 +51,11 @@ extension Character {
         return CharacterViewModel(character: self)
     }
 }
+
+struct PeoplePagedResult: Codable, Hashable {
+    var page: Int
+    var results: [Character]
+    var total_pages: Int
+    var total_results: Int
+}
+
