@@ -25,6 +25,7 @@ struct Person: Codable, Hashable {
     var movie_credits: MovieCredits?
 }
 
+
 extension Person {
     var genderString: String {
         switch gender {

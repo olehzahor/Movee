@@ -42,6 +42,11 @@ class CharacterViewModel: Hashable {
         return character.character ?? character.job ?? ""
     }
     
+    var knownFor: String {
+        let movies = character.known_for?.compactMap { $0.title }
+        return movies?.joined(separator: "\n") ?? ""
+    }
+    
     
     init(character: Character) {
         self.character = character

@@ -44,6 +44,8 @@
 		0450F0A225AB8DF300C97AA3 /* Data+Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0450F0A125AB8DF300C97AA3 /* Data+Storage.swift */; };
 		045B46ED25BB476900DFA2FD /* UIColor+Components.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045B46EC25BB476900DFA2FD /* UIColor+Components.swift */; };
 		0463E101257D4F880058F727 /* MoviesListViewController+Layout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0463E100257D4F880058F727 /* MoviesListViewController+Layout.swift */; };
+		046426E825DD4E430056B182 /* PeopleController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 046426E725DD4E430056B182 /* PeopleController.swift */; };
+		046426EB25DD51E40056B182 /* PeopleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 046426EA25DD51E40056B182 /* PeopleViewController.swift */; };
 		04676F242585049D004DE20F /* FiltersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04676F232585049D004DE20F /* FiltersViewController.swift */; };
 		0469EA9C25A23F66004AEC5B /* TMDBMoviesListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0469EA9B25A23F66004AEC5B /* TMDBMoviesListController.swift */; };
 		0469EA9F25A242B3004AEC5B /* MoviesListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0469EA9E25A242B3004AEC5B /* MoviesListViewController.swift */; };
@@ -147,6 +149,8 @@
 		0450F0A125AB8DF300C97AA3 /* Data+Storage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+Storage.swift"; sourceTree = "<group>"; };
 		045B46EC25BB476900DFA2FD /* UIColor+Components.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Components.swift"; sourceTree = "<group>"; };
 		0463E100257D4F880058F727 /* MoviesListViewController+Layout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MoviesListViewController+Layout.swift"; sourceTree = "<group>"; };
+		046426E725DD4E430056B182 /* PeopleController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeopleController.swift; sourceTree = "<group>"; };
+		046426EA25DD51E40056B182 /* PeopleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeopleViewController.swift; sourceTree = "<group>"; };
 		04676F232585049D004DE20F /* FiltersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FiltersViewController.swift; sourceTree = "<group>"; };
 		0469EA9B25A23F66004AEC5B /* TMDBMoviesListController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMDBMoviesListController.swift; sourceTree = "<group>"; };
 		0469EA9E25A242B3004AEC5B /* MoviesListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviesListViewController.swift; sourceTree = "<group>"; };
@@ -365,6 +369,7 @@
 				04676F232585049D004DE20F /* FiltersViewController.swift */,
 				044C917F25A3765F00B4C29A /* SearchViewController.swift */,
 				04E84D6125ACB8FA0007C96A /* HomeViewController.swift */,
+				046426EA25DD51E40056B182 /* PeopleViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -505,6 +510,7 @@
 				047662DA257D2FAD00DD1959 /* CreditsController.swift */,
 				04C0BC1C257E77D100DBB274 /* PersonController.swift */,
 				04CBE6E92583D6C700F94F41 /* DiscoverController.swift */,
+				046426E725DD4E430056B182 /* PeopleController.swift */,
 			);
 			path = ModelControllers;
 			sourceTree = "<group>";
@@ -670,6 +676,7 @@
 				04C621D42559722A002B52A6 /* DecriptionCell.swift in Sources */,
 				04C621D025596CA2002B52A6 /* PlaceholderCell.swift in Sources */,
 				040FD9C1257D48A3005EDF25 /* PersonPhotoCell.swift in Sources */,
+				046426EB25DD51E40056B182 /* PeopleViewController.swift in Sources */,
 				04E594B025879BFE002D0ABE /* HintFooter.swift in Sources */,
 				04FCB82925714512006874AB /* CreditsViewController+Layout.swift in Sources */,
 				049A2AFC2576B3E800028CBD /* GenericLayouts.swift in Sources */,
@@ -691,6 +698,7 @@
 				042EA5E225966076008899FF /* FilterController.swift in Sources */,
 				044A2C9F25990AA6000D1355 /* TrailerCell.swift in Sources */,
 				04C05B192582944C0046BA4D /* MainCoordinator.swift in Sources */,
+				046426E825DD4E430056B182 /* PeopleController.swift in Sources */,
 				04A09B65256435D4002CB6A2 /* MovieDetailsViewController.swift in Sources */,
 				0448C83D2585078900A43D8A /* OptionCell.swift in Sources */,
 				042EA5DF259651B8008899FF /* Date+Tommorow.swift in Sources */,
@@ -834,7 +842,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -889,7 +897,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
