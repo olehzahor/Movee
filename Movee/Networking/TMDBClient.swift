@@ -50,6 +50,12 @@ class TMDBClient: ApiService {
               completion: completion)
     }
     
+    func searchPeople(query: String, page: Int,
+                      completion: @escaping (Result<PeoplePagedResult, Error>) -> Void) -> URLSessionTask? {
+        return fetch(url: endpoints.searchPeople(query: query, page: page),
+              completion: completion)
+    }
+    
     func getGenresList(completion: @escaping (Result<Genres, Error>) -> Void) {
         guard let url = endpoints.genresList() else { return }
         fetch(url: url, completion: completion)

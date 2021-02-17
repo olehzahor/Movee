@@ -76,6 +76,16 @@ struct Endpoints {
         return constructURL(path: "/3/movie/popular",
                             queryItems: [queryItem(forPage: page)])
     }
+    
+    func searchPeople(query: String, page: Int = 1) -> URL? {
+        let queryItems = [
+            URLQueryItem(name: "include_adult", value: "false"),
+            URLQueryItem(name: "query", value: query),
+            queryItem(forPage: page) ]
+        
+        let url = constructURL(path: "/3/search/person", queryItems: queryItems)
+        return url
+    }
 
     func searchMovies(query: String, page: Int = 1) -> URL? {
         let queryItems = [
