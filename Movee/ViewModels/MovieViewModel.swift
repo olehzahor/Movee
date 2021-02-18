@@ -70,7 +70,7 @@ class MovieViewModel {
     }
     
     var title: String {
-        return movie.title ?? ""
+        return movie.title
     }
     
     var titleWithYear: String? {
@@ -111,15 +111,16 @@ class MovieViewModel {
         return formatter.string(from: date)
     }
     
+    private func separate(_ strings: [String], separator: String) -> String {
+        return strings.filter({!$0.isEmpty}).joined(separator: separator)
+    }
+    
     var infoString: InfoString {
-        var short = [year, genresString.short].joined(separator: separator)
-        var long = ""
-        if runtime.isEmpty {
-            long = [releaseDate, genresString.long].joined(separator: separator)
-        } else {
-            long = [releaseDate, runtime].joined(separator: separator)
-            long += "\n" + genresString.long
-        }
+        let short = separate([year, genresString.short], separator: separator)
+        
+        var long = separate([releaseDate, runtime], separator: separator)
+        if !long.isEmpty, !genresString.long.isEmpty { long += "\n" }
+        long += genresString.long
         
         return InfoString(short: short, long: long)
     }

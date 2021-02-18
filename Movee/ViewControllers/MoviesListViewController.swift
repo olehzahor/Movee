@@ -19,8 +19,6 @@ class MoviesListViewController: UIViewController, GenericCollectionViewControlle
     var collectionView: UICollectionView!
     private(set) var moviesController: MoviesListController?
     
-    var searchHistoryController: SearchHistoryController?
-
     func setMoviesController(_ moviesController: MoviesListController) {
         self.moviesController = moviesController
     }
@@ -74,7 +72,6 @@ class MoviesListViewController: UIViewController, GenericCollectionViewControlle
 extension MoviesListViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let movie = dataSource.itemIdentifier(for: indexPath) else { return }
-        if trackHistory { searchHistoryController?.addMovie(movie) }
         coordinator?.showDetails(movie: movie)
     }
 }

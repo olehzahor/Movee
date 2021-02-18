@@ -23,6 +23,7 @@ struct Credits: Codable, Hashable {
         let sortedCast = cast?.sorted(by: {$0.order ?? -1 < $1.order ?? -1}) ?? []
         let crew = self.crew ?? []
         let groupedCredits = Dictionary(grouping: sortedCast + crew, by: {$0.known_for_department})
+        
         let alphabeticalySortedGroupedCredits = groupedCredits.sorted(by: {$0.key < $1.key })
         return alphabeticalySortedGroupedCredits
     }
@@ -40,10 +41,12 @@ struct Character: Codable, Hashable {
     var character: String?
     var job: String?
     var popularity: Double = 0
-    var known_for_department: String
+    var known_for_department: String = ""
     var original_name: String?
     
     var known_for: [Movie]?
+    
+    static var placeholder = Character()
 }
 
 extension Character {

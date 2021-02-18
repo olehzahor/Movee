@@ -97,6 +97,17 @@ struct Endpoints {
         return url
     }
     
+    func searchMulti(query: String, page: Int = 1) -> URL? {
+        let queryItems = [
+            URLQueryItem(name: "include_adult", value: "false"),
+            URLQueryItem(name: "query", value: query),
+            queryItem(forPage: page) ]
+        
+        let url = constructURL(path: "/3/search/multi", queryItems: queryItems)
+        return url
+    }
+        
+    
     func image(path: String, size: String) -> URL? {
         var components = URLComponents()
         components.scheme = "https"

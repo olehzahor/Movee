@@ -26,6 +26,8 @@ class CreditsViewController: UIViewController, GenericCollectionViewController, 
         }
         
         super.viewDidLoad()
+        
+        
         creditsController = .init(credits: credits)
         setupCollectionView()
         dataSource.apply(createSnapshot())
