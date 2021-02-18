@@ -11,7 +11,7 @@ class SearchHistoryController: JSONPersistenceController<Movie>, MoviesListContr
     var title: String { return "Search History" }
     
     func addMovie(_ movie: Movie) {
-        guard !items.contains(movie) else { return }
+        guard !items.contains(where: {$0.id == movie.id}) else { return }
         addItem(movie.short)
     }
     
@@ -34,6 +34,7 @@ class SearchHistoryController: JSONPersistenceController<Movie>, MoviesListContr
     
     convenience init() {
         self.init(filename: "search_history.json")
+        loadData()
     }
 
 }

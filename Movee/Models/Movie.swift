@@ -11,7 +11,7 @@ struct Movie: Codable, Hashable, Equatable {
     // short response
     var id: Int?
 
-    var title: String?
+    var title: String = ""
     var poster_path: String?
     var adult: Bool?
     var overview: String?
@@ -41,14 +41,13 @@ struct Movie: Codable, Hashable, Equatable {
     var job: String?
     
     var videos: Video?
+    var media_type: String?
     
     var isPosterAvaiable: Bool {
         return poster_path != nil
     }
     
-    static var placeholder: Movie {
-        return Movie()
-    }
+    static var placeholder = Movie()
 }
 
 struct Video: Codable, Hashable, Equatable {

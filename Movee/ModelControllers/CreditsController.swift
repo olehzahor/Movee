@@ -49,7 +49,7 @@ class CreditsController {
     init(credits: Credits) {
         self.credits = credits
     }
-    
+        
     //TODO: create more initializers
 //    init(movieId: Int) {
 //

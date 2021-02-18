@@ -7,7 +7,7 @@
 
 import UIKit
 
-class SearchViewController: UITableViewController, Coordinated {
+class DiscoverViewController: UITableViewController, Coordinated {
     var coordinator: SearchCoordinator?
     var discoverController: DiscoverController? {
         didSet {
@@ -27,18 +27,17 @@ class SearchViewController: UITableViewController, Coordinated {
     var isTopSectionVisible = true
     
     private var searchController: UISearchController!
-    private var resultsController: MoviesListViewController!
+    private var resultsController: SearchResultsViewController!//MoviesListViewController!
     
     private lazy var topSectionItems: KeyValuePairs =
         ["Advanced Search": { self.coordinator?.showAdvancedSearch() },
          "Search History": { self.coordinator?.showSearchHistory(controller: self.searchHistoryController)}]
     
     fileprivate func setupSearchController() {
-        resultsController = MoviesListViewController()
+        resultsController = SearchResultsViewController()//MoviesListViewController()
         resultsController.coordinator = self.coordinator
         
         resultsController.searchHistoryController = searchHistoryController
-        resultsController.trackHistory = true
         
         searchController = UISearchController(searchResultsController: resultsController)
         searchController.delegate = self
@@ -46,6 +45,8 @@ class SearchViewController: UITableViewController, Coordinated {
         searchController.searchResultsUpdater = self
         searchController.searchBar.autocapitalizationType = .none
         searchController.searchBar.delegate = self
+        searchController.searchBar.scopeButtonTitles = ["All Results", "Movies", "People"]
+        searchController.searchBar.placeholder = "Search for movies and people"
         navigationItem.hidesSearchBarWhenScrolling = false
         navigationItem.searchController = searchController
         
@@ -64,7 +65,7 @@ class SearchViewController: UITableViewController, Coordinated {
     }
 }
 
-extension SearchViewController {
+extension DiscoverViewController {
     override func numberOfSections(in tableView: UITableView) -> Int {
         var numberOfSections = 0
         
@@ -115,14 +116,17 @@ extension SearchViewController {
     }
 }
 
-extension SearchViewController: UISearchControllerDelegate, UISearchResultsUpdating, UISearchBarDelegate {
+extension DiscoverViewController: UISearchControllerDelegate, UISearchResultsUpdating, UISearchBarDelegate {
     func updateSearchResults(for searchController: UISearchController) {
-        let resultsController = searchController.searchResultsController as? MoviesListViewController
-        
         guard let searchText = searchController.searchBar.text, !searchText.isEmpty
         else { return }
+
+        let resultsController = searchController.searchResultsController as? SearchResultsViewController
+        resultsController?.searchController = SearchResultsController(query: searchText)
         
-        let searchController = TMDBMoviesListController.searchResults(query: searchText)
-        resultsController?.loadFromController(searchController)
+        let filters: [SearchResultsController.ResultType] = [.all, .movies, .people]
+        resultsController?.searchController?.filter = filters[searchController.searchBar.selectedScopeButtonIndex]
+
+        resultsController?.loadFromController()
     }
 }

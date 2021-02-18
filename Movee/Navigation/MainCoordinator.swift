@@ -113,7 +113,7 @@ class MainCoordinator: Coordinator {
     
     func showNestedDiscoverList(discoverController: DiscoverController?) {
         guard let discoverController = discoverController else { return }
-        createAndPush(SearchViewController.self) {
+        createAndPush(DiscoverViewController.self) {
             $0.discoverController = discoverController
         }
     }

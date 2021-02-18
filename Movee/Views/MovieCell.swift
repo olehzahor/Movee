@@ -48,11 +48,11 @@ class MovieCell: UICollectionViewCell, SelfConfiguringView {
     fileprivate func setupViews() {
         [poster, titleLabel, infoLabel, overviewLabel].forEach({addSubview($0)})
         
-        poster.anchor(top: topAnchor, leading: leadingAnchor, bottom: bottomAnchor, trailing: nil, padding: .init(top: 8, left: 16, bottom: 8, right: 0))
+        poster.anchor(top: topAnchor, leading: leadingAnchor, bottom: bottomAnchor, trailing: nil)
         
         poster.widthAnchor.constraint(equalTo: poster.heightAnchor, multiplier: 2/3).isActive = true
         
-        titleLabel.anchor(top: topAnchor, leading: poster.trailingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 8, left: 16, bottom: 0, right: 8))
+        titleLabel.anchor(top: topAnchor, leading: poster.trailingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 0, left: 16, bottom: 0, right: 0))
         
         infoLabel.putBelow(view: titleLabel, spacing: 8)
         

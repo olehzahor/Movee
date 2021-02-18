@@ -15,7 +15,7 @@ class SearchCoordinator: MainCoordinator {
     }
     
     override func start() {
-        let vc = SearchViewController()
+        let vc = DiscoverViewController()
         vc.coordinator = self
         vc.tabBarItem = .init(tabBarSystemItem: .search, tag: 2)
         navigationController.pushViewController(vc, animated: false)

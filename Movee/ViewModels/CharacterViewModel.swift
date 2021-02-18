@@ -66,5 +66,11 @@ extension CharacterViewModel {
         view.originalTitleLabel.text = originalName
         view.subtitleLabel.text = subtitle
     }
+    
+    func configure(_ view: CharacterSearchCell) {
+        view.titleLabel.text = name
+        view.subtitleLabel.text = knownFor
+        view.imageView.sd_setImage(with: imageURL, placeholderImage: placeholder)
+    }
 }
 

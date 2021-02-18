@@ -49,6 +49,8 @@ class PersonViewController: UIViewController, GenericCollectionViewController, C
         
         super.viewDidLoad()
         
+        navigationItem.largeTitleDisplayMode = .never
+        
         personController = PersonController(character: character)
         personController.updateHandler = update(with:)
 

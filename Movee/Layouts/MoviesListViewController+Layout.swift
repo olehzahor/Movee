@@ -18,6 +18,7 @@ extension MoviesListViewController {
             widthDimension: .fractionalWidth(1.0),
             heightDimension: .fractionalHeight(1.0))
         let movieItem = NSCollectionLayoutItem(layoutSize: itemSize)
+        movieItem.contentInsets = .init(top: 8, leading: 16, bottom: 8, trailing: 16)
         
         let groupSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1.0),
