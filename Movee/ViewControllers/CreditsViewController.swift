@@ -50,7 +50,7 @@ extension CreditsViewController {
         guard let credits = creditsController?.long else { return snapshot }
         
         credits.forEach {
-            snapshot.appendSections([$0])
+            snapshot.appendSections([$0 ?? ""])
             snapshot.appendItems($1, toSection: $0)
         }
         

@@ -30,6 +30,7 @@ struct Endpoints {
         var components = baseComponents
         components.path = path
         components.queryItems?.append(contentsOf: queryItems ?? [])
+        print(components.url)
         return components.url
     }
     
@@ -45,6 +46,21 @@ struct Endpoints {
         return constructURL(
             path: "/3/movie/\(movieId)",
             queryItems: [queryItems])
+    }
+    
+    func tvShowDetails(tvShowId: Int) -> URL? {
+        let queryItems = URLQueryItem(
+            name: "append_to_response",
+            value: "credits,recommendations,videos")
+        
+        return constructURL(
+            path: "/3/tv/\(tvShowId)",
+            queryItems: [queryItems])
+    }
+    
+    func seasonDetails(tvShowId: Int, seasonNumber: Int) -> URL? {
+        return constructURL(
+            path: "/3/tv/\(tvShowId)/season/\(seasonNumber)")
     }
     
     func discover(page: Int = 1, filter: Filter) -> URL? {
@@ -77,6 +93,12 @@ struct Endpoints {
                             queryItems: [queryItem(forPage: page)])
     }
     
+    func popularTVShows(page: Int = 1) -> URL? {
+        return constructURL(path: "/3/tv/popular",
+                            queryItems: [queryItem(forPage: page)])
+    }
+
+    
     func searchPeople(query: String, page: Int = 1) -> URL? {
         let queryItems = [
             URLQueryItem(name: "include_adult", value: "false"),
@@ -96,6 +118,17 @@ struct Endpoints {
         let url = constructURL(path: "/3/search/movie", queryItems: queryItems)
         return url
     }
+    
+    func searchTVShows(query: String, page: Int = 1) -> URL? {
+        let queryItems = [
+            URLQueryItem(name: "include_adult", value: "false"),
+            URLQueryItem(name: "query", value: query),
+            queryItem(forPage: page) ]
+        
+        let url = constructURL(path: "/3/search/tv", queryItems: queryItems)
+        return url
+    }
+
     
     func searchMulti(query: String, page: Int = 1) -> URL? {
         let queryItems = [

@@ -18,11 +18,11 @@ class CreditsController {
         return combined.filter({$0.popularity > 1})
     }
     
-    private var groupedByDepartment: [Dictionary<String, [Character]>.Element] {
+    private var groupedByDepartment: [Dictionary<String?, [Character]>.Element] {
         let sortedCast = credits.cast?.sorted(by: {$0.order ?? -1 < $1.order ?? -1}) ?? []
         let crew = credits.crew ?? []
         let groupedCredits = Dictionary(grouping: sortedCast + crew, by: {$0.known_for_department})
-        let alphabeticalySortedGroupedCredits = groupedCredits.sorted(by: {$0.key < $1.key })
+        let alphabeticalySortedGroupedCredits = groupedCredits.sorted(by: {$0.key ?? "" < $1.key ?? "" })
         return alphabeticalySortedGroupedCredits
     }
        
@@ -33,7 +33,7 @@ class CreditsController {
         return directors + popular
     }
     
-    var long: [Dictionary<String, [Character]>.Element] {
+    var long: [Dictionary<String?, [Character]>.Element] {
         return groupedByDepartment
     }
     

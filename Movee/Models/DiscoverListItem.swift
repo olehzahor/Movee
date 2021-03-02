@@ -12,12 +12,14 @@ class DiscoverListItem: Codable {
     let path: String?
     let query: String?
     let nestedLists: [DiscoverListItem]
+    let mediaType: String?
     
-    init(name: String, path: String, query: String) {
+    init(name: String, path: String, query: String, mediaType: String! = nil) {
         self.name = name
         self.path = path
         self.query = query
         self.nestedLists = []
+        self.mediaType = mediaType
     }
     
     init(name: String, nestedLists: [DiscoverListItem]) {
@@ -25,13 +27,42 @@ class DiscoverListItem: Codable {
         self.nestedLists = nestedLists
         self.path = nil
         self.query = nil
+        self.mediaType = nil
     }
 }
 
 extension DiscoverListItem {
-    var moviesController: MoviesListController? {
+//    var anyMediaListController: TMDBMediaListController<AnyMedia> {
+//        return TMDBMediaListController<AnyMedia>.customList(title: name, path: path ?? "", query: query ?? "")
+//    }
+    
+//    var movieController: TMDBMediaListController<Movie> {
+//        return TMDBMediaListController<Movie>.customList(title: name, path: path ?? "", query: query ?? "")
+//    }
+//
+//    func mediaC<T: Media>() -> TMDBMediaListController<T> {
+//        return TMDBMediaListController<T>.customList(title: name, path: path ?? "", query: query ?? "")
+//    }
+//
+//    var anyMediaController: TMDBMediaListController<AnyMedia> {
+//        return TMDBMediaListController<TVShow>.customList(title: name, path: path ?? "", query: query ?? "")
+//    }
+    
+//    var mediaController: some MediaListController {
+//        return TMDBMediaListController<Movie>.customList(title: name, path: path ?? "", query: query ?? "")
+//    }
+//
+    
+    var moviesController: MoviesListController? { return nil }
+    
+    var mediaController: MediaListController? {
         guard let path = path, let query = query else { return nil }
-        return TMDBMoviesListController.customList(title: name, path: path, query: query)
+        switch mediaType {
+        case "tv":
+            return TMDBMediaListController<TVShow>.customList(title: name, path: path, query: query)
+        default:
+            return TMDBMediaListController<Movie>.customList(title: name, path: path, query: query)
+        }
     }
 }
 
