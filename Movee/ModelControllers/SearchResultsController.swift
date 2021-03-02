@@ -8,8 +8,15 @@
 import Foundation
 
 class SearchResultsController {
-    enum ResultType {
-        case movies, tvs, people, all
+    enum ResultType: String, CaseIterable {
+        case all = "All Results"
+        case movies = "Movies"
+        case tvs = "TV Shows"
+        case people = "People"
+        
+        static var titles: [String] {
+            return self.allCases.compactMap { $0.rawValue }
+        }
     }
     
     var query: String = ""
@@ -44,6 +51,7 @@ class SearchResultsController {
             print(error)
         }
     }
+    
         
     private func fetch(page: Int, completion: @escaping (SearchResultsController) -> Void) {
         switch filter {
@@ -55,6 +63,11 @@ class SearchResultsController {
             task = TMDBClient.shared.searchMovies(query: query, page: page) { [weak self] result in
                 self?.fetched(result: result, completion: completion)
             }
+        case .tvs:
+            task = TMDBClient.shared.searchTVShows(query: query, page: page) { [weak self] result in
+                self?.fetched(result: result, completion: completion)
+            }
+
         case .people:
             task = TMDBClient.shared.searchPeople(query: query, page: page) { [weak self] result in
                 self?.fetched(result: result, completion: completion)

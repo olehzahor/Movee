@@ -29,22 +29,7 @@ class MovieCell: UICollectionViewCell, SelfConfiguringView {
         label.font = UIFont.systemFont(ofSize: 12, weight: .semibold)
         return label
     }()
-    
-    let ratingLabel: UILabel = {
-        let label = UILabel()
-        
-        label.text = "7.6"
-        label.backgroundColor = .darkGray
-        label.textColor = .white
-        label.font = UIFont.systemFont(ofSize: 10, weight: .bold)
-        label.textAlignment = .center
-        
-        label.layer.cornerRadius = 5
-        label.clipsToBounds = true
-                
-        return label
-    }()
-       
+           
     fileprivate func setupViews() {
         [poster, titleLabel, infoLabel, overviewLabel].forEach({addSubview($0)})
         

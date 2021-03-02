@@ -51,18 +51,61 @@ class MainCoordinator: Coordinator {
     }
     
     func start() {
-        createAndPush(HomeViewController.self, animated: false) {
+        createAndPush(NewHomeViewController.self, animated: false) {
             $0.watchlistController = self.watchlistController
             $0.tabBarItem = UITabBarItem(title: "Home", image: UIImage(systemName: "house"), tag: 0)
         }
+//
+//        createAndPush(MediaListViewController<AnyMedia>.self, animated: false) {
+//            let controller = TMDBMediaListController<AnyMedia>(title: "Popular Shows") { (page, completion) -> URLSessionTask? in
+//                TMDBClient.shared.getPopularMovies(page: page, completion: completion)
+//            }
+//
+//            $0.setMediaController(controller)
+//        }
+        
+
     }
     
     func showDetails(movie: Movie) {
-        let vc = MovieDetailsViewController()
+        let vc = MediaDetailsViewController(MediaController(movie))//MovieDetailsViewController()
         vc.coordinator = self
-        vc.movie = movie
+        //vc.movie = movie
         vc.watchlistController = watchlistController
         navigationController.pushViewController(vc, animated: true)
+    }
+    
+    func showMediaDetails(media: Media) {
+        switch media {
+        case is Movie:
+            showMovieDetails(movie: media as! Movie)
+        case is TVShow:
+            showTVShowDetails(tvShow: media as! TVShow)
+        default:
+            return
+        }
+    }
+    
+//    func showMediaDetails<MediaType: Media>(media: MediaType) {
+//        //showMovieDetails(movie: media as! Movie)
+//        print(MediaType.self)
+//        if MediaType.self == Movie.self {
+//            showMovieDetails(movie: media as! Movie)
+//        } else if MediaType.self == TVShow.self {
+//            showTVShowDetails(tvShow: media as! TVShow)
+//        }
+//    }
+    
+    func showMovieDetails(movie: Movie) {
+        createAndPush(MediaDetailsViewController.self) {
+            $0.mediaController = MovieController(movie)
+        }
+    }
+    
+    func showTVShowDetails(tvShow: TVShow) {
+        createAndPush(MediaDetailsViewController.self) {
+            $0.mediaController = TVShowController(tvShow)
+        }
     }
     
     func showCredits(_ credits: Credits) {
@@ -93,6 +136,18 @@ class MainCoordinator: Coordinator {
         }
     }
     
+    func showCustomMediaList(mediaController: MediaListController?) {
+        if let moviesController = mediaController as? TMDBMediaListController<Movie> {
+            createAndPush(MediaListViewController.self) {
+                $0.setMediaController(moviesController)
+            }
+        } else if let tvShowsController = mediaController as? TMDBMediaListController<TVShow> {
+            createAndPush(MediaListViewController.self) {
+                $0.setMediaController(tvShowsController)
+            }
+        }
+    }
+    
     func showMovieCredits(_ controller: PersonController) {
         let vc = MovieCreditsController()
         vc.coordinator = self
@@ -115,6 +170,13 @@ class MainCoordinator: Coordinator {
         guard let discoverController = discoverController else { return }
         createAndPush(DiscoverViewController.self) {
             $0.discoverController = discoverController
+        }
+    }
+    
+    func showSeasonDetails(season: Season, tvShowId: Int) {
+        createAndPush(SeasonViewController.self) {
+            let seasonController = SeasonController(tvShowId: tvShowId, season: season)
+            $0.seasonController = seasonController
         }
     }
 }

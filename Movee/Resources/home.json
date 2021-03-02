@@ -3,24 +3,35 @@
       "path":"movie/popular",
       "nestedLists":[],
       "query":"",
-      "name":"Popular Movies"
+      "name":"Popular Movies",
+      "mediaType": "movie"
+   },
+   {
+      "path":"tv/popular",
+      "nestedLists":[],
+      "query":"",
+      "name":"Popular TV Shows",
+      "mediaType": "tv"
    },
    {
       "path":"movie/now_playing",
       "nestedLists":[],
       "query":"",
-      "name":"Now Playing"
+      "name":"Now Playing",
+      "mediaType": "movie"
    },
    {
       "path":"movie/upcoming",
       "nestedLists":[],
       "query":"",
-      "name":"Upcoming Movies"
+      "name":"Upcoming Movies",
+      "mediaType": "movie"
    },
    {
       "path":"trending/movie/day",
       "nestedLists":[],
       "query":"",
-      "name":"Trending Movies"
+      "name":"Trending Movies",
+      "mediaType": "movie"
    },
 ]

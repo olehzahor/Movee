@@ -79,7 +79,7 @@ extension SearchResultsViewController {
                 return cell
             case .tv(let tv):
                 let cell = self.dequeueCell(MovieCell.self, for: indexPath)
-                tv.transformToMovie().viewModel.configure(cell)
+                tv.viewModel.configure(cell)
                 return cell
             case .empty:
                 self.searchController?.loadMore { _ in self.update() }
@@ -96,8 +96,17 @@ extension SearchResultsViewController: UICollectionViewDelegate {
         case .character(let character):
             coordinator?.showPersonInfo(character: character)
         case .movie(let movie):
-            searchHistoryController?.addMovie(movie)
-            coordinator?.showDetails(movie: movie)
+            coordinator?.showMovieDetails(movie: movie)
+            //let vc =  // MediaDetailsViewController()
+//            let mediaController = MovieController3(movie)
+//            let vc = MediaDetailsViewController(mediaController)
+//            coordinator?.navigationController.pushViewController(vc, animated: true)
+        case .tv(let tvShow):
+            coordinator?.showTVShowDetails(tvShow: tvShow)
+//            let mediaController = TVShowController3(tvShow)
+//            let vc = MediaDetailsViewController(mediaController)
+//            vc.coordinator = self.coordinator
+//            coordinator?.navigationController.pushViewController(vc, animated: true)
         default:
             return
         }

@@ -45,7 +45,8 @@ class DiscoverViewController: UITableViewController, Coordinated {
         searchController.searchResultsUpdater = self
         searchController.searchBar.autocapitalizationType = .none
         searchController.searchBar.delegate = self
-        searchController.searchBar.scopeButtonTitles = ["All Results", "Movies", "People"]
+        searchController.searchBar.scopeButtonTitles = SearchResultsController.ResultType.titles
+        //["All Results", "Movies", "TV Shows", "People"]
         searchController.searchBar.placeholder = "Search for movies and people"
         navigationItem.hidesSearchBarWhenScrolling = false
         navigationItem.searchController = searchController
@@ -124,9 +125,11 @@ extension DiscoverViewController: UISearchControllerDelegate, UISearchResultsUpd
         let resultsController = searchController.searchResultsController as? SearchResultsViewController
         resultsController?.searchController = SearchResultsController(query: searchText)
         
-        let filters: [SearchResultsController.ResultType] = [.all, .movies, .people]
+        let filters = SearchResultsController.ResultType.allCases //: [SearchResultsController.ResultType] = [.all, .movies, .tvs, .people]
         resultsController?.searchController?.filter = filters[searchController.searchBar.selectedScopeButtonIndex]
 
         resultsController?.loadFromController()
     }
 }
+
+

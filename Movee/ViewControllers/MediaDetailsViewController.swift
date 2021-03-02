@@ -1,29 +1,16 @@
-//
-//  ModernDetailsController.swift
-//  Movee
-//
-//  Created by jjurlits on 11/17/20.
-//
-
 import UIKit
 
-class MovieDetailsViewController: UIViewController, GenericCollectionViewController, Coordinated {
+class MediaDetailsViewController<MediaType: Media&Hashable>: UIViewController, GenericCollectionViewController, Coordinated, UICollectionViewDelegate {
     typealias DataSource = UICollectionViewDiffableDataSource<Section, AnyHashable>
     typealias Snapshot = NSDiffableDataSourceSnapshot<Section, AnyHashable>
 
     weak var coordinator: MainCoordinator?
-    
-    var movie: Movie? {
-        didSet { movieId = movie?.id }
-    }
-    var movieId: Int?
-    
+        
     var collectionView: UICollectionView!
-    private(set) var movieController: MovieController!
+    internal var mediaController: MediaController<MediaType>!
     
     var watchlistController: WatchlistController?
-    
-    
+        
     private(set) lazy var dataSource = createDataSource()
 
     private var savedNavBarAlpha: CGFloat = 0
@@ -41,17 +28,7 @@ class MovieDetailsViewController: UIViewController, GenericCollectionViewControl
         appearance.backgroundColor = .systemBackground
         return appearance
     }()
-    
-    func setupMovieController() {
-        if let movie = movie {
-            movieController = MovieController(
-                movie: movie, updateHandler: update(with:))
-        } else if let movieId = movieId {
-            movieController = MovieController(
-                movieId: movieId, updateHandler: update(with:))
-        }
-    }
-    
+        
     func setupCollectionView() {
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: createLayout())
         view.addSubview(collectionView)
@@ -63,7 +40,7 @@ class MovieDetailsViewController: UIViewController, GenericCollectionViewControl
                               bottom: view.safeAreaLayoutGuide.bottomAnchor,
                               trailing: view.trailingAnchor)
         
-        if movieController.isBackdropAvaiable {
+        if mediaController.isBackdropAvaiable {
             collectionView.contentInsetAdjustmentBehavior = .never
         }
         
@@ -92,24 +69,71 @@ class MovieDetailsViewController: UIViewController, GenericCollectionViewControl
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupMovieController()
         setupCollectionView()
         
         
-        title = movieController.viewModel?.title
-        navigationItem.titleView?.alpha = 0 
+        title = mediaController.viewModel?.title
+        navigationItem.titleView?.alpha = 0
         navigationItem.largeTitleDisplayMode = .never
-        setupNavigationBarButtons()
-        dataSource.apply(createSnapshot(controller: movieController), animatingDifferences: true)
+        //setupNavigationBarButtons()
+        dataSource.apply(createSnapshot(controller: mediaController), animatingDifferences: true)
         
-        movieController.load()
+        mediaController.loadDetails(completion: update(with:))
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let contentOffsetY = scrollView.contentOffset.y
+        
+        let maxOffset = collectionView.supplementaryView(forElementKind: UICollectionView.elementKindSectionHeader, at: IndexPath(item: 0, section: 0))?.frame.height ?? 100
+        
+        if contentOffsetY > 0 && contentOffsetY <= maxOffset {
+            let alpha = contentOffsetY / maxOffset
+            navBarAlpha = alpha
+        }
+        else if contentOffsetY <= 0 {
+            navBarAlpha = 0
+        }
+        else if contentOffsetY > maxOffset {
+            navBarAlpha = 1
+        }
+    }
+
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let section = findSection(at: indexPath, in: dataSource)
+        
+        switch section {
+        case .credits:
+            navigateToPersonInfo(from: indexPath)
+        case .related:
+            navigateToMediaDetails(from: indexPath)
+        case .seasons:
+            navigateToSeason(from: indexPath)
+        default:
+            return
+        }
+    }
+
+    
+    @objc func navigateToCredits() {
+        guard let credits = mediaController.credits else { return }
+        coordinator?.showCredits(credits)
+    }
+    
+    @objc func navigateToRelatedList() {
+//        guard let movie = movie else { return }
+//        coordinator?.showRelated(to: movie)
+    }
+    
+    convenience init(_ mediaController: MediaController<MediaType>) {
+        self.init()
+        self.mediaController = mediaController
     }
 }
 
 //MARK: - Navigation Bar Setup
-extension MovieDetailsViewController {
+extension MediaDetailsViewController {
     func setupNavBarAppearance() {
-        guard movieController.isBackdropAvaiable else { return }
+        guard mediaController.isBackdropAvaiable else { return }
         navBarAppearance.backgroundColor = UIColor.systemBackground.withAlphaComponent(navBarAlpha)
         navBarAppearance.shadowColor =
             navBarAppearance.shadowColor?.withAlphaComponent(navBarShadowAlpha * navBarAlpha)
@@ -150,78 +174,67 @@ extension MovieDetailsViewController {
         navigationController?.navigationBar.tintColor = nil
     }
     
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let contentOffsetY = scrollView.contentOffset.y
-        
-        let maxOffset = collectionView.supplementaryView(forElementKind: UICollectionView.elementKindSectionHeader, at: IndexPath(item: 0, section: 0))?.frame.height ?? 100
-        
-        if contentOffsetY > 0 && contentOffsetY <= maxOffset {
-            let alpha = contentOffsetY / maxOffset
-            navBarAlpha = alpha
-        }
-        else if contentOffsetY <= 0 {
-            navBarAlpha = 0
-        }
-        else if contentOffsetY > maxOffset {
-            navBarAlpha = 1
-        }
-    }
 }
 
 
 //MARK: - Watchlist Setup
-extension MovieDetailsViewController {
-    @objc func addToWatchlist() {
-        watchlistController?.addMovie(movieController.movie!)
-        setupNavigationBarButtons()
-    }
-    
-    @objc func removeFromWatchlist() {
-        watchlistController?.removeMovie(movieController.movie!)
-        setupNavigationBarButtons()
-    }
-    
-    fileprivate func setupNavigationBarButtons() {
-        guard let movie = movieController.movie,
-              let watchlistController = watchlistController
-        else { return }
-        
-        let addToWatchlistButton = UIBarButtonItem(
-            image: UIImage(systemName: "bookmark"),
-            style: .plain,
-            target: self,
-            action: #selector(addToWatchlist))
-        
-        let removeFromWatchlistButton = UIBarButtonItem(
-            image: UIImage(systemName: "bookmark.slash"),
-            style: .plain,
-            target: self,
-            action: #selector(removeFromWatchlist))
-        
-        self.navigationItem.rightBarButtonItem =
-            watchlistController.contains(movie) ? removeFromWatchlistButton : addToWatchlistButton
-    }
-}
+//extension MediaDetailsViewController {
+//    @objc func addToWatchlist() {
+//        watchlistController?.addMovie(mediaController.movie!)
+//        setupNavigationBarButtons()
+//    }
+//
+//    @objc func removeFromWatchlist() {
+//        watchlistController?.removeMovie(mediaController.movie!)
+//        setupNavigationBarButtons()
+//    }
+//
+//    fileprivate func setupNavigationBarButtons() {
+//        guard let movie = mediaController.movie,
+//              let watchlistController = watchlistController
+//        else { return }
+//
+//        let addToWatchlistButton = UIBarButtonItem(
+//            image: UIImage(systemName: "bookmark"),
+//            style: .plain,
+//            target: self,
+//            action: #selector(addToWatchlist))
+//
+//        let removeFromWatchlistButton = UIBarButtonItem(
+//            image: UIImage(systemName: "bookmark.slash"),
+//            style: .plain,
+//            target: self,
+//            action: #selector(removeFromWatchlist))
+//
+//        self.navigationItem.rightBarButtonItem =
+//            watchlistController.contains(movie) ? removeFromWatchlistButton : addToWatchlistButton
+//    }
+//}
 
 //MARK: - Data Source
-extension MovieDetailsViewController {
-    func update(with controller: MovieController) {
-        self.movie = controller.movie
+extension MediaDetailsViewController {
+    func update(with controller: MediaController<MediaType>) {
+        //self.movie = controller.movie
         dataSource.apply(createSnapshot(controller: controller))
     }
     
-    func createSnapshot(controller: MovieController) -> NSDiffableDataSourceSnapshot<Section, AnyHashable> {
+    func createSnapshot(controller: MediaController<MediaType>) -> NSDiffableDataSourceSnapshot<Section, AnyHashable> {
         var snapshot = Snapshot()
-
-        snapshot.appendSections([.description])
-        snapshot.appendItems([controller.movie], toSection: .description)
         
+        snapshot.appendSections([.description])
+        snapshot.appendItems([controller.isDetailsLoaded], toSection: .description)
+
         if let trailer = controller.trailer {
             snapshot.appendSections([.trailer])
             snapshot.appendItems([trailer], toSection: .trailer)
         }
         
-        if let credits = controller.creditsController?.short, !credits.isEmpty {
+        if let seasons = controller.seasons, !seasons.isEmpty {
+            snapshot.appendSections([.seasons])
+            snapshot.appendItems(seasons, toSection: .seasons)
+        }
+        
+        if let credits = controller.credits?.controller.short, !credits.isEmpty {
             snapshot.appendSections([.credits])
             snapshot.appendItems(credits, toSection: .credits)
         }
@@ -229,11 +242,18 @@ extension MovieDetailsViewController {
         if let related = controller.related, !related.isEmpty {
             snapshot.appendSections([.related])
             snapshot.appendItems(related, toSection: .related)
+//            if let movies = related as? [Movie] {
+//                snapshot.appendItems(movies, toSection: .related)
+//            } else if let tvShows = related as? [TVShow] {
+//                snapshot.appendItems(tvShows, toSection: .related)
+//            }
         }
         
-        if !controller.generalInfo.isEmpty {
+
+        
+        if controller.isDetailsLoaded, let facts = controller.viewModel?.facts, !facts.isEmpty {
             snapshot.appendSections([.info])
-            snapshot.appendItems(controller.generalInfo, toSection: .info)
+            snapshot.appendItems(facts, toSection: .info)
         }
         
         return snapshot
@@ -248,12 +268,12 @@ extension MovieDetailsViewController {
             switch section {
             case .description:
                 let cell = self.dequeueCell(DescriptionCell.self, for: indexPath)
-                self.movieController.viewModel?.configure(cell)
+                self.mediaController.viewModel?.configure(cell)
                 return cell
             case .trailer:
                 let cell = self.dequeueCell(TrailerCell.self, for: indexPath)
                 if let video = item as? VideoResult {
-                    cell.placeholder.sd_setImage(with: self.movieController.viewModel?.backdropURL)
+                    cell.placeholder.sd_setImage(with: self.mediaController.viewModel?.backdropURL)
                     cell.trailerNameLabel.text = video.name
                     cell.setVideo(id: video.key ?? "")
                 }
@@ -264,12 +284,23 @@ extension MovieDetailsViewController {
                     character.viewModel.configure(cell)
                 }
                 return cell
+                
             case .related:
                 let cell = self.dequeueCell(CompactMovieCell.self, for: indexPath)
                 if let movie = item as? Movie {
                     movie.viewModel.configure(cell)
+                } else if let tvShow = item as? TVShow {
+                    tvShow.viewModel.configure(cell)
                 }
                 return cell
+            
+            case .seasons:
+                let cell = self.dequeueCell(CompactMovieCell.self, for: indexPath)
+                if let season = item as? Season {
+                    season.viewModel.configure(cell)
+                }
+                return cell
+                
             case .info:
                 let cell = self.dequeueCell(KeyValueCell.self, for: indexPath)
                 if let row = (item as? [String: String])?.first {
@@ -287,7 +318,7 @@ extension MovieDetailsViewController {
             
             if section == .description {
                 let backdrop = self.dequeueHeader(BackdropView.self, for: indexPath)
-                self.movieController.viewModel?.configure(backdrop)
+                self.mediaController.viewModel?.configure(backdrop)
                 return backdrop
             }
                         
@@ -317,49 +348,32 @@ extension MovieDetailsViewController {
 
 
 //MARK: - Navigation
-extension MovieDetailsViewController: UICollectionViewDelegate {
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let section = findSection(at: indexPath, in: dataSource)
-        
-        switch section {
-        case .credits:
-            navigateToPersonInfo(from: indexPath)
-        case .related:
-            navigateToMovieDetails(from: indexPath)
-        default:
-            return
-        }
-    }
-
-    @objc func navigateToCredits() {
-        guard let credits = movieController.movie?.credits else { return }
-        coordinator?.showCredits(credits)
-    }
-    
-    @objc func navigateToRelatedList() {
-        guard let movie = movie else { return }
-        coordinator?.showRelated(to: movie)
-    }
-    
-    func navigateToMovieDetails(from indexPath: IndexPath) {
-        guard let movie = dataSource.itemIdentifier(for: indexPath) as? Movie else { return }
-        coordinator?.showDetails(movie: movie)
+extension MediaDetailsViewController  {
+    func navigateToMediaDetails(from indexPath: IndexPath) {
+        guard let media = dataSource.itemIdentifier(for: indexPath) as? MediaType else { return }
+        coordinator?.showMediaDetails(media: media)
     }
     
     func navigateToPersonInfo(from indexPath: IndexPath) {
         guard let character = dataSource.itemIdentifier(for: indexPath) as? Character else { return }
         coordinator?.showPersonInfo(character: character)
     }
+    
+    func navigateToSeason(from indexPath: IndexPath) {
+        guard let season = dataSource.itemIdentifier(for: indexPath) as? Season,
+              let tvShowId = mediaController.media.id else { return }
+        coordinator?.showSeasonDetails(season: season, tvShowId: tvShowId)
+    }
 }
 
-
-extension MovieDetailsViewController {    
+extension MediaDetailsViewController {
     enum Section: String, Hashable {
         case description
         case trailer
         case credits = "Cast and Crew"
         case related = "Related"
-        case info = "Information"
+        case seasons = "Seasons"
+        case info = "Facts"
         
         var title: String {
             return self.rawValue

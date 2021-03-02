@@ -43,7 +43,7 @@ class StrechyHeaderCompositionalLayout: UICollectionViewCompositionalLayout {
         }
 }
 
-extension MovieDetailsViewController {   
+extension MediaDetailsViewController {
     func createLayout() -> UICollectionViewLayout {
         return StrechyHeaderCompositionalLayout { (sectionIndex, layoutEnvironment) -> NSCollectionLayoutSection? in
             guard let section = self.findSection(at: sectionIndex, in: self.dataSource)
@@ -54,12 +54,12 @@ extension MovieDetailsViewController {
                 return self.createDescriptionSection()
             case .credits:
                 return self.createCreditsSection()
-            case .related:
-                return GenericLayouts.createHorizontalListSection(height: 188, width: 110, addHeader: true) //self.createRelatedSection()
+            case .related, .seasons:
+                return GenericLayouts.createHorizontalListSection(height: 188, width: 110, addHeader: true)
             case .trailer:
                 return GenericLayouts.createFullWidthSection(addHeader: false)
             case .info:
-                return GenericLayouts.createFullWidthSection(addHeader: false)
+                return GenericLayouts.createFullWidthSection(addHeader: true)
             }
             
         }
@@ -143,7 +143,7 @@ extension MovieDetailsViewController {
         
         section.contentInsets = .init(top: 16, leading: 16, bottom: 16, trailing: 16)
 
-        if self.movieController.isBackdropAvaiable {
+        if self.mediaController.isBackdropAvaiable {
             let header = NSCollectionLayoutBoundarySupplementaryItem(
                 layoutSize: headerSize,
                 elementKind: UICollectionView.elementKindSectionHeader,

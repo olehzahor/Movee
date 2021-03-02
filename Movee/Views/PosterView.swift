@@ -7,7 +7,14 @@
 
 import UIKit
 
+
 class PosterView: UIView {
+    let placeholderLabel: UILabel = {
+        let label = UILabel()
+        label.isHidden = true
+        return label
+    }()
+    
     let imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.sd_imageTransition = .fade
@@ -18,47 +25,28 @@ class PosterView: UIView {
         return imageView
     }()
     
-    let ratingLabel: UILabel = {
-        let label = UILabel()
-        label.font = .systemFont(ofSize: 8, weight: .semibold)
+    let ratingView: RatingView = {
+        let view = RatingView()
+        view.ratingLabel.font = .systemFont(ofSize: 8, weight: .semibold)
         
-        label.layer.cornerRadius = 5
-        label.clipsToBounds = true
+        view.layer.cornerRadius = 5
+        view.clipsToBounds = true
         
-        return label
+        return view
     }()
         
     func setRating(_ rating: Double, votes: Int! = 0) {
-        guard rating > 0 else {
-            ratingLabel.text = ""
-            return
-        }
-        
-        switch rating {
-        case 7...10:
-            ratingLabel.backgroundColor = UIColor.green
-            ratingLabel.textColor = .darkGray
-        case 5..<7:
-            ratingLabel.backgroundColor = UIColor.yellow
-            ratingLabel.textColor = .darkGray
-        case 1..<5.5:
-            ratingLabel.backgroundColor = UIColor.orange
-            ratingLabel.textColor = .white
-        default:
-            ratingLabel.backgroundColor = .secondarySystemBackground
-        }
-        ratingLabel.text = " \(rating) "
-        
-        if votes > 0 {
-            ratingLabel.text?.append("(\(votes ?? 0)) ")
-        }
+        ratingView.setRating(rating, votes: votes)
     }
     
     func setupViews() {
         addSubview(imageView)
-        addSubview(ratingLabel)
+        addSubview(ratingView)
         imageView.fillSuperview()
-        ratingLabel.anchor(top: nil, leading: nil, bottom: imageView.bottomAnchor, trailing: imageView.trailingAnchor, padding: .init(top: 0, left: 0, bottom: 3, right: 3))
+        ratingView.anchor(top: nil, leading: nil, bottom: imageView.bottomAnchor, trailing: imageView.trailingAnchor, padding: .init(top: 0, left: 0, bottom: 3, right: 3))
+        
+        addSubview(placeholderLabel)
+        placeholderLabel.centerInSuperview()
     }
     
     override init(frame: CGRect) {
