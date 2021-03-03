@@ -30,13 +30,18 @@ struct Endpoints {
         var components = baseComponents
         components.path = path
         components.queryItems?.append(contentsOf: queryItems ?? [])
-        print(components.url)
+        //print(components.url)
         return components.url
     }
     
-    func genresList() -> URL? {
+    func movieGenresList() -> URL? {
         return constructURL(path: "/3/genre/movie/list")
     }
+    
+    func tvGenresList() -> URL? {
+        return constructURL(path: "/3/genre/tv/list")
+    }
+
     
     func movieDetails(movieId: Int) -> URL? {
         let queryItems = URLQueryItem(

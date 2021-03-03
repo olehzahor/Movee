@@ -46,10 +46,11 @@ class FilterController {
     }
     
     fileprivate func createGenresFilter() {
-        if let genres = TMDBClient.shared.genres {
+        if let genres = TMDBClient.shared.genres.movie {
             self.genresFilter = GenresFilter(genres: genres)
         } else {
-            TMDBClient.shared.loadGenres { genres in
+            TMDBClient.shared.loadMovieGenres { genres in
+                guard let genres = genres else { return }
                 self.genresFilter = GenresFilter(genres: genres)
                 self.updateHandler?(self)
             }
