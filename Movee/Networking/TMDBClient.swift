@@ -8,13 +8,21 @@
 import Foundation
 
 class TMDBClient: ApiService {
+    struct StoredGenres {
+        var movie: Genres?
+        var tv: Genres?
+    }
+        
     typealias PagedReusltCompletionHandler = (Result<MoviesPagedResult, Error>) -> Void
     var locale: String = "en_US"
     
     lazy var endpoints = Endpoints(apiKey: TMDB_API_KEY, locale: locale)
 
-    var genres: Genres?
-    var genresLoadingCompletionHandler: ((Genres) -> ())?
+    var genres: StoredGenres = StoredGenres()
+    private var isMovieGenresLoading = false
+    private var isTvGenresLoading = false
+    
+    //var genresLoadingCompletionHandler: ((Genres) -> ())?
     
     static let shared = TMDBClient()
     
@@ -30,7 +38,7 @@ class TMDBClient: ApiService {
     func discoverMovies(page: Int, filter: Filter, completion: @escaping (Result<MoviesPagedResult, Error>) -> Void) -> URLSessionTask? {
         guard let url = endpoints.discover(page: page, filter: filter)
         else { return nil }
-        print(url)
+        //print(url)
         return fetch(url: url, completion: completion)
     }
     
@@ -89,11 +97,18 @@ class TMDBClient: ApiService {
     }
 
     
-    func getGenresList(completion: @escaping (Result<Genres, Error>) -> Void) {
-        guard let url = endpoints.genresList() else { return }
+    func getMovieGenresList(completion: @escaping (Result<Genres, Error>) -> Void) {
+        guard let url = endpoints.movieGenresList() else { return }
         fetch(url: url, completion: completion)
         
     }
+    
+    func getTvGenresList(completion: @escaping (Result<Genres, Error>) -> Void) {
+        guard let url = endpoints.tvGenresList() else { return }
+        fetch(url: url, completion: completion)
+        
+    }
+
     
     func getMovieDetails(id: Int, completion: @escaping (Result<Movie, Error>) -> Void) -> URLSessionTask? {
         return fetch(url: endpoints.movieDetails(movieId: id),
@@ -110,17 +125,55 @@ class TMDBClient: ApiService {
               completion: completion)
     }
     
-    func loadGenres(completion: ((Genres) -> ())? = nil) {
-        getGenresList { (result) in
+    func loadMovieGenres(completion: ((Genres?) -> ())? = nil) {
+        guard !isMovieGenresLoading else {
+            completion?(genres.movie)
+            return
+        }
+        isMovieGenresLoading = true
+        getMovieGenresList { (result) in
             switch result {
             case .success(let genres):
-                self.genres = genres
+                self.genres.movie = genres
                 completion?(genres)
             case .failure(let error):
                 print(error)
             }
+            self.isMovieGenresLoading = false
         }
     }
+    
+    func loadTVGenres(completion: ((Genres?) -> ())? = nil) {
+        guard !isTvGenresLoading else {
+            completion?(genres.tv)
+            return
+        }
+
+        isTvGenresLoading = true
+        getTvGenresList { (result) in
+            switch result {
+            case .success(let genres):
+                self.genres.tv = genres
+                completion?(genres)
+            case .failure(let error):
+                print(error)
+            }
+            self.isTvGenresLoading = false
+        }
+    }
+
+    
+//    func loadGenres(completion: ((Genres) -> ())? = nil) {
+//        getGenresList { (result) in
+//            switch result {
+//            case .success(let genres):
+//                self.genres = genres
+//                completion?(genres)
+//            case .failure(let error):
+//                print(error)
+//            }
+//        }
+//    }
     
     func fullPosterUrl(path: String) -> URL? {
         return endpoints.image(path: path, size: "w500")
@@ -130,7 +183,6 @@ class TMDBClient: ApiService {
         return endpoints.image(path: path, size: "w780")
     }
 
-    
     private override init() {
         super.init()
     }
