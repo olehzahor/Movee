@@ -64,10 +64,11 @@ class SeasonViewModel {
 }
 
 extension SeasonViewModel {
-    func configure(_ view: CompactMovieCell, posterPlaceholder: UIImage? = nil) {
-        view.titleLabel.attributedText = attributedTitle//titleLabel.text = title
+    func configure(_ view: CompactMovieCell) {
+        view.titleLabel.attributedText = attributedTitle
         view.subtitleLabel.text = subtitle
-        view.poster.imageView.sd_setImage(with: posterURL, placeholderImage: posterPlaceholder)
+        view.poster.imageView.sd_setImage(with: posterURL,
+                                          placeholderImage: posterPlaceholder)
     }
 }
 

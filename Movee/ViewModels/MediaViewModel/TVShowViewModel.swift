@@ -8,6 +8,10 @@
 import Foundation
 
 class TVShowViewModel: AnyMediaViewModel<TVShow> {
+    override var allGenres: Genres? {
+        return TMDBClient.shared.genres.tv
+    }
+    
     override var originalTitle: String {
         if let originalName = media.original_name, originalName != media.name {
             return originalName

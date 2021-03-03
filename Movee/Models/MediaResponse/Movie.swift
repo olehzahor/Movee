@@ -50,6 +50,10 @@ class Movie: Media {
         department = try? container.decode(String.self, forKey: .department)
         job = try? container.decode(String.self, forKey: .job)
     }
+    
+    required init() {
+        super.init()
+    }
 }
 
 struct Video: Codable, Hashable, Equatable {

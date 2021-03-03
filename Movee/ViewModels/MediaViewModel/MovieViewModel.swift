@@ -8,6 +8,10 @@
 import UIKit
 
 class MovieViewModel: AnyMediaViewModel<Movie> {
+    override var allGenres: Genres? {
+        return TMDBClient.shared.genres.movie
+    }
+    
     override var subtitle: String {
         if let character = media.character {
             return character
