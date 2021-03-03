@@ -96,13 +96,13 @@ extension SearchResultsViewController: UICollectionViewDelegate {
         case .character(let character):
             coordinator?.showPersonInfo(character: character)
         case .movie(let movie):
-            coordinator?.showMovieDetails(movie: movie)
+            coordinator?.showDetails(movie: movie)
             //let vc =  // MediaDetailsViewController()
 //            let mediaController = MovieController3(movie)
 //            let vc = MediaDetailsViewController(mediaController)
 //            coordinator?.navigationController.pushViewController(vc, animated: true)
         case .tv(let tvShow):
-            coordinator?.showTVShowDetails(tvShow: tvShow)
+            coordinator?.showDetails(tvShow: tvShow)
 //            let mediaController = TVShowController3(tvShow)
 //            let vc = MediaDetailsViewController(mediaController)
 //            vc.coordinator = self.coordinator

@@ -57,7 +57,7 @@ class MediaListViewController<T: Media>: UIViewController, GenericCollectionView
         
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let media = dataSource.itemIdentifier(for: indexPath) else { return }
-        coordinator?.showMediaDetails(media: media)
+        coordinator?.showDetails(media: media)
     }
     
     convenience init(mediaController: TMDBMediaListController<T>) {

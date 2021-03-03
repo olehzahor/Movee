@@ -43,8 +43,34 @@ class MediaController<T: Media> {
 
     init(_ media: T) {
         self.media = media
+
     }
 }
+
+//extension MediaController where T: Movie {
+//    var viewModel: MediaViewModel? {
+//        return media.viewModel
+//    }
+//
+//    var related: [Movie]? {
+//        return media.recommendations?.results
+//    }
+//
+//    func loadDetails(completion: @escaping (MediaController<T>) -> Void) {
+//        guard let movieId = media.id else { return }
+//
+//        let _ = TMDBClient.shared.getMovieDetails(id: movieId) { result in
+//            switch result {
+//            case .success(let movie):
+//                self.media = movie as! T
+//                self.isDetailsLoaded = true
+//            case .failure(let error):
+//                self.error = error
+//            }
+//            //completion()
+//        }
+//    }
+//}
 
 
 

@@ -6,6 +6,13 @@
       "name":"Top Movies of All Time"
    },
    {
+       "path":"discover/tv",
+       "nestedLists":[],
+       "query":"vote_count.gte=1000&sort_by=vote_count.desc",
+       "name":"Top Rated TV Shows",
+       "mediaType": "tv"
+   },
+   {
       "name":"Top Movies by Genre",
       "nestedLists":[
          {
