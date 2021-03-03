@@ -7,6 +7,8 @@
 
 import Foundation
 
+
+
 class MovieController: MediaController<Movie> {
     override var viewModel: MediaViewModel? {
         return media.viewModel

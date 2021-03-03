@@ -67,42 +67,38 @@ class MainCoordinator: Coordinator {
 
     }
     
-    func showDetails(movie: Movie) {
-        let vc = MediaDetailsViewController(MediaController(movie))//MovieDetailsViewController()
-        vc.coordinator = self
-        //vc.movie = movie
-        vc.watchlistController = watchlistController
-        navigationController.pushViewController(vc, animated: true)
-    }
+//    func showDetails(movie: Movie) {
+//        let vc = MediaDetailsViewController(MediaController(movie))//MovieDetailsViewController()
+//        vc.coordinator = self
+//        //vc.movie = movie
+//        vc.watchlistController = watchlistController
+//        navigationController.pushViewController(vc, animated: true)
+//    }
     
-    func showMediaDetails(media: Media) {
+//    func showMediaDetails<T: Media>(media: T) {
+//        createAndPush(MediaDetailsViewController.self) {
+//            $0.mediaController = MediaController(media)
+//        }
+//    }
+    
+    func showDetails(media: Media) {
         switch media {
         case is Movie:
-            showMovieDetails(movie: media as! Movie)
+            showDetails(movie: media as! Movie)
         case is TVShow:
-            showTVShowDetails(tvShow: media as! TVShow)
+            showDetails(tvShow: media as! TVShow)
         default:
             return
         }
     }
-    
-//    func showMediaDetails<MediaType: Media>(media: MediaType) {
-//        //showMovieDetails(movie: media as! Movie)
-//        print(MediaType.self)
-//        if MediaType.self == Movie.self {
-//            showMovieDetails(movie: media as! Movie)
-//        } else if MediaType.self == TVShow.self {
-//            showTVShowDetails(tvShow: media as! TVShow)
-//        }
-//    }
-    
-    func showMovieDetails(movie: Movie) {
+        
+    func showDetails(movie: Movie) {
         createAndPush(MediaDetailsViewController.self) {
             $0.mediaController = MovieController(movie)
         }
     }
     
-    func showTVShowDetails(tvShow: TVShow) {
+    func showDetails(tvShow: TVShow) {
         createAndPush(MediaDetailsViewController.self) {
             $0.mediaController = TVShowController(tvShow)
         }

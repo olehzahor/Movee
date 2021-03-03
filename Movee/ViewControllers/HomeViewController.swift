@@ -112,7 +112,7 @@ extension HomeViewController {
 extension HomeViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let media = dataSource.itemIdentifier(for: indexPath) else { return }
-        coordinator?.showMediaDetails(media: media)
+        coordinator?.showDetails(media: media)
     }
     
     func seeAllMoviesInList(listTitle: String?) {

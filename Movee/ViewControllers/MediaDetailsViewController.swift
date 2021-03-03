@@ -351,7 +351,7 @@ extension MediaDetailsViewController {
 extension MediaDetailsViewController  {
     func navigateToMediaDetails(from indexPath: IndexPath) {
         guard let media = dataSource.itemIdentifier(for: indexPath) as? MediaType else { return }
-        coordinator?.showMediaDetails(media: media)
+        coordinator?.showDetails(media: media)
     }
     
     func navigateToPersonInfo(from indexPath: IndexPath) {
