@@ -108,8 +108,9 @@ extension DiscoverViewController {
             topSectionItems[indexPath.row].value()
         } else {
             guard let list = discoverController?.lists[indexPath.row] else { return }
-            if let controller = list.moviesController {
-                coordinator?.showCustomMoviesList(moviesController: controller)
+            if let controller = list.mediaController {
+                coordinator?.showCustomMediaList(mediaController: controller)
+                //coordinator?.showCustomMoviesList(moviesController: controller)
             } else {
                 coordinator?.showNestedDiscoverList(discoverController: discoverController?.moved(to: list))
             }
