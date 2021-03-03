@@ -8,8 +8,8 @@
 import UIKit
 
 class HomeViewController: UIViewController, GenericCollectionViewController, Coordinated {
-    typealias DataSource = UICollectionViewDiffableDataSource<String, MovieContainer>
-    typealias Snapshot = NSDiffableDataSourceSnapshot<String, MovieContainer>
+    typealias DataSource = UICollectionViewDiffableDataSource<String, Media>
+    typealias Snapshot = NSDiffableDataSourceSnapshot<String, Media>
     
     private lazy var dataSource = createDataSource()
     private var snapshot = Snapshot()
@@ -19,15 +19,16 @@ class HomeViewController: UIViewController, GenericCollectionViewController, Coo
     
     var discoverController = DiscoverController(lists: Bundle.main.decode(from: "home"))
     var watchlistController: WatchlistController?
+    
         
-    var moviesControllers: [MoviesListController] = []
+    var mediaControllers: [MediaListController] = []
     
     private var watchlistSection: String? {
         return watchlistController?.title
     }
     
     @objc func updateWatchlist() {
-        watchlistController?.load(completion: update(with:))
+        //watchlistController?.load(completion: update(with:))
     }
     
     fileprivate func setupCollectionView() {
@@ -45,25 +46,28 @@ class HomeViewController: UIViewController, GenericCollectionViewController, Coo
     }
     
     fileprivate func loadWatchList(completion: (() -> Void)? = nil) {
-        guard let watchlistController = watchlistController else { return }
-        watchlistController.load { controller in
-            self.update(with: controller)
-            completion?()
-        }
+//        guard let watchlistController = watchlistController else { return }
+//        watchlistController.load { controller in
+//            self.update(with: controller)
+//            completion?()
+//        }
     }
     
     fileprivate func loadLists() {
         let group = DispatchGroup()
         
-        let controllers = discoverController.lists.compactMap({$0.moviesController})
+        
+        let controllers = discoverController.lists.compactMap({$0.mediaController})
         for controller in controllers {
-            moviesControllers.append(controller)
+            mediaControllers.append(controller)
             group.enter()
-            controller.load() { _ in group.leave() }
+            controller.load() {
+                group.leave()
+            }
         }
                 
         group.notify(queue: .main) {
-            for controller in self.moviesControllers {
+            for controller in self.mediaControllers {
                 self.updateSnapshot(from: controller)
             }
             self.dataSource.apply(self.snapshot)
@@ -88,6 +92,7 @@ class HomeViewController: UIViewController, GenericCollectionViewController, Coo
         
         setupCollectionView()
         addObserverForWatchlistUpdates()
+        watchlistController = nil
         manageMoviesControllers()
         
         title = "Explore"
@@ -103,44 +108,38 @@ extension HomeViewController {
     }
 }
 
+//MARK: - Navigation
 extension HomeViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let container = dataSource.itemIdentifier(for: indexPath) else { return }
-        if container.movie == Movie.placeholder {
-            let sectionTitle = findSection(at: indexPath, in: self.dataSource)
-            seeAllMoviesInList(listTitle: sectionTitle)
-        } else {
-            coordinator?.showDetails(movie: container.movie)
+        guard let media = dataSource.itemIdentifier(for: indexPath) else { return }
+        coordinator?.showMediaDetails(media: media)
+    }
+    
+    func seeAllMoviesInList(listTitle: String?) {
+        guard let listTitle = listTitle else { return }
+        if let list = discoverController.lists.first(
+            where: { $0.name == listTitle }) {
+            coordinator?.showCustomMediaList(mediaController: list.mediaController)
         }
+           
     }
 }
 
+//MARK: - Data Source
 extension HomeViewController {
-    struct MovieContainer: Hashable {
-        let movie: Movie
-        let list: String
-        
-        static func createContainers(from movies: [Movie], listName: String, removePlaceholder: Bool = true) -> [MovieContainer] {
-            movies.compactMap { movie in
-                if movie == Movie.placeholder, removePlaceholder { return nil }
-                return MovieContainer(movie: movie, list: listName)
-            }
-        }
-    }
-    
     func updateDataSource() {
         dataSource.apply(snapshot)
     }
     
-    func update(with controller: MoviesListController) {
-        dataSource.apply(updateSnapshot(from: controller), animatingDifferences: true)
+    func update(with controller: MediaListController) {
+        dataSource.apply(updateSnapshot(from: controller))
     }
     
     @discardableResult
-    func updateSnapshot(from controller: MoviesListController) -> Snapshot {
+    func updateSnapshot(from controller: MediaListController) -> Snapshot {
         let section = controller.title
         
-        if controller.movies.count == 0 {
+        if controller.medias.count == 0 {
             if snapshot.sectionIdentifiers.contains(section) {
                 snapshot.deleteSections([section])
             }
@@ -157,31 +156,22 @@ extension HomeViewController {
             }
         }
         
-        var items = MovieContainer.createContainers(from: controller.movies, listName: controller.title)
+        var items = controller.medias.filter { $0 != Media.placeholder() }
         if section != watchlistSection { items.shuffle() }
         
         snapshot.appendItems(items, toSection: section)
         return snapshot
     }
-
-    
-    func seeAllMoviesInList(listTitle: String?) {
-        guard let listTitle = listTitle else { return }
-        if let list = discoverController.lists.first(
-            where: { $0.name == listTitle }),
-           let controller = list.moviesController {
-            coordinator?.showCustomMoviesList(moviesController: controller)
-        }
-    }
     
     func createDataSource() -> DataSource {
         let dataSource = DataSource(
             collectionView: collectionView,
-            cellProvider: { [self] (collectionView, indexPath, container) -> UICollectionViewCell? in
+            cellProvider: { [self] (collectionView, indexPath, media) -> UICollectionViewCell? in
                 let cell = dequeueCell(CompactMovieCell.self, for: indexPath)
-                container.movie.viewModel.configure(cell)
+                media.viewModel.configure(cell)
                 return cell
             })
+        
         dataSource.supplementaryViewProvider = { (collectionView, kind, indexPath) -> UICollectionReusableView? in
             
             guard let sectionTitle = self.findSection(at: indexPath, in: self.dataSource) else { return nil }
