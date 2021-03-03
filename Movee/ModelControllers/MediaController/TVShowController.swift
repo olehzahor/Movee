@@ -13,7 +13,7 @@ class TVShowController: MediaController<TVShow> {
     }
     
     override var seasons: [Season]? {
-        return media.seasons
+        return media.seasons?.filter { ($0.season_number ?? 0) > 0 }
     }
     
     override var related: [TVShow]? {

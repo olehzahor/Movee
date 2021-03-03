@@ -1,6 +1,6 @@
 import UIKit
 
-class MediaDetailsViewController<MediaType: Media&Hashable>: UIViewController, GenericCollectionViewController, Coordinated, UICollectionViewDelegate {
+class MediaDetailsViewController<MediaType: Media>: UIViewController, GenericCollectionViewController, Coordinated, UICollectionViewDelegate {
     typealias DataSource = UICollectionViewDiffableDataSource<Section, AnyHashable>
     typealias Snapshot = NSDiffableDataSourceSnapshot<Section, AnyHashable>
 

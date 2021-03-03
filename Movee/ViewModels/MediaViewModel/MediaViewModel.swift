@@ -15,7 +15,6 @@ struct InfoString {
 protocol MediaViewModel {
     var id: Int? { get }
 
-    var genres: Genres? { get }
     var title: String { get }
     var titleWithYear: String? { get }
     var attributedTitleWithYear: NSAttributedString { get }
@@ -29,6 +28,7 @@ protocol MediaViewModel {
     var genresString: InfoString { get }
     var infoString: InfoString { get }
     var overview: String? { get }
+    var genres: [String] { get }
     
     var posterURL: URL? { get }
     var backdropURL: URL? { get }
@@ -45,9 +45,10 @@ extension MediaViewModel {
         return createAttributedTitleSubtitleString(separator: " as ")
     }
 
-    var genres: Genres? {
-        return TMDBClient.shared.genres
-    }
+    //var genres: Genres?
+//    {
+//        return TMDBClient.shared.genres
+//    }
 
     var attributedTitleWithYear: NSAttributedString {
         let attributedTitle = NSMutableAttributedString(string: title)

@@ -32,13 +32,17 @@ class Media: Hashable, Codable {
     var original_language: String?
     var tagline: String?
     var videos: Video?
-
-    static var placeholder: Media {
-        return Media()
-    }
+//
+//    static var placeholder: Media {
+//        return MediaPlaceholder()
+//    }
     
     static func == (lhs: Media, rhs: Media) -> Bool {
         lhs.id == rhs.id
+    }
+    
+    static func placeholder<T: Media>() -> T {
+        T()
     }
     
     func hash(into hasher: inout Hasher) {
@@ -48,17 +52,20 @@ class Media: Hashable, Codable {
     var viewModel: MediaViewModel {
         return AnyMediaViewModel(media: self)
     }
-
-
     
-//    enum CodingKeys: String, CodingKey {
-//        case _title = "title", _release_date = "release_date"
-//        case id, name, first_air_date, poster_path, backdrop_path,
-//             popularity, vote_count, vote_average, overview, genre_ids
-//    }
-
+    required init() { }
 }
 
+class MediaPlaceholder: Media {
+    required init() {
+        super.init()
+        self.id = -1
+    }
+        
+    required init(from decoder: Decoder) throws {
+        fatalError("init(from:) has not been implemented")
+    }
+}
 
 //protocol Media: Codable, Hashable {
 //    var id: Int? { get }

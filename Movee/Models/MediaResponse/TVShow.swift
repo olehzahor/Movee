@@ -69,7 +69,10 @@ class TVShow: Media {
         recommendations = try? container.decode(TVShowsPagedResult.self, forKey: .recommendations)
         
       }
-
+    
+    required init() {
+        super.init()
+    }
 }
 
 
