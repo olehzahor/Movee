@@ -7,6 +7,13 @@
       "mediaType": "movie"
    },
    {
+      "path":"trending/movie/day",
+      "nestedLists":[],
+      "query":"",
+      "name":"Trending Movies",
+      "mediaType": "movie"
+   },
+   {
       "path":"tv/popular",
       "nestedLists":[],
       "query":"",
@@ -17,21 +24,14 @@
       "path":"movie/now_playing",
       "nestedLists":[],
       "query":"",
-      "name":"Now Playing",
+      "name":"Now Playing Movies",
       "mediaType": "movie"
    },
    {
-      "path":"movie/upcoming",
-      "nestedLists":[],
-      "query":"",
-      "name":"Upcoming Movies",
-      "mediaType": "movie"
-   },
-   {
-      "path":"trending/movie/day",
-      "nestedLists":[],
-      "query":"",
-      "name":"Trending Movies",
-      "mediaType": "movie"
+       "path":"tv/on_the_air",
+       "nestedLists":[],
+       "query":"",
+       "name":"Currently Airing TV Shows",
+       "mediaType": "tv"
    },
 ]

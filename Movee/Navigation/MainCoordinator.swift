@@ -51,7 +51,7 @@ class MainCoordinator: Coordinator {
     }
     
     func start() {
-        createAndPush(NewHomeViewController.self, animated: false) {
+        createAndPush(HomeViewController.self, animated: false) {
             $0.watchlistController = self.watchlistController
             $0.tabBarItem = UITabBarItem(title: "Home", image: UIImage(systemName: "house"), tag: 0)
         }
@@ -123,17 +123,17 @@ class MainCoordinator: Coordinator {
     }
     
     func showRelated(to movie: Movie) {
-        guard let moviesController = TMDBMoviesListController.relatedList(to: movie)
-        else { return }
-        let vc = MoviesListViewController(moviesController: moviesController)
-        vc.coordinator = self
-        navigationController.pushViewController(vc, animated: true)
+//        guard let moviesController = TMDBMoviesListController.relatedList(to: movie)
+//        else { return }
+//        let vc = MoviesListViewController(moviesController: moviesController)
+//        vc.coordinator = self
+//        navigationController.pushViewController(vc, animated: true)
     }
     
     func showCustomMoviesList(moviesController: MoviesListController) {
-        createAndPush(MoviesListViewController.self) {
-            $0.setMoviesController(moviesController)
-        }
+//        createAndPush(MoviesListViewController.self) {
+//            $0.setMoviesController(moviesController)
+//        }
     }
     
     func showCustomMediaList(mediaController: MediaListController?) {
@@ -156,10 +156,10 @@ class MainCoordinator: Coordinator {
     }
     
     func showFilteredMovies(filter: Filter) {
-        createAndPush(MoviesListViewController.self) {
-            $0.setMoviesController(
-                TMDBMoviesListController.filteredList(filter: filter))
-        }
+//        createAndPush(MediaListViewController<Movie>.self) {
+//            $0.setMoviesController(
+//                TMDBMoviesListController.filteredList(filter: filter))
+//        }
     }
     
     func showAdvancedSearch() {

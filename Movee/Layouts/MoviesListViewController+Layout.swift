@@ -7,7 +7,7 @@
 
 import UIKit
 
-extension MoviesListViewController {
+extension MediaListViewController {
     func createLayout() -> UICollectionViewLayout {
         let width = view.bounds.width
         let minimalWidth = CGFloat(414.0)
