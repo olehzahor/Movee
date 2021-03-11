@@ -7,7 +7,10 @@
 
 import Foundation
 
-class Movie: Media {
+final class Movie: Media, TMDBMediaResponse {
+    
+    static var placeholder = Movie()
+    
     var video: Bool?
     
     // detailed response
@@ -54,6 +57,8 @@ class Movie: Media {
     required init() {
         super.init()
     }
+    
+
 }
 
 struct Video: Codable, Hashable, Equatable {

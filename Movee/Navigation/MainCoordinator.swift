@@ -51,10 +51,16 @@ class MainCoordinator: Coordinator {
     }
     
     func start() {
-        createAndPush(HomeViewController.self, animated: false) {
-            $0.watchlistController = self.watchlistController
-            $0.tabBarItem = UITabBarItem(title: "Home", image: UIImage(systemName: "house"), tag: 0)
+        createAndPush(AnyMediaListVC.self) {
+            let controller = AnyMediaListController<Movie>(title: "Popular Movies") { (page, completion) -> URLSessionTask? in
+                TMDBClient.shared.getPopularMovies(page: page, completion: completion)
+            }
+            $0.loadFromController(controller)
         }
+//        createAndPush(HomeViewController.self, animated: false) {
+//            $0.watchlistController = self.watchlistController
+//            $0.tabBarItem = UITabBarItem(title: "Home", image: UIImage(systemName: "house"), tag: 0)
+//        }
 //
 //        createAndPush(MediaListViewController<AnyMedia>.self, animated: false) {
 //            let controller = TMDBMediaListController<AnyMedia>(title: "Popular Shows") { (page, completion) -> URLSessionTask? in

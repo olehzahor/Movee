@@ -7,51 +7,55 @@
 
 import Foundation
 
-
-
-enum SearchResult: Decodable, Hashable {
-    private struct Media: Codable {
-        var media_type: String?
+enum SearchResult: TMDBMediaResponse {
+    static var placeholder: SearchResult {
+        return self.empty
+    }
+    
+    var id: Int? {
+        switch self {
+        case .character(let character):
+            return character.id
+        case .movie(let movie):
+            return movie.id
+        case .tv(let tvShow):
+            return tvShow.id
+        default:
+            return nil
+        }
+    }
+    
+    private struct TypedResult: Decodable {
+        enum MediaType: String, Decodable {
+            case unknown
+            case movie = "movie"
+            case tvShow = "tv"
+            case character = "person"
+        }
+        var media_type: MediaType
     }
     
     init(from decoder: Decoder) throws {
         let container = try? decoder.singleValueContainer()
-        if let character = try? container?.decode(Character.self) {
-            self = .character(character)
-        } else if let media = try? container?.decode(Media.self) {
-            switch media.media_type {
-            case "movie":
+        
+        if let result = try? container?.decode(TypedResult.self) {
+            switch result.media_type {
+            case .movie:
                 if let movie = try? container?.decode(Movie.self) {
                     self = .movie(movie)
-                }
-                else {
-                    self = .empty
-                }
-            case "tv":
+                } else { self = .empty }
+            case .tvShow:
                 if let tvShow = try? container?.decode(TVShow.self) {
                     self = .tv(tvShow)
-                }
-                else {
-                    self = .empty
-                }
-
+                } else { self = .empty }
+            case .character:
+                if let character = try? container?.decode(Character.self) {
+                    self = .character(character)
+                } else { self = .empty }
             default:
                 self = .empty
             }
-        } else {
-            self = .empty
-        }
-        
-//
-//        else if var movie = try? container?.decode(Movie.self) {
-//            movie.media_type = "movie"
-//            self = .movie(movie)
-//        } else if var tvShow = try? container?.decode(TVShow.self) {
-//            tvShow.media_type = "tv"
-//            self = .tv(tvShow)
-//        } else {
-//            self = .empty
-//        }
+        } else { self = .empty }
     }
     
     case movie(Movie)
@@ -66,3 +70,42 @@ struct PagedSearchResult: Decodable, Hashable {
     var total_pages: Int
     var total_results: Int
 }
+
+//        if let character = try? container?.decode(Character.self) {
+//            self = .character(character)
+//        } else if let media = try? container?.decode(Media.self) {
+//            switch media.media_type {
+//            case "movie":
+//                if let movie = try? container?.decode(Movie.self) {
+//                    self = .movie(movie)
+//                }
+//                else {
+//                    self = .empty
+//                }
+//            case "tv":
+//                if let tvShow = try? container?.decode(TVShow.self) {
+//                    self = .tv(tvShow)
+//                }
+//                else {
+//                    self = .empty
+//                }
+//
+//            default:
+//                self = .empty
+//            }
+//        } else {
+//            self = .empty
+//        }
+//
+//        if let character = try? container?.decode(Character.self) {
+//            self = .character(character)
+//        }
+//        else if var movie = try? container?.decode(Movie.self) {
+//            movie.media_type = "movie"
+//            self = .movie(movie)
+//        } else if var tvShow = try? container?.decode(TVShow.self) {
+//            tvShow.media_type = "tv"
+//            self = .tv(tvShow)
+//        } else {
+//            self = .empty
+//        }

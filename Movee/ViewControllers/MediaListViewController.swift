@@ -17,13 +17,13 @@ class MediaListViewController<T: Media>: UIViewController, GenericCollectionView
     private lazy var dataSource = createDataSource()
 
     var collectionView: UICollectionView!
-    private(set) var mediaController: TMDBMediaListController<T>!
+    private(set) var mediaController: MediaListController!
     
-    func setMediaController(_ mediaController: TMDBMediaListController<T>) {
+    func setMediaController(_ mediaController: MediaListController) {
         self.mediaController = mediaController
     }
     
-    func loadFromController(_ mediaController: TMDBMediaListController<T>) {
+    func loadFromController(_ mediaController: MediaListController) {
         setMediaController(mediaController)
         mediaController.load(completion: update)
     }
@@ -60,7 +60,7 @@ class MediaListViewController<T: Media>: UIViewController, GenericCollectionView
         coordinator?.showDetails(media: media)
     }
     
-    convenience init(mediaController: TMDBMediaListController<T>) {
+    convenience init(mediaController: MediaListController) {
         self.init()
         setMediaController(mediaController)
     }

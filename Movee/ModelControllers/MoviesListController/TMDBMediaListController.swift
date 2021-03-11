@@ -13,9 +13,9 @@ extension MediaListController {
     }
 }
 
+
+
 class TMDBMediaListController<T: Media>: MediaListController {
-    //typealias MediaType = T
-    
     typealias UpdateHandler = (TMDBMediaListController) -> ()
     typealias FetchRequest = (Int, @escaping (Result<MediaPagedResult<T>, Error>) -> Void) -> URLSessionTask?
 
@@ -28,7 +28,6 @@ class TMDBMediaListController<T: Media>: MediaListController {
     
     internal var list: MediaList<T> = MediaList<T>()
     private var savedList: MediaList<T>?
-    //private var genres: Genres?
     private var task: URLSessionTask?
     
     func loadMore(completion: @escaping CompletionHandler) {
@@ -76,21 +75,6 @@ class TMDBMediaListController<T: Media>: MediaListController {
                 self.fetch(page: initialPage, completion: completion)
             }
         } else { self.fetch(page: initialPage, completion: completion) }
-
-//        if let genres = TMDBClient.shared.genres.movie {
-//            //self.genres = genres
-//            fetch(page: initialPage, completion: completion)
-//        } else {
-//            let group = DispatchGroup()
-//            group.enter()
-//            TMDBClient.shared.loadMovieGenres() { genres in
-//                //self.genres = genres
-//                group.leave()
-//            }
-//            group.notify(queue: .main) {
-//                self.fetch(page: initialPage, completion: completion)
-//            }
-//        }
     }
 
     private func fetch(page: Int, completion: @escaping CompletionHandler) {
@@ -133,4 +117,34 @@ class TMDBMediaListController<T: Media>: MediaListController {
             TMDBClient.shared.customList(page: page, path: path, query: query, completion: completion)
         }
     }
+    
+    static func moviesSearchResult(query: String) -> TMDBMediaListController<Movie> {
+        return TMDBMediaListController<Movie> { page, completion in
+            TMDBClient.shared.searchMovies(query: query, page: page, completion: completion)
+        }
+    }
+    
+    static func tvShowsSearchResult(query: String) -> TMDBMediaListController<TVShow> {
+        return TMDBMediaListController<TVShow> { page, completion in
+            TMDBClient.shared.searchTVShows(query: query, page: page, completion: completion)
+        }
+    }
+
+
 }
+
+
+//        if let genres = TMDBClient.shared.genres.movie {
+//            //self.genres = genres
+//            fetch(page: initialPage, completion: completion)
+//        } else {
+//            let group = DispatchGroup()
+//            group.enter()
+//            TMDBClient.shared.loadMovieGenres() { genres in
+//                //self.genres = genres
+//                group.leave()
+//            }
+//            group.notify(queue: .main) {
+//                self.fetch(page: initialPage, completion: completion)
+//            }
+//        }

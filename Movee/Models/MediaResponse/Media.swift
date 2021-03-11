@@ -7,6 +7,29 @@
 
 import Foundation
 
+class MultiSearchResult: Media {
+    enum CodingKeys: String, CodingKey {
+        case title, release_date, name, first_air_date
+    }
+
+    required init(from decoder: Decoder) throws {
+        try super.init(from: decoder)
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        title = try? container.decode(String.self, forKey: .title)
+        
+        if title == nil {
+            title = try? container.decode(String.self, forKey: .name)
+        }
+        
+        release_date = try? container.decode(String.self, forKey: .release_date)
+    }
+    
+    required init() {
+        super.init()
+    }
+
+}
+
 class Media: Hashable, Codable {
     enum MediaType { case movie, tv, unknown }
 
@@ -38,16 +61,19 @@ class Media: Hashable, Codable {
 //    }
     
     static func == (lhs: Media, rhs: Media) -> Bool {
-        lhs.id == rhs.id
+        lhs.id == rhs.id && lhs.title == rhs.title
     }
+        
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+        hasher.combine(title)
+    }
+
     
     static func placeholder<T: Media>() -> T {
         T()
     }
     
-    func hash(into hasher: inout Hasher) {
-        hasher.combine(id)
-    }
     
     var viewModel: MediaViewModel {
         return AnyMediaViewModel(media: self)
@@ -56,16 +82,16 @@ class Media: Hashable, Codable {
     required init() { }
 }
 
-class MediaPlaceholder: Media {
-    required init() {
-        super.init()
-        self.id = -1
-    }
-        
-    required init(from decoder: Decoder) throws {
-        fatalError("init(from:) has not been implemented")
-    }
-}
+//class MediaPlaceholder: Media {
+//    required init() {
+//        super.init()
+//        self.id = -1
+//    }
+//
+//    required init(from decoder: Decoder) throws {
+//        fatalError("init(from:) has not been implemented")
+//    }
+//}
 
 //protocol Media: Codable, Hashable {
 //    var id: Int? { get }

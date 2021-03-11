@@ -86,9 +86,12 @@ class AnyMediaViewModel<T: Media>: MediaViewModel {
     var subtitle: String { return "" }
     var runtime: String { return "" }
     var infoString: InfoString {
-        return InfoString(short: "", long: "")
+        if !year.isEmpty {
+            return InfoString(short: year, long: year)
+        } else {
+            return InfoString(short: "", long: "")
+        }
     }
-
 
     init(media: T) {
         self.media = media
