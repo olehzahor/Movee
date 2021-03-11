@@ -108,6 +108,7 @@
 		04D57F7025BDEE7B00B6EB92 /* PersistenceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04D57F6F25BDEE7B00B6EB92 /* PersistenceController.swift */; };
 		04D57F7425BDEE9D00B6EB92 /* JSONPersistenceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04D57F7325BDEE9D00B6EB92 /* JSONPersistenceController.swift */; };
 		04D57F7825BDEEB800B6EB92 /* SearchHistoryController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04D57F7725BDEEB800B6EB92 /* SearchHistoryController.swift */; };
+		04D7F2C925F9494700E46BE2 /* AnyMediaListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04D7F2C825F9494700E46BE2 /* AnyMediaListVC.swift */; };
 		04DD6D2C25484E6C005FBA8C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04DD6D2B25484E6C005FBA8C /* AppDelegate.swift */; };
 		04DD6D2E25484E6C005FBA8C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04DD6D2D25484E6C005FBA8C /* SceneDelegate.swift */; };
 		04DD6D3325484E6C005FBA8C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 04DD6D3125484E6C005FBA8C /* Main.storyboard */; };
@@ -133,6 +134,7 @@
 		04F5118025DEE70200CEB0F5 /* MediaDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F5117F25DEE70200CEB0F5 /* MediaDetailsViewController.swift */; };
 		04FCB82925714512006874AB /* CreditsViewController+Layout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FCB82825714512006874AB /* CreditsViewController+Layout.swift */; };
 		04FD559925EFDCFD00B6F941 /* ReminderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FD559825EFDCFD00B6F941 /* ReminderCell.swift */; };
+		04FD559C25F030BD00B6F941 /* AnyTMDBList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FD559B25F030BD00B6F941 /* AnyTMDBList.swift */; };
 		04FF6E23254865B700652EEA /* ApiService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FF6E22254865B700652EEA /* ApiService.swift */; };
 		35944751597091747A5A07B2 /* Pods_Movee.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 306283432746BCA5374DEFD1 /* Pods_Movee.framework */; };
 /* End PBXBuildFile section */
@@ -240,6 +242,7 @@
 		04D57F6F25BDEE7B00B6EB92 /* PersistenceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceController.swift; sourceTree = "<group>"; };
 		04D57F7325BDEE9D00B6EB92 /* JSONPersistenceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONPersistenceController.swift; sourceTree = "<group>"; };
 		04D57F7725BDEEB800B6EB92 /* SearchHistoryController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchHistoryController.swift; sourceTree = "<group>"; };
+		04D7F2C825F9494700E46BE2 /* AnyMediaListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnyMediaListVC.swift; sourceTree = "<group>"; };
 		04DD6D2825484E6C005FBA8C /* Movee.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Movee.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		04DD6D2B25484E6C005FBA8C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		04DD6D2D25484E6C005FBA8C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -267,6 +270,7 @@
 		04F5117F25DEE70200CEB0F5 /* MediaDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaDetailsViewController.swift; sourceTree = "<group>"; };
 		04FCB82825714512006874AB /* CreditsViewController+Layout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CreditsViewController+Layout.swift"; sourceTree = "<group>"; };
 		04FD559825EFDCFD00B6F941 /* ReminderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderCell.swift; sourceTree = "<group>"; };
+		04FD559B25F030BD00B6F941 /* AnyTMDBList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnyTMDBList.swift; sourceTree = "<group>"; };
 		04FF6E22254865B700652EEA /* ApiService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiService.swift; sourceTree = "<group>"; };
 		24D54CBE0E1218D26F16FBFD /* Pods-Movee.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Movee.release.xcconfig"; path = "Target Support Files/Pods-Movee/Pods-Movee.release.xcconfig"; sourceTree = "<group>"; };
 		306283432746BCA5374DEFD1 /* Pods_Movee.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Movee.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -340,6 +344,7 @@
 				04AD72B625EEBEDB00DF2AC9 /* TMDBMediaListController.swift */,
 				0487F59B25B0AE620077D8F2 /* MoviesListController.swift */,
 				0469EA9B25A23F66004AEC5B /* TMDBMoviesListController.swift */,
+				04FD559B25F030BD00B6F941 /* AnyTMDBList.swift */,
 			);
 			path = MoviesListController;
 			sourceTree = "<group>";
@@ -461,6 +466,7 @@
 				04912714255C3B4E00013750 /* CreditsViewController.swift */,
 				04EB5B482575571A002CA369 /* PersonViewController.swift */,
 				0401D83225780D0F0087072F /* MovieCreditsController.swift */,
+				04D7F2C825F9494700E46BE2 /* AnyMediaListVC.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -840,6 +846,7 @@
 				04C5A8432597B1BB00D96314 /* RuntimeFilter.swift in Sources */,
 				04AB753925E820E8003B2D94 /* TVShowController.swift in Sources */,
 				04D57F7825BDEEB800B6EB92 /* SearchHistoryController.swift in Sources */,
+				04FD559C25F030BD00B6F941 /* AnyTMDBList.swift in Sources */,
 				04E84D6A25ACE54D0007C96A /* LabelCell.swift in Sources */,
 				04E594B325879C97002D0ABE /* Filter.swift in Sources */,
 				044C917725A35C7200B4C29A /* MovieContainer.swift in Sources */,
@@ -880,6 +887,7 @@
 				0473784425BF2FAF00C50D6C /* WatchHistoryController.swift in Sources */,
 				04DD6D2E25484E6C005FBA8C /* SceneDelegate.swift in Sources */,
 				04EB5B4F2575641E002CA369 /* PersonViewModel.swift in Sources */,
+				04D7F2C925F9494700E46BE2 /* AnyMediaListVC.swift in Sources */,
 				0469EA9C25A23F66004AEC5B /* TMDBMoviesListController.swift in Sources */,
 				040FD9BC257D47F4005EDF25 /* ProgrammaticCollectionViewCell.swift in Sources */,
 				044A2C672598F053000D1355 /* PosterView.swift in Sources */,

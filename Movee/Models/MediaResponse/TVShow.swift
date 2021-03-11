@@ -21,7 +21,9 @@ import Foundation
 //name string
 //original_name string
 
-class TVShow: Media {
+final class TVShow: Media, TMDBMediaResponse {
+    static var placeholder = TVShow()
+
     var name: String?
     var first_air_date: String?
     

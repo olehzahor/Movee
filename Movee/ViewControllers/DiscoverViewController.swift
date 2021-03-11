@@ -27,17 +27,17 @@ class DiscoverViewController: UITableViewController, Coordinated {
     var isTopSectionVisible = true
     
     private var searchController: UISearchController!
-    private var resultsController: SearchResultsViewController!//MoviesListViewController!
+    private var resultsController: AnyMediaListVC! //MediaListViewController<Media>!//SearchResultsViewController!//MoviesListViewController!
     
     private lazy var topSectionItems: KeyValuePairs =
         ["Advanced Search": { self.coordinator?.showAdvancedSearch() },
          "Search History": { self.coordinator?.showSearchHistory(controller: self.searchHistoryController)}]
     
     fileprivate func setupSearchController() {
-        resultsController = SearchResultsViewController()//MoviesListViewController()
+        resultsController = AnyMediaListVC() //SearchResultsViewController()//MoviesListViewController()
         resultsController.coordinator = self.coordinator
         
-        resultsController.searchHistoryController = searchHistoryController
+        //resultsController.searchHistoryController = searchHistoryController
         
         searchController = UISearchController(searchResultsController: resultsController)
         searchController.delegate = self
@@ -45,7 +45,7 @@ class DiscoverViewController: UITableViewController, Coordinated {
         searchController.searchResultsUpdater = self
         searchController.searchBar.autocapitalizationType = .none
         searchController.searchBar.delegate = self
-        searchController.searchBar.scopeButtonTitles = SearchResultsController.ResultType.titles
+        searchController.searchBar.scopeButtonTitles = SearchResultType.titles
         //["All Results", "Movies", "TV Shows", "People"]
         searchController.searchBar.placeholder = "Search for movies and people"
         navigationItem.hidesSearchBarWhenScrolling = false
@@ -123,13 +123,36 @@ extension DiscoverViewController: UISearchControllerDelegate, UISearchResultsUpd
         guard let searchText = searchController.searchBar.text, !searchText.isEmpty
         else { return }
 
-        let resultsController = searchController.searchResultsController as? SearchResultsViewController
-        resultsController?.searchController = SearchResultsController(query: searchText)
+        let resultsController = searchController.searchResultsController as? AnyMediaListVC
         
-        let filters = SearchResultsController.ResultType.allCases //: [SearchResultsController.ResultType] = [.all, .movies, .tvs, .people]
-        resultsController?.searchController?.filter = filters[searchController.searchBar.selectedScopeButtonIndex]
+        let selectedFilter =
+            SearchResultType.allCases[searchController.searchBar.selectedScopeButtonIndex]
+        
+        let controller = selectedFilter.listController(query: searchText)
+        
+        resultsController?.loadFromController(controller!)
+        
+        
+//        if searchController.searchBar.selectedScopeButtonIndex == 0 {
+//            let controller = TMDBMediaListController.moviesSearchResult(query: searchText)
+//            resultsController?.loadFromController(controller)
+//        } else if searchController.searchBar.selectedScopeButtonIndex == 1 {
+//            let controller = TMDBMediaListController.tvShowsSearchResult(query: searchText)
+//            resultsController?.loadFromController(controller)
+//        } else {
+//            let controller = TMDBMediaListController<MultiSearchResult> { (page, completion) -> URLSessionTask? in
+//                TMDBClient.shared.searchMulti(query: searchText, page: page, completion: completion)
+//            }
+//            resultsController?.loadFromController(controller)
+//        }
+        
 
-        resultsController?.loadFromController()
+        //resultsController?.searchController = SearchResultsController(query: searchText)
+//
+//        let filters = SearchResultsController.ResultType.allCases //: [SearchResultsController.ResultType] = [.all, .movies, .tvs, .people]
+//        resultsController?.searchController?.filter = filters[searchController.searchBar.selectedScopeButtonIndex]
+//
+//        resultsController?.loadFromController()
     }
 }
 

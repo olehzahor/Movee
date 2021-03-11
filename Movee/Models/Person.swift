@@ -7,7 +7,9 @@
 
 import Foundation
 
-struct Person: Codable, Hashable {
+struct Person: TMDBMediaResponse {
+    static var placeholder: Person { return .init() }
+    
     var birthday: String?
     var known_for_department: String?
     var deathday: String?

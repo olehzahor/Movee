@@ -7,6 +7,33 @@
 
 import Foundation
 
+
+enum SearchResultType: String, CaseIterable {
+    case all = "All Results"
+    case movies = "Movies"
+    case tvs = "TV Shows"
+    case people = "People"
+    
+    static var titles: [String] {
+        return self.allCases.compactMap { $0.rawValue }
+    }
+    
+    func listController(query: String) -> AnyMediaListControllerProtocol? {
+        switch self {
+        case .all:
+            return MSRController.multiSearchResult(query: query)
+        case .movies:
+            return AnyMediaListController<Movie>.moviesSearchResult(query: query)
+        case .tvs:
+            return AnyMediaListController<TVShow>.tvShowsSearchResult(query: query)
+        case .people:
+            return AnyMediaListController<Character>.peopleSearchResult(query: query)
+        default:
+            return nil
+        }
+    }
+}
+
 class SearchResultsController {
     enum ResultType: String, CaseIterable {
         case all = "All Results"
