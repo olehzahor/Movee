@@ -8,8 +8,8 @@
 import UIKit
 
 class HomeViewController: UIViewController, GenericCollectionViewController, Coordinated {
-    typealias DataSource = UICollectionViewDiffableDataSource<String, Media>
-    typealias Snapshot = NSDiffableDataSourceSnapshot<String, Media>
+    typealias DataSource = UICollectionViewDiffableDataSource<String, MediaContainer>
+    typealias Snapshot = NSDiffableDataSourceSnapshot<String, MediaContainer>
     
     private lazy var dataSource = createDataSource()
     private var snapshot = Snapshot()
@@ -21,14 +21,17 @@ class HomeViewController: UIViewController, GenericCollectionViewController, Coo
     var watchlistController: WatchlistController?
     
         
-    var mediaControllers: [MediaListController] = []
+    var mediaControllers: [AnyMediaListController] = []
     
     private var watchlistSection: String? {
         return watchlistController?.title
     }
     
     @objc func updateWatchlist() {
-        //watchlistController?.load(completion: update(with:))
+        guard let controller = watchlistController else { return }
+        controller.load {
+            self.update(with: controller)
+        }
     }
     
     fileprivate func setupCollectionView() {
@@ -46,22 +49,22 @@ class HomeViewController: UIViewController, GenericCollectionViewController, Coo
     }
     
     fileprivate func loadWatchList(completion: (() -> Void)? = nil) {
-//        guard let watchlistController = watchlistController else { return }
-//        watchlistController.load { controller in
-//            self.update(with: controller)
-//            completion?()
-//        }
+        guard let watchlistController = watchlistController else { return }
+        watchlistController.load {
+            self.update(with: watchlistController)
+            completion?()
+        }
     }
     
     fileprivate func loadLists() {
         let group = DispatchGroup()
         
         
-        let controllers = discoverController.lists.compactMap({$0.mediaController})
+        let controllers = discoverController.lists.compactMap({ $0.mediaController })
         for controller in controllers {
             mediaControllers.append(controller)
             group.enter()
-            controller.load() {
+            controller.load(fromPage: 1, infiniteScroll: false) {
                 group.leave()
             }
         }
@@ -72,7 +75,6 @@ class HomeViewController: UIViewController, GenericCollectionViewController, Coo
             }
             self.dataSource.apply(self.snapshot)
         }
-
     }
     
     fileprivate func manageMoviesControllers() {
@@ -83,7 +85,6 @@ class HomeViewController: UIViewController, GenericCollectionViewController, Coo
         } else {
             loadLists()
         }
-
     }
     
     
@@ -92,7 +93,6 @@ class HomeViewController: UIViewController, GenericCollectionViewController, Coo
         
         setupCollectionView()
         addObserverForWatchlistUpdates()
-        watchlistController = nil
         manageMoviesControllers()
         
         title = "Explore"
@@ -111,32 +111,47 @@ extension HomeViewController {
 //MARK: - Navigation
 extension HomeViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let media = dataSource.itemIdentifier(for: indexPath) else { return }
-        coordinator?.showDetails(media: media)
+        guard let media = dataSource.itemIdentifier(for: indexPath)?.media else { return }
+        if let movie = media as? Movie {
+            coordinator?.showDetails(movie: movie)
+        } else if let tvShow = media as? TVShow {
+            coordinator?.showDetails(tvShow: tvShow)
+        }
     }
-    
+
     func seeAllMoviesInList(listTitle: String?) {
         guard let listTitle = listTitle else { return }
         if let list = discoverController.lists.first(
             where: { $0.name == listTitle }) {
             coordinator?.showCustomMediaList(mediaController: list.mediaController)
         }
-           
+
     }
 }
 
 //MARK: - Data Source
 extension HomeViewController {
+    struct MediaContainer: Hashable {
+        let media: AnyHashable
+        let list: String
+
+        static func createContainers(from medias: [AnyHashable], listName: String) -> [MediaContainer] {
+            medias.compactMap { media in
+                return MediaContainer(media: media, list: listName)
+            }
+        }
+    }
+
     func updateDataSource() {
         dataSource.apply(snapshot)
     }
     
-    func update(with controller: MediaListController) {
+    func update(with controller: AnyMediaListController) {
         dataSource.apply(updateSnapshot(from: controller))
     }
     
     @discardableResult
-    func updateSnapshot(from controller: MediaListController) -> Snapshot {
+    func updateSnapshot(from controller: AnyMediaListController) -> Snapshot {
         let section = controller.title
         
         if controller.medias.count == 0 {
@@ -156,25 +171,31 @@ extension HomeViewController {
             }
         }
         
-        var items = controller.medias.filter { $0 != Media.placeholder() }
-        if section != watchlistSection { items.shuffle() }
-        
-        snapshot.appendItems(items, toSection: section)
+        let containers = MediaContainer.createContainers(
+            from: controller.medias, listName: controller.title)
+            
+        snapshot.appendItems(containers, toSection: section)
         return snapshot
     }
     
     func createDataSource() -> DataSource {
         let dataSource = DataSource(
             collectionView: collectionView,
-            cellProvider: { [self] (collectionView, indexPath, media) -> UICollectionViewCell? in
+            cellProvider: { [self] (collectionView, indexPath, container) -> UICollectionViewCell? in
+                let media = container.media
                 let cell = dequeueCell(CompactMovieCell.self, for: indexPath)
-                media.viewModel.configure(cell)
+                if let movie = media as? Movie {
+                    movie.viewModel.configure(cell)
+                } else if let tvShow = media as? TVShow {
+                    tvShow.viewModel.configure(cell)
+                }
                 return cell
             })
         
         dataSource.supplementaryViewProvider = { (collectionView, kind, indexPath) -> UICollectionReusableView? in
             
             guard let sectionTitle = self.findSection(at: indexPath, in: self.dataSource) else { return nil }
+            
             let header = self.dequeueHeader(SectionHeader.self, for: indexPath)
             header.titleLabel.text = sectionTitle
             

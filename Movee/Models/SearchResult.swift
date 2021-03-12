@@ -7,7 +7,8 @@
 
 import Foundation
 
-enum SearchResult: TMDBMediaResponse {
+
+enum SearchResult: MediaListItem {
     static var placeholder: SearchResult {
         return self.empty
     }
@@ -56,6 +57,10 @@ enum SearchResult: TMDBMediaResponse {
                 self = .empty
             }
         } else { self = .empty }
+    }
+    
+    func encode(to encoder: Encoder) throws {
+        
     }
     
     case movie(Movie)

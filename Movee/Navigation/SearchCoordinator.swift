@@ -9,9 +9,9 @@ import Foundation
 
 class SearchCoordinator: MainCoordinator {
     func showSearchHistory(controller: SearchHistoryController) {
-//        createAndPush(MoviesListViewController.self) {
-//            $0.setMoviesController(controller)
-//        }
+        createAndPush(MediaListViewController.self) {
+            $0.setMediaController(controller)
+        }
     }
     
     override func start() {

@@ -1,103 +1,110 @@
 //
-//  MediaListViewController.swift
+//  AnyMediaListVC.swift
 //  Movee
 //
-//  Created by jjurlits on 2/26/21.
+//  Created by jjurlits on 3/10/21.
 //
 
 import UIKit
 
-class MediaListViewController<T: Media>: UIViewController, GenericCollectionViewController, Coordinated, UICollectionViewDelegate {
-    weak var coordinator: MainCoordinator?
-    
-    var trackHistory: Bool = false
-    
-    typealias DataSource = UICollectionViewDiffableDataSource<Section, T>
-    typealias Snapshot = NSDiffableDataSourceSnapshot<Section, T>
-    private lazy var dataSource = createDataSource()
-
+class MediaListViewController: UIViewController, GenericCollectionViewController, Coordinated {
     var collectionView: UICollectionView!
-    private(set) var mediaController: MediaListController!
-    
-    func setMediaController(_ mediaController: MediaListController) {
-        self.mediaController = mediaController
+    var mediaController: AnyMediaListController? {
+        didSet { title = mediaController?.title }
     }
     
-    func loadFromController(_ mediaController: MediaListController) {
-        setMediaController(mediaController)
-        mediaController.load(completion: update)
+    var searchHistoryController: SearchHistoryController?
+    
+    func createLayout() -> UICollectionViewLayout {
+        UICollectionViewCompositionalLayout { (sectionIndex, env) -> NSCollectionLayoutSection? in
+            let sectionLayout = GenericLayouts.createFullWidthSection(height: 150, addHeader: false)
+            sectionLayout?.interGroupSpacing = 16
+            return sectionLayout
+        }
     }
     
-    fileprivate func loadFromMediaController() {
-        mediaController?.load(completion: update)
-    }
+    var coordinator: MainCoordinator?
     
-    fileprivate func setupCollectionView() {
+    typealias DataSource = UICollectionViewDiffableDataSource<Section, AnyHashable>
+    typealias Snapshot = NSDiffableDataSourceSnapshot<Section, AnyHashable>
+    private lazy var dataSource = createDataSource()
+    
+    fileprivate func configureCollectionView() {
         collectionView = createCollectionView()
-        collectionView.contentInset.top = 8
+        collectionView.contentInset.top = 16
+        
         collectionView.delegate = self
         
+        registerCell(CharacterSearchCell.self)
         registerCell(MovieCell.self)
         registerCell(PlaceholderCell.self)
     }
-
     
-    fileprivate func setupNavigationItem() {
-        title = mediaController?.title
+    func setMediaController(_ controller: AnyMediaListController?) {
+        self.mediaController = controller
+    }
+    
+    func loadFromMediaController(_ controller: AnyMediaListController?) {
+        self.mediaController = controller
+        controller?.load(completion: update)
     }
     
     override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        setupCollectionView()
-        setupNavigationItem()
-        
-        loadFromMediaController()
-    }
-        
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let media = dataSource.itemIdentifier(for: indexPath) else { return }
-        coordinator?.showDetails(media: media)
+        configureCollectionView()
+        loadFromMediaController(mediaController)
     }
     
-    convenience init(mediaController: MediaListController) {
-        self.init()
-        setMediaController(mediaController)
-    }
+    var oldItems = [AnyHashable]()
 }
 
-
-
-//MARK:- Data Source
-internal extension MediaListViewController {
+extension MediaListViewController {
     func update() {
-        dataSource.apply(createSnapshot())
+        if let mediaController = mediaController {
+            dataSource.apply(createSnapshot(from: mediaController))
+        }
     }
-    
-    func createSnapshot() -> Snapshot {
-        var snapshot = Snapshot()
         
-        guard let medias = mediaController?.medias else { return snapshot }
-
+    func createSnapshot(from controller: AnyMediaListController) -> Snapshot {
+        var snapshot = Snapshot()
         snapshot.appendSections([.main])
-        snapshot.appendItems(medias as! [T])
+        snapshot.appendItems(controller.medias, toSection: .main)
         return snapshot
     }
     
     func createDataSource() -> DataSource {
-        return DataSource(
-            collectionView: collectionView,
-            cellProvider: { [self] (collectionView, indexPath, media) -> UICollectionViewCell? in
-                if media == T.placeholder() {
-                    let cell = dequeueCell(PlaceholderCell.self, for: indexPath)
-                    self.mediaController?.loadMore(completion: update)
-                    return cell
-                }
-                
-                let cell = dequeueCell(MovieCell.self, for: indexPath)
-                media.viewModel.configure(cell)
+        DataSource(collectionView: collectionView) { (collectionView, indexPath, item) -> UICollectionViewCell? in
+            if let character = item as? Character, character != Character.placeholder {
+                let cell = self.dequeueCell(CharacterSearchCell.self, for: indexPath)
+                character.viewModel.configure(cell)
                 return cell
-            })
+            } else if let movie = item as? Movie, movie != Movie.placeholder {
+                let cell = self.dequeueCell(MovieCell.self, for: indexPath)
+                movie.viewModel.configure(cell)
+                return cell
+            } else if let tvShow = item as? TVShow, tvShow != TVShow.placeholder {
+                let cell = self.dequeueCell(MovieCell.self, for: indexPath)
+                tvShow.viewModel.configure(cell)
+                return cell
+            } else {
+                self.mediaController?.loadMore(completion: self.update)
+                return self.dequeueCell(PlaceholderCell.self, for: indexPath)
+            }
+        }
+    }
+}
+
+extension MediaListViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let item = dataSource.itemIdentifier(for: indexPath) else { return }
+        if let character = item as? Character {
+            coordinator?.showPersonInfo(character: character)
+        } else if let movie = item as? Movie {
+            coordinator?.showDetails(movie: movie)
+            searchHistoryController?.addMedia(movie)
+        } else if let tvShow = item as? TVShow {
+            coordinator?.showDetails(tvShow: tvShow)
+            searchHistoryController?.addMedia(tvShow)
+        }
     }
 }
 
@@ -105,4 +112,10 @@ extension MediaListViewController {
     enum Section {
         case main
     }
+    
+    struct ResultWrapper: Hashable {
+        var item: AnyHashable
+    }
 }
+
+

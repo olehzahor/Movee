@@ -75,7 +75,7 @@ class MediaDetailsViewController<MediaType: Media>: UIViewController, GenericCol
         title = mediaController.viewModel?.title
         navigationItem.titleView?.alpha = 0
         navigationItem.largeTitleDisplayMode = .never
-        //setupNavigationBarButtons()
+        setupNavigationBarButtons()
         dataSource.apply(createSnapshot(controller: mediaController), animatingDifferences: true)
         
         mediaController.loadDetails(completion: update(with:))
@@ -120,10 +120,19 @@ class MediaDetailsViewController<MediaType: Media>: UIViewController, GenericCol
     }
     
     @objc func navigateToRelatedList() {
-//        guard let movie = movie else { return }
-//        coordinator?.showRelated(to: movie)
+        coordinator?.showRelated(to: mediaController.media)
     }
     
+    @objc func addToWatchlist() {
+        watchlistController?.addMedia(mediaController.media)
+        setupNavigationBarButtons()
+    }
+
+    @objc func removeFromWatchlist() {
+        watchlistController?.removeMedia(mediaController.media)
+        setupNavigationBarButtons()
+    }
+
     convenience init(_ mediaController: MediaController<MediaType>) {
         self.init()
         self.mediaController = mediaController
@@ -178,38 +187,28 @@ extension MediaDetailsViewController {
 
 
 //MARK: - Watchlist Setup
-//extension MediaDetailsViewController {
-//    @objc func addToWatchlist() {
-//        watchlistController?.addMovie(mediaController.movie!)
-//        setupNavigationBarButtons()
-//    }
-//
-//    @objc func removeFromWatchlist() {
-//        watchlistController?.removeMovie(mediaController.movie!)
-//        setupNavigationBarButtons()
-//    }
-//
-//    fileprivate func setupNavigationBarButtons() {
-//        guard let movie = mediaController.movie,
-//              let watchlistController = watchlistController
-//        else { return }
-//
-//        let addToWatchlistButton = UIBarButtonItem(
-//            image: UIImage(systemName: "bookmark"),
-//            style: .plain,
-//            target: self,
-//            action: #selector(addToWatchlist))
-//
-//        let removeFromWatchlistButton = UIBarButtonItem(
-//            image: UIImage(systemName: "bookmark.slash"),
-//            style: .plain,
-//            target: self,
-//            action: #selector(removeFromWatchlist))
-//
-//        self.navigationItem.rightBarButtonItem =
-//            watchlistController.contains(movie) ? removeFromWatchlistButton : addToWatchlistButton
-//    }
-//}
+extension MediaDetailsViewController {
+    fileprivate func setupNavigationBarButtons() {
+        guard let watchlistController = watchlistController
+        else { return }
+        
+        let addToWatchlistButton = UIBarButtonItem(
+            image: UIImage(systemName: "bookmark"),
+            style: .plain,
+            target: self,
+            action: #selector(addToWatchlist))
+
+        let removeFromWatchlistButton = UIBarButtonItem(
+            image: UIImage(systemName: "bookmark.slash"),
+            style: .plain,
+            target: self,
+            action: #selector(removeFromWatchlist))
+
+        self.navigationItem.rightBarButtonItem =
+            watchlistController.contains(mediaController.media)
+            ? removeFromWatchlistButton : addToWatchlistButton
+    }
+}
 
 //MARK: - Data Source
 extension MediaDetailsViewController {
@@ -242,11 +241,6 @@ extension MediaDetailsViewController {
         if let related = controller.related, !related.isEmpty {
             snapshot.appendSections([.related])
             snapshot.appendItems(related, toSection: .related)
-//            if let movies = related as? [Movie] {
-//                snapshot.appendItems(movies, toSection: .related)
-//            } else if let tvShows = related as? [TVShow] {
-//                snapshot.appendItems(tvShows, toSection: .related)
-//            }
         }
         
 

@@ -22,7 +22,7 @@ extension PersonViewController: UICollectionViewDelegate {
     
     func navigateToMovieDetails(from indexPath: IndexPath) {
         guard let movie = dataSource?.itemIdentifier(for: indexPath) as? Movie else { return }
-        coordinator?.showDetails(movie: movie)
+        coordinator?.showDetails(media: movie)
     }
     
     func navigateToMovieCredits() {

@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Person: TMDBMediaResponse {
+struct Person: MediaListItem {
     static var placeholder: Person { return .init() }
     
     var birthday: String?

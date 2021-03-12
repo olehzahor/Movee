@@ -16,7 +16,7 @@ extension MovieCreditsController: UICollectionViewDelegate {
         guard let movie = dataSource?.itemIdentifier(for: indexPath)
         else { return }
         
-        coordinator?.showDetails(movie: movie)
+        coordinator?.showDetails(media: movie)
     }
 }
 

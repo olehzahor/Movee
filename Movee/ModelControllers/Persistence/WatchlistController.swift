@@ -8,8 +8,22 @@
 import Foundation
 
 struct WatchlistItem: Codable, Equatable, Hashable {
-    var movie: Movie
+    var movie: Movie?
+    var tvShow: TVShow?
+    var mediaType: MediaType?
     var added: Date
+    
+    init(movie: Movie, added: Date! = Date()) {
+        self.movie = movie.short
+        self.added = added
+        self.mediaType = .movie
+    }
+    
+    init(tvShow: TVShow, added: Date! = Date()) {
+        self.tvShow = tvShow.short
+        self.added = added
+        self.mediaType = .tvShow
+    }
 }
 
 class WatchlistController: JSONPersistenceController<WatchlistItem>  {
@@ -24,23 +38,31 @@ class WatchlistController: JSONPersistenceController<WatchlistItem>  {
         super.saveData()
         NotificationCenter.default.post(name: Self.ncUpdateName, object: nil)
     }
-    
-    func addMovie(_ movie: Movie) {
-        guard !items.contains(where: { $0.movie.id == movie.id }) else { return }
+       
+    func addMedia<T: Media>(_ media: T) {
+        switch media.mediaType {
+        case .movie:
+            guard let movie = media as? Movie, !contains(movie) else { return }
+            addItem(.init(movie: movie))
+        case .tvShow:
+            guard let tvShow = media as? TVShow, !contains(tvShow) else { return }
+            addItem(.init(tvShow: tvShow))
+        default:
+            return
+        }
         
-        let newItem = WatchlistItem(movie: movie.short, added: Date())
-        addItem(newItem)
+    }
+            
+    func removeMedia<T: Media>(_ media: T) {
+        items.removeAll {
+            $0.movie?.id == media.id || $0.tvShow?.id == media.id }
         saveData()
     }
-        
-    func removeMovie(_ movie: Movie) {
-        items.removeAll { $0.movie.id == movie.id }
-        saveData()
-    }
     
-    func contains(_ movie: Movie) -> Bool {
-        let movie = items.first { $0.movie.id == movie.id }
-        return movie == nil ? false : true
+    func contains<T: Media>(_ media: T) -> Bool {
+        let media = items.first {
+            $0.movie?.id == media.id || $0.tvShow?.id == media.id }
+        return media != nil
     }
     
     var count: Int {
@@ -56,7 +78,8 @@ class WatchlistController: JSONPersistenceController<WatchlistItem>  {
             case .date:
                 return first.added > second.added
             case .title:
-                return first.movie.title ?? "" > second.movie.title ?? ""
+                return first.movie?.title ?? first.tvShow?.title ?? ""
+                    > second.movie?.title ?? second.tvShow?.title ?? ""
             }
         }
     }
@@ -71,23 +94,48 @@ class WatchlistController: JSONPersistenceController<WatchlistItem>  {
     }
 }
 
-extension WatchlistController: MoviesListController {
-    var title: String { return "Watchlist" }
+
+extension WatchlistController: AnyMediaListController {
+    @objc var title: String { return "Watchlist" }
 
     func load(fromPage initialPage: Int, infiniteScroll: Bool, completion: @escaping CompletionHandler) {
         DispatchQueue.global().async {
             if !self.isDataLoaded { self.loadData() }
             DispatchQueue.main.async {
-                completion(self)
+                completion()
             }
         }
     }
     
-    var movies: [Movie] {
-        return watchlist().compactMap({ $0.movie })
+    var medias: [AnyHashable] {
+        return watchlist().compactMap {
+            $0.movie as AnyHashable? ?? $0.tvShow as AnyHashable?
+        }
     }
     
     func loadMore(completion: CompletionHandler) { }
     func stop() { }
 }
 
+
+
+//extension WatchlistController: MoviesListController {
+//    var title: String { return "Watchlist" }
+//
+//    func load(fromPage initialPage: Int, infiniteScroll: Bool, completion: @escaping CompletionHandler) {
+//        DispatchQueue.global().async {
+//            if !self.isDataLoaded { self.loadData() }
+//            DispatchQueue.main.async {
+//                completion(self)
+//            }
+//        }
+//    }
+//
+//    var movies: [Movie] {
+//        return watchlist().compactMap({ $0.movie })
+//    }
+//
+//    func loadMore(completion: CompletionHandler) { }
+//    func stop() { }
+//}
+//

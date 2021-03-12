@@ -93,6 +93,11 @@ struct Endpoints {
                             queryItems: [queryItem(forPage: page)])
     }
     
+    func relatedTVShows(tvShowId: Int, page: Int = 1) -> URL?  {
+        return constructURL(path: "/3/tv/\(tvShowId)/recommendations",
+                            queryItems: [queryItem(forPage: page)])
+    }
+    
     func popularMovies(page: Int = 1) -> URL? {
         return constructURL(path: "/3/movie/popular",
                             queryItems: [queryItem(forPage: page)])

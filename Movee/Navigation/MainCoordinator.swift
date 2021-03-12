@@ -7,21 +7,11 @@
 
 import UIKit
 
-
 class MainCoordinator: Coordinator {
     var childCoordinators = [Coordinator]()
     var navigationController: UINavigationController
+    var navigationBarAppearance: UINavigationBarAppearance?
     var watchlistController: WatchlistController?
-    
-    var navigationBarAppearance: UINavigationBarAppearance? {
-        didSet {
-            guard let navigationBarAppearance = navigationBarAppearance else { return }
-            navigationController.navigationBar.standardAppearance = navigationBarAppearance
-            navigationController.navigationBar.scrollEdgeAppearance = navigationBarAppearance
-            navigationController.navigationBar.compactAppearance = navigationBarAppearance
-
-        }
-    }
     
     convenience init() {
         self.init(navigationController: UINavigationController())
@@ -32,80 +22,51 @@ class MainCoordinator: Coordinator {
         setupNavigationBar()
     }
 
-    private func setupNavigationBar() {
-        navigationBarAppearance = UINavigationBarAppearance()
-        guard let navigationBarAppearance = navigationBarAppearance else {
-            return
-        }
-        
-        navigationBarAppearance.configureWithOpaqueBackground()
-        navigationBarAppearance.backgroundColor = .systemBackground
-        
-        navigationController.navigationBar.standardAppearance = navigationBarAppearance
-        navigationController.navigationBar.scrollEdgeAppearance = navigationBarAppearance
-        navigationController.navigationBar.compactAppearance = navigationBarAppearance
-
-
-        navigationController.navigationBar.prefersLargeTitles = true
-
-    }
     
     func start() {
-        createAndPush(AnyMediaListVC.self) {
-            let controller = AnyMediaListController<Movie>(title: "Popular Movies") { (page, completion) -> URLSessionTask? in
-                TMDBClient.shared.getPopularMovies(page: page, completion: completion)
-            }
-            $0.loadFromController(controller)
+        navigationController.navigationBar.prefersLargeTitles = true
+        createAndPush(HomeViewController.self, animated: false) {
+            $0.watchlistController = self.watchlistController
+            $0.tabBarItem = UITabBarItem(title: "Home", image: UIImage(systemName: "house"), tag: 0)
         }
-//        createAndPush(HomeViewController.self, animated: false) {
-//            $0.watchlistController = self.watchlistController
-//            $0.tabBarItem = UITabBarItem(title: "Home", image: UIImage(systemName: "house"), tag: 0)
-//        }
-//
-//        createAndPush(MediaListViewController<AnyMedia>.self, animated: false) {
-//            let controller = TMDBMediaListController<AnyMedia>(title: "Popular Shows") { (page, completion) -> URLSessionTask? in
-//                TMDBClient.shared.getPopularMovies(page: page, completion: completion)
-//            }
-//
-//            $0.setMediaController(controller)
-//        }
-        
-
     }
-    
-//    func showDetails(movie: Movie) {
-//        let vc = MediaDetailsViewController(MediaController(movie))//MovieDetailsViewController()
-//        vc.coordinator = self
-//        //vc.movie = movie
-//        vc.watchlistController = watchlistController
-//        navigationController.pushViewController(vc, animated: true)
-//    }
-    
-//    func showMediaDetails<T: Media>(media: T) {
-//        createAndPush(MediaDetailsViewController.self) {
-//            $0.mediaController = MediaController(media)
-//        }
-//    }
-    
-    func showDetails(media: Media) {
-        switch media {
-        case is Movie:
-            showDetails(movie: media as! Movie)
-        case is TVShow:
-            showDetails(tvShow: media as! TVShow)
+        
+    func showDetails<T: Media>(media: T) {
+        switch media.mediaType {
+        case .movie:
+            showDetails(movie: media as? Movie)
+        case .tvShow:
+            showDetails(tvShow: media as? TVShow)
         default:
             return
         }
+//
+//        createAndPush(MediaDetailsViewController.self) {
+//            $0.mediaController = MediaController(media)
+//        }
+        
+//        switch media {
+//        case is Movie:
+//            showDetails(movie: media as! Movie)
+//        case is TVShow:
+//            showDetails(tvShow: media as! TVShow)
+//        default:
+//            return
+//        }
     }
         
-    func showDetails(movie: Movie) {
-        createAndPush(MediaDetailsViewController.self) {
+    func showDetails(movie: Movie?) {
+        guard let movie = movie else { return }
+        createAndPush(MediaDetailsViewController<Movie>.self) {
+            $0.watchlistController = self.watchlistController
             $0.mediaController = MovieController(movie)
         }
     }
-    
-    func showDetails(tvShow: TVShow) {
-        createAndPush(MediaDetailsViewController.self) {
+
+    func showDetails(tvShow: TVShow?) {
+        guard let tvShow = tvShow else { return }
+        createAndPush(MediaDetailsViewController<TVShow>.self) {
+            $0.watchlistController = self.watchlistController
             $0.mediaController = TVShowController(tvShow)
         }
     }
@@ -124,31 +85,55 @@ class MainCoordinator: Coordinator {
         navigationController.pushViewController(vc, animated: true)
     }
     
-    func showRelated(to movie: Movie) {
-//        guard let moviesController = TMDBMoviesListController.relatedList(to: movie)
-//        else { return }
-//        let vc = MoviesListViewController(moviesController: moviesController)
-//        vc.coordinator = self
-//        navigationController.pushViewController(vc, animated: true)
-    }
-    
-    func showCustomMoviesList(moviesController: MoviesListController) {
-//        createAndPush(MoviesListViewController.self) {
-//            $0.setMoviesController(moviesController)
-//        }
-    }
-    
-    func showCustomMediaList(mediaController: MediaListController?) {
-        if let moviesController = mediaController as? TMDBMediaListController<Movie> {
-            createAndPush(MediaListViewController.self) {
-                $0.setMediaController(moviesController)
-            }
-        } else if let tvShowsController = mediaController as? TMDBMediaListController<TVShow> {
-            createAndPush(MediaListViewController.self) {
-                $0.setMediaController(tvShowsController)
-            }
+    func showRelated<T: Media>(to media: T) {
+        var mediaController: AnyMediaListController?
+        guard let mediaId = media.id, let mediaTitle = media.title else { return }
+        switch media.mediaType {
+        case .movie:
+            mediaController = MediaListController<Movie>.relatedMoviesList(movieId: mediaId, name: mediaTitle)
+        case .tvShow:
+            mediaController = MediaListController<TVShow>.relatedTVShowsList(tvShowId: mediaId, name: mediaTitle)
+        default:
+            return
+        }
+        createAndPush(MediaListViewController.self) {
+            $0.setMediaController(mediaController)
         }
     }
+    
+//    func showRelated(to movie: Movie) {
+////        guard let moviesController = TMDBMoviesListController.relatedList(to: movie)
+////        else { return }
+////        let vc = MoviesListViewController(moviesController: moviesController)
+////        vc.coordinator = self
+////        navigationController.pushViewController(vc, animated: true)
+//    }
+//
+//    func showCustomMoviesList(moviesController: MoviesListController) {
+////        createAndPush(MoviesListViewController.self) {
+////            $0.setMoviesController(moviesController)
+////        }
+//    }
+//
+    func showCustomMediaList(mediaController: AnyMediaListController?) {
+        let vc = MediaListViewController()
+        vc.setMediaController(mediaController)
+        vc.coordinator = self
+        navigationController.pushViewController(vc, animated: true)
+//        createAndPush(MediaListViewController.self) { $0.loadFromController(mediaController) }
+    }
+//
+//    func showCustomMediaList(mediaController: MediaListController?) {
+//        if let moviesController = mediaController as? TMDBMediaListController<Movie> {
+//            createAndPush(MediaListViewController.self) {
+//                $0.setMediaController(moviesController)
+//            }
+//        } else if let tvShowsController = mediaController as? TMDBMediaListController<TVShow> {
+//            createAndPush(MediaListViewController.self) {
+//                $0.setMediaController(tvShowsController)
+//            }
+//        }
+//    }
     
     func showMovieCredits(_ controller: PersonController) {
         let vc = MovieCreditsController()
@@ -158,10 +143,10 @@ class MainCoordinator: Coordinator {
     }
     
     func showFilteredMovies(filter: Filter) {
-//        createAndPush(MediaListViewController<Movie>.self) {
-//            $0.setMoviesController(
-//                TMDBMoviesListController.filteredList(filter: filter))
-//        }
+        createAndPush(MediaListViewController.self) {
+            $0.setMediaController(
+                MediaListController<Movie>.filteredMovies(filter: filter))
+        }
     }
     
     func showAdvancedSearch() {
@@ -182,3 +167,47 @@ class MainCoordinator: Coordinator {
         }
     }
 }
+
+extension MainCoordinator {
+    private func setupNavigationBar() {
+        navigationBarAppearance = UINavigationBarAppearance()
+        guard let navigationBarAppearance = navigationBarAppearance else {
+            return
+        }
+
+        navigationBarAppearance.configureWithOpaqueBackground()
+        navigationBarAppearance.backgroundColor = .systemBackground
+
+        navigationController.navigationBar.standardAppearance = navigationBarAppearance
+        navigationController.navigationBar.scrollEdgeAppearance = navigationBarAppearance
+        navigationController.navigationBar.compactAppearance = navigationBarAppearance
+
+
+        navigationController.navigationBar.prefersLargeTitles = true
+
+    }
+}
+//{
+//        didSet {
+//            guard let navigationBarAppearance = navigationBarAppearance else { return }
+//            navigationController.navigationBar.standardAppearance = navigationBarAppearance
+//            navigationController.navigationBar.scrollEdgeAppearance = navigationBarAppearance
+//            navigationController.navigationBar.compactAppearance = navigationBarAppearance
+//
+//        }
+//    }
+
+
+//    func showDetails(movie: Movie) {
+//        let vc = MediaDetailsViewController(MediaController(movie))//MovieDetailsViewController()
+//        vc.coordinator = self
+//        //vc.movie = movie
+//        vc.watchlistController = watchlistController
+//        navigationController.pushViewController(vc, animated: true)
+//    }
+    
+//    func showMediaDetails<T: Media>(media: T) {
+//        createAndPush(MediaDetailsViewController.self) {
+//            $0.mediaController = MediaController(media)
+//        }
+//    }

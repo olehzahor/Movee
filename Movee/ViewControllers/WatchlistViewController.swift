@@ -7,7 +7,7 @@
 
 import UIKit
 
-class WatchlistViewController: MediaListViewController<Movie> {
+class WatchlistViewController: MediaListViewController {
     let placeholder: UILabel = {
         let label = UILabel()
         label.text = "Your watchlist is empty.\n\nMovies you add to your watchlist will appear here."
@@ -25,7 +25,7 @@ class WatchlistViewController: MediaListViewController<Movie> {
     
     @objc func watchlistUpdated() {
         if isViewLoaded {
-            //watchlistController?.load(completion: update(with:))
+            watchlistController?.load { self.update() }
             setupEmptyListPlaceholder()
         }
     }
@@ -33,7 +33,7 @@ class WatchlistViewController: MediaListViewController<Movie> {
     var watchlistController: WatchlistController? {
         didSet {
             if let watchlistController = watchlistController {
-                //setMoviesController(watchlistController)
+                setMediaController(watchlistController)
                 NotificationCenter.default.addObserver(self, selector: #selector(watchlistUpdated), name: WatchlistController.ncUpdateName, object: nil)
             }
         }
