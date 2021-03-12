@@ -30,7 +30,7 @@ struct Credits: Codable, Hashable {
 }
 
 //TODO: check for 'order' thing
-struct Character: TMDBMediaResponse, Encodable {
+struct Character: MediaListItem, Encodable {
     var cast_id: Int?
     var credit_id: String?
     var gender: Int?

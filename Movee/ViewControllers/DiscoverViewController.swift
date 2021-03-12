@@ -7,6 +7,30 @@
 
 import UIKit
 
+private extension DiscoverViewController {
+    struct TopSectionItem {
+        var title: String
+        var action: () -> Void
+    }
+    
+    var topSectionItems: [TopSectionItem] {
+        let advancedSearchItem =
+            TopSectionItem(title: "Advanced Search",
+                           action: { self.coordinator?.showAdvancedSearch() })
+        var items = [advancedSearchItem]
+        
+        if let searchHistoryController = searchHistoryController {
+            let searchHistoryItem = TopSectionItem(
+                title: "Search History",
+                action: {
+                    self.coordinator?.showSearchHistory(
+                        controller: searchHistoryController) })
+            items += [searchHistoryItem]
+        }
+        return items
+    }
+}
+
 class DiscoverViewController: UITableViewController, Coordinated {
     var coordinator: SearchCoordinator?
     var discoverController: DiscoverController? {
@@ -21,39 +45,20 @@ class DiscoverViewController: UITableViewController, Coordinated {
         }
     }
     
-    var searchHistoryController = SearchHistoryController()
+    var searchHistoryController: SearchHistoryController?
     
     var isSearchBarVisible = true
     var isTopSectionVisible = true
     
-    private var searchController: UISearchController!
-    private var resultsController: AnyMediaListVC! //MediaListViewController<Media>!//SearchResultsViewController!//MoviesListViewController!
+    private var searchController: UISearchController?
+    private var resultsController: MediaListViewController?
     
-    private lazy var topSectionItems: KeyValuePairs =
-        ["Advanced Search": { self.coordinator?.showAdvancedSearch() },
-         "Search History": { self.coordinator?.showSearchHistory(controller: self.searchHistoryController)}]
-    
-    fileprivate func setupSearchController() {
-        resultsController = AnyMediaListVC() //SearchResultsViewController()//MoviesListViewController()
-        resultsController.coordinator = self.coordinator
         
-        //resultsController.searchHistoryController = searchHistoryController
-        
-        searchController = UISearchController(searchResultsController: resultsController)
-        searchController.delegate = self
-        
-        searchController.searchResultsUpdater = self
-        searchController.searchBar.autocapitalizationType = .none
-        searchController.searchBar.delegate = self
-        searchController.searchBar.scopeButtonTitles = SearchResultType.titles
-        //["All Results", "Movies", "TV Shows", "People"]
-        searchController.searchBar.placeholder = "Search for movies and people"
-        navigationItem.hidesSearchBarWhenScrolling = false
-        navigationItem.searchController = searchController
-        
-    }
-
     override func viewDidLoad() {
+        searchHistoryController = SearchHistoryController {
+            self.tableView?.reloadData()
+        }
+        
         navigationController?.navigationBar.prefersLargeTitles = true
         title = discoverController?.name ?? "Search"
         
@@ -91,7 +96,7 @@ extension DiscoverViewController {
         else { fatalError() }
 
         if indexPath.section == 0, isTopSectionVisible {
-            cell.textLabel?.text = topSectionItems[indexPath.row].key
+            cell.textLabel?.text = topSectionItems[indexPath.row].title
         } else {
             let list = discoverController?.lists[indexPath.row]
             cell.textLabel?.text = list?.name
@@ -105,12 +110,11 @@ extension DiscoverViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.section == 0, isTopSectionVisible {
-            topSectionItems[indexPath.row].value()
+            topSectionItems[indexPath.row].action()
         } else {
             guard let list = discoverController?.lists[indexPath.row] else { return }
             if let controller = list.mediaController {
                 coordinator?.showCustomMediaList(mediaController: controller)
-                //coordinator?.showCustomMoviesList(moviesController: controller)
             } else {
                 coordinator?.showNestedDiscoverList(discoverController: discoverController?.moved(to: list))
             }
@@ -119,40 +123,37 @@ extension DiscoverViewController {
 }
 
 extension DiscoverViewController: UISearchControllerDelegate, UISearchResultsUpdating, UISearchBarDelegate {
+    fileprivate func setupSearchController() {
+        resultsController = MediaListViewController()
+        resultsController?.coordinator = self.coordinator
+        
+        resultsController?.searchHistoryController = searchHistoryController
+        
+        searchController = UISearchController(searchResultsController: resultsController)
+        searchController?.delegate = self
+        
+        searchController?.searchResultsUpdater = self
+        searchController?.searchBar.autocapitalizationType = .none
+        searchController?.searchBar.delegate = self
+        searchController?.searchBar.scopeButtonTitles = SearchResultType.titles
+        searchController?.searchBar.placeholder = "Search for Movies, TV Shows and People"
+        navigationItem.hidesSearchBarWhenScrolling = false
+        navigationItem.searchController = searchController
+        
+    }
+
     func updateSearchResults(for searchController: UISearchController) {
         guard let searchText = searchController.searchBar.text, !searchText.isEmpty
         else { return }
 
-        let resultsController = searchController.searchResultsController as? AnyMediaListVC
+        let resultsController = searchController.searchResultsController as? MediaListViewController
         
         let selectedFilter =
             SearchResultType.allCases[searchController.searchBar.selectedScopeButtonIndex]
         
         let controller = selectedFilter.listController(query: searchText)
         
-        resultsController?.loadFromController(controller!)
-        
-        
-//        if searchController.searchBar.selectedScopeButtonIndex == 0 {
-//            let controller = TMDBMediaListController.moviesSearchResult(query: searchText)
-//            resultsController?.loadFromController(controller)
-//        } else if searchController.searchBar.selectedScopeButtonIndex == 1 {
-//            let controller = TMDBMediaListController.tvShowsSearchResult(query: searchText)
-//            resultsController?.loadFromController(controller)
-//        } else {
-//            let controller = TMDBMediaListController<MultiSearchResult> { (page, completion) -> URLSessionTask? in
-//                TMDBClient.shared.searchMulti(query: searchText, page: page, completion: completion)
-//            }
-//            resultsController?.loadFromController(controller)
-//        }
-        
-
-        //resultsController?.searchController = SearchResultsController(query: searchText)
-//
-//        let filters = SearchResultsController.ResultType.allCases //: [SearchResultsController.ResultType] = [.all, .movies, .tvs, .people]
-//        resultsController?.searchController?.filter = filters[searchController.searchBar.selectedScopeButtonIndex]
-//
-//        resultsController?.loadFromController()
+        resultsController?.loadFromMediaController(controller)
     }
 }
 

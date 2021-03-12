@@ -13,7 +13,7 @@ class AnyMediaViewModel<T: Media>: MediaViewModel {
     
     
     var id: Int? { return media.id }
-    var title: String { return media.title ?? "" }
+    var title: String { media.title ?? "" }
     var originalTitle: String { return media.original_title ?? "" }
     
     var allGenres: Genres? { return nil }

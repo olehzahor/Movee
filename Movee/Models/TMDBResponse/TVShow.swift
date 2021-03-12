@@ -21,12 +21,32 @@ import Foundation
 //name string
 //original_name string
 
-final class TVShow: Media, TMDBMediaResponse {
+struct TVShow: Media {
+    var id: Int?
+    var title: String?
+    var original_title: String?
+    var release_date: String?
+    var poster_path: String?
+    var backdrop_path: String?
+    var popularity: Double?
+    var vote_count: Int?
+    var vote_average: Double?
+    var overview: String?
+    var genre_ids: [Int]?
+    var media_type: String?
+    var adult: Bool?
+    var genres: [Genre]?
+    var credits: Credits?
+    var production_countries: [Country]?
+    var original_language: String?
+    var tagline: String?
+    var videos: Video?
+    
     static var placeholder = TVShow()
 
     var name: String?
     var first_air_date: String?
-    
+
     
     var original_name: String?
     
@@ -41,51 +61,40 @@ final class TVShow: Media, TMDBMediaResponse {
     var networks: [Network]?
     var seasons: [Season]?
     
-    var recommendations: TVShowsPagedResult?
+    var recommendations: PagedResult<TVShow>?
     
-    override var viewModel: MediaViewModel {
-        return TVShowViewModel(tvShow: self)
-    }
-
     enum CodingKeys: String, CodingKey {
         case title = "name", original_title = "original_name", release_date = "first_air_date"
-        case episode_run_time, last_air_date, next_episode_to_air, in_production,
-             status, networks, seasons, recommendations
-    }
-    
-    required init(from decoder: Decoder) throws {
-        try super.init(from: decoder)
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        
-        title = try? container.decode(String.self, forKey: .title)
-        original_title = try? container.decode(String.self, forKey: .original_title)
-        release_date = try? container.decode(String.self, forKey: .release_date)
-        
-        episode_run_time = try? container.decode([Int].self, forKey: .episode_run_time)
-        last_air_date = try? container.decode(String.self, forKey: .last_air_date)
-        next_episode_to_air = try? container.decode(Episode.self, forKey: .next_episode_to_air)
-        in_production = try? container.decode(Bool.self, forKey: .in_production)
-        status = try? container.decode(String.self, forKey: .status)
-        networks = try? container.decode([Network].self, forKey: .networks)
-        seasons = try? container.decode([Season].self, forKey: .seasons)
-        recommendations = try? container.decode(TVShowsPagedResult.self, forKey: .recommendations)
-        
-      }
-    
-    required init() {
-        super.init()
+        case id, poster_path, backdrop_path, popularity, vote_count, vote_average, overview, genre_ids, media_type, adult, genres, credits, production_countries, original_language, tagline, videos, episode_run_time, last_air_date, next_episode_to_air, in_production, status, networks, seasons, recommendations
     }
 }
 
-
-
-struct TVShowsPagedResult: Hashable, Codable {
-    var results: [TVShow]
-    var total_results: Int
-    var total_pages: Int
-    var page: Int
+extension TVShow {
+    var mediaType: MediaType { return .tvShow }
+    var viewModel: MediaViewModel {
+        return TVShowViewModel(tvShow: self)
+    }
 }
 
+extension TVShow {
+    var short: TVShow {
+        var tvShow = TVShow()
+        tvShow.id = id
+        tvShow.release_date = release_date
+        tvShow.title = title
+        tvShow.original_title = original_title
+        tvShow.overview = overview
+        tvShow.poster_path = poster_path
+        tvShow.vote_average = vote_average
+        tvShow.vote_count = vote_count
+        tvShow.genre_ids = genre_ids
+        tvShow.genres = genres
+        tvShow.backdrop_path = backdrop_path
+        tvShow.popularity = popularity
+
+        return tvShow
+    }
+}
 
 struct Network: Codable, Hashable {
     var name: String

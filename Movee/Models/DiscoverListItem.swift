@@ -53,15 +53,17 @@ extension DiscoverListItem {
 //    }
 //
     
-    var moviesController: MoviesListController? { return nil }
+    //var moviesController: MoviesListController? { return nil }
     
-    var mediaController: MediaListController? {
+    //var mediaCon
+    
+    var mediaController: AnyMediaListController? {
         guard let path = path, let query = query else { return nil }
         switch mediaType {
         case "tv":
-            return TMDBMediaListController<TVShow>.customList(title: name, path: path, query: query)
+            return MediaListController<TVShow>.customTVShowsList(title: name, path: path, query: query)
         default:
-            return TMDBMediaListController<Movie>.customList(title: name, path: path, query: query)
+            return MediaListController<Movie>.customMoviesList(title: name, path: path, query: query)
         }
     }
 }

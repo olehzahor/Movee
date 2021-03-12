@@ -43,11 +43,10 @@ class MediaController<T: Media> {
 
     init(_ media: T) {
         self.media = media
-
     }
 }
 
-//extension MediaController where T: Movie {
+//extension MediaController where T == Movie {
 //    var viewModel: MediaViewModel? {
 //        return media.viewModel
 //    }
@@ -62,7 +61,7 @@ class MediaController<T: Media> {
 //        let _ = TMDBClient.shared.getMovieDetails(id: movieId) { result in
 //            switch result {
 //            case .success(let movie):
-//                self.media = movie as! T
+//                self.media = movie
 //                self.isDetailsLoaded = true
 //            case .failure(let error):
 //                self.error = error

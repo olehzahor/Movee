@@ -7,7 +7,26 @@
 
 import Foundation
 
-final class Movie: Media, TMDBMediaResponse {
+struct Movie: Media {
+    var id: Int?
+    var title: String?
+    var original_title: String?
+    var release_date: String?
+    var poster_path: String?
+    var backdrop_path: String?
+    var popularity: Double?
+    var vote_count: Int?
+    var vote_average: Double?
+    var overview: String?
+    var genre_ids: [Int]?
+    var media_type: String?
+    var adult: Bool?
+    var genres: [Genre]?
+    var credits: Credits?
+    var production_countries: [Country]?
+    var original_language: String?
+    var tagline: String?
+    var videos: Video?
     
     static var placeholder = Movie()
     
@@ -15,7 +34,7 @@ final class Movie: Media, TMDBMediaResponse {
     
     // detailed response
     var runtime: Int?
-    var recommendations: MoviesPagedResult?
+    var recommendations: PagedResult<Movie>?
     var revenue: Double?
     var budget: Double?
     
@@ -28,37 +47,19 @@ final class Movie: Media, TMDBMediaResponse {
     var isPosterAvaiable: Bool {
         return poster_path != nil
     }
-    
-    override var viewModel: MediaViewModel {
+}
+
+extension Movie {
+    var mediaType: MediaType { return .movie }
+    var viewModel: MediaViewModel {
         return MovieViewModel(movie: self)
     }
     
-    enum CodingKeys: String, CodingKey {
-        case video, runtime, recommendations, revenue, budget,
-             character, credit_id, department, job
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+        hasher.combine(title)
+        hasher.combine(character)
     }
-    
-    required init(from decoder: Decoder) throws {
-        try super.init(from: decoder)
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        
-        video = try? container.decode(Bool.self, forKey: .video)
-        runtime = try? container.decode(Int.self, forKey: .runtime)
-        recommendations = try? container.decode(MoviesPagedResult.self, forKey: .recommendations)
-        revenue = try? container.decode(Double.self, forKey: .revenue)
-        budget = try? container.decode(Double.self, forKey: .budget)
-        
-        character = try? container.decode(String.self, forKey: .character)
-        credit_id = try? container.decode(String.self, forKey: .credit_id)
-        department = try? container.decode(String.self, forKey: .department)
-        job = try? container.decode(String.self, forKey: .job)
-    }
-    
-    required init() {
-        super.init()
-    }
-    
-
 }
 
 struct Video: Codable, Hashable, Equatable {
@@ -82,22 +83,21 @@ struct Country: Codable, Hashable, Equatable {
 
 extension Movie {
     var short: Movie {
-        return self
-//        var movie = Movie()
-//        movie.id = id
-////        movie.release_date = release_date
-////        movie.title = title
-//        movie.original_title = original_title
-//        movie.overview = overview
-//        movie.poster_path = poster_path
-//        movie.vote_average = vote_average
-//        movie.vote_count = vote_count
-//        movie.genre_ids = genre_ids
-//        movie.genres = genres
-//        movie.backdrop_path = backdrop_path
-//        movie.popularity = popularity
-//
-//        return movie
+        var movie = Movie()
+        movie.id = id
+        movie.release_date = release_date
+        movie.title = title
+        movie.original_title = original_title
+        movie.overview = overview
+        movie.poster_path = poster_path
+        movie.vote_average = vote_average
+        movie.vote_count = vote_count
+        movie.genre_ids = genre_ids
+        movie.genres = genres
+        movie.backdrop_path = backdrop_path
+        movie.popularity = popularity
+
+        return movie
     }
 }
 

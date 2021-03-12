@@ -8,9 +8,9 @@
 import UIKit
 
 class WatchlistCoordinator: MainCoordinator {
-    func watchlistController(_ watchlistController: WatchlistController, countDidChange count: Int) {
-        watchlistTabBarItem?.badgeValue = String(count)
-    }
+//    func watchlistController(_ watchlistController: WatchlistController, countDidChange count: Int) {
+//        watchlistTabBarItem?.badgeValue = String(count)
+//    }
     
     private var watchlistTabBarItem: UITabBarItem?
     
