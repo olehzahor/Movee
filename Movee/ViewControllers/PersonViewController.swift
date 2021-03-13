@@ -7,38 +7,16 @@
 
 import UIKit
 
-extension PersonViewController: UICollectionViewDelegate {
-    func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
-        let section = dataSource?.findSection(at: indexPath)
-        return section == .knownFor
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let section = dataSource?.findSection(at: indexPath)
-        if section == .knownFor {
-            navigateToMovieDetails(from: indexPath)
-        }
-    }
-    
-    func navigateToMovieDetails(from indexPath: IndexPath) {
-        guard let movie = dataSource?.itemIdentifier(for: indexPath) as? Movie else { return }
-        coordinator?.showDetails(media: movie)
-    }
-    
-    func navigateToMovieCredits() {
-        coordinator?.showMovieCredits(personController)
-    }
-}
-
 class PersonViewController: UIViewController, GenericCollectionViewController, Coordinated {
     weak var coordinator: MainCoordinator?
     
-    typealias DataSource = UICollectionViewDiffableDataSource<PersonViewController.Section, AnyHashable>
+    typealias DataSource = UICollectionViewDiffableDataSource<Section, AnyHashable>
+    var snapshot: NSDiffableDataSourceSnapshot<Section, AnyHashable>?
+
     private(set) var personController: PersonController!
     var character: Character?
     var photo: UIImage?
-    var dataSource: DataSource?
-    var snapshot: NSDiffableDataSourceSnapshot<Section, AnyHashable>?
+    private(set) lazy var dataSource = createDataSource()
     var collectionView: UICollectionView!
     
     override func viewDidLoad() {
@@ -52,16 +30,15 @@ class PersonViewController: UIViewController, GenericCollectionViewController, C
         navigationItem.largeTitleDisplayMode = .never
         
         personController = PersonController(character: character)
-        personController.updateHandler = update(with:)
+        //personController.updateHandler = update(with:)
 
         setupCollectionView()
         
-        createDataSource()
-        dataSource?.apply(
+        dataSource.apply(
             createSnapshot(from: personController),
             animatingDifferences: true)
         
-        personController.load()
+        personController.load(completion: update(with:))
         title = personController.person.name
     }
         
@@ -78,22 +55,24 @@ class PersonViewController: UIViewController, GenericCollectionViewController, C
         collectionView.registerHeader(SectionHeader.self)
     }
     
-    func findSection(at indexPath: IndexPath) -> Section? {
-        return dataSource?.snapshot().sectionIdentifiers[indexPath.section]
-    }
-    
-    func findSection(contains item: AnyHashable) -> Section? {
-        return dataSource?.snapshot().sectionIdentifier(containingItem: item)
-    }
+    deinit { print("person vc has gone") }
+//    func findSection(at indexPath: IndexPath) -> Section? {
+//        return dataSource.snapshot().sectionIdentifiers[indexPath.section]
+//    }
+//
+//    func findSection(contains item: AnyHashable) -> Section? {
+//        return dataSource.snapshot().sectionIdentifier(containingItem: item)
+//    }
     
 }
 
 extension PersonViewController {
     func update(with controller: PersonController) {
         let snapshot = createSnapshot(from: controller)
-        dataSource?.apply(snapshot, animatingDifferences: true) {
+        dataSource.apply(snapshot, animatingDifferences: true)
+        { [weak self] in
             if #available(iOS 14.3, *) {
-               self.dataSource?.apply(snapshot, animatingDifferences: true)
+               self?.dataSource.apply(snapshot, animatingDifferences: true)
             }
         }
     }
@@ -128,11 +107,11 @@ extension PersonViewController {
         return snapshot!
     }
     
-    func createDataSource() {
-        dataSource =  DataSource(collectionView: collectionView) {
+    func createDataSource() -> DataSource {
+        let dataSource = DataSource(collectionView: collectionView) {
             [weak self] (collectionView, indexPath, item) -> UICollectionViewCell? in
             guard let self = self else { return nil }
-            guard let section = self.findSection(contains: item) else { return nil }
+            guard let section = self.dataSource.findSection(contains: item) else { return nil }
             switch section {
             case .photoAndName:
                 let cell = collectionView.dequeueCell(PersonPhotoCell.self, for: indexPath)
@@ -167,19 +146,45 @@ extension PersonViewController {
             
         }
         
-        dataSource?.supplementaryViewProvider = { [weak self] collectionView, kind, indexPath in
+        dataSource.supplementaryViewProvider = { [weak self] collectionView, kind, indexPath in
             guard let self = self else { return nil }
-            guard let section = self.findSection(at: indexPath) else { return nil }
+            guard let section = self.dataSource.findSection(at: indexPath) else { return nil }
             let header = collectionView.dequeueHeader(SectionHeader.self, for: indexPath)
             header.titleLabel.text = section.title
             if section == .knownFor {
                 header.setAction(title: "See All",
-                                 action: self.navigateToMovieCredits) }
+                                 action: { [weak self] in self?.navigateToMovieCredits() })
+            }
             return header
         }
-
+        
+        return dataSource
     }
 }
+
+extension PersonViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
+        let section = dataSource.findSection(at: indexPath)
+        return section == .knownFor
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let section = dataSource.findSection(at: indexPath)
+        if section == .knownFor {
+            navigateToMovieDetails(from: indexPath)
+        }
+    }
+    
+    func navigateToMovieDetails(from indexPath: IndexPath) {
+        guard let movie = dataSource.itemIdentifier(for: indexPath) as? Movie else { return }
+        coordinator?.showDetails(media: movie)
+    }
+    
+    func navigateToMovieCredits() {
+        coordinator?.showMovieCredits(personController)
+    }
+}
+
 
 extension PersonViewController {   
     enum Section: Hashable {

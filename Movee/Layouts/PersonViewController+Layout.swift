@@ -9,8 +9,8 @@ import UIKit
 
 extension PersonViewController {
     func createLayout() -> UICollectionViewLayout {
-        return UICollectionViewCompositionalLayout { (sectionIndex, layoutEnvironment) -> NSCollectionLayoutSection? in
-            guard let snapshot = self.snapshot else { return nil }
+        return UICollectionViewCompositionalLayout { [weak self] (sectionIndex, layoutEnvironment) -> NSCollectionLayoutSection? in
+            guard let snapshot = self?.snapshot else { return nil }
             let section = snapshot.sectionIdentifiers[sectionIndex]
             switch section {
             case .photoAndName:
