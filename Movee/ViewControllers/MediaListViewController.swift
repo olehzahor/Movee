@@ -54,7 +54,7 @@ class MediaListViewController: UIViewController, GenericCollectionViewController
         loadFromMediaController(mediaController)
     }
     
-    var oldItems = [AnyHashable]()
+    deinit { print("media list vc deleted from memory")}
 }
 
 extension MediaListViewController {

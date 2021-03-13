@@ -11,8 +11,8 @@ class PersonController {
     typealias UpdateHandler = (PersonController) -> ()
     typealias ErrorHandler = (Error) -> ()
 
-    var errorHandler: ErrorHandler?
-    var updateHandler: UpdateHandler?
+    //var errorHandler: ErrorHandler?
+    //var updateHandler: UpdateHandler?
 
     private(set) var person: Person! {
         didSet {
@@ -96,7 +96,7 @@ class PersonController {
             .compactMap { MovieCredits(department: $0.key, items: $0.value) }
     }()
     
-    private func fetchDetails() {
+    private func fetchDetails(completion: UpdateHandler?) {
         guard let personId = person?.id else { return }
         
         TMDBClient.shared.getPersonDetails(personId: personId) { [self] result in
@@ -104,20 +104,22 @@ class PersonController {
             case .success(let person):
                 self.person = person
                 DispatchQueue.main.async {
-                    updateHandler?(self)
+                    completion?(self)
+                    //updateHandler?(self)
                 }
                 
             case .failure(let error):
                 print(error)
-                DispatchQueue.main.async {
-                    errorHandler?(error)
-                }
+//                DispatchQueue.main.async {
+//                    completion(self)
+//                    //errorHandler?(error)
+//                }
             }
         }
     }
     
-    func load() {
-        fetchDetails()
+    func load(completion: UpdateHandler? = nil) {
+        fetchDetails(completion: completion)
     }
     
     init(character: Character) {

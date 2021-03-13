@@ -1,4 +1,5 @@
 import UIKit
+import SDWebImage
 
 class MediaDetailsViewController<MediaType: Media>: UIViewController, GenericCollectionViewController, Coordinated, UICollectionViewDelegate {
     typealias DataSource = UICollectionViewDiffableDataSource<Section, AnyHashable>
@@ -75,7 +76,7 @@ class MediaDetailsViewController<MediaType: Media>: UIViewController, GenericCol
         title = mediaController.viewModel?.title
         navigationItem.titleView?.alpha = 0
         navigationItem.largeTitleDisplayMode = .never
-        setupNavigationBarButtons()
+        //setupNavigationBarButtons()
         dataSource.apply(createSnapshot(controller: mediaController), animatingDifferences: true)
         
         mediaController.loadDetails(completion: update(with:))
@@ -140,6 +141,7 @@ class MediaDetailsViewController<MediaType: Media>: UIViewController, GenericCol
     
     deinit {
         print("removed from memory: details vc")
+        //collectionView.dataSource = nil
     }
 }
 
@@ -261,9 +263,13 @@ extension MediaDetailsViewController {
         let dataSource = DataSource(collectionView: collectionView) { [weak self]
             (collectionView, indexPath, item) -> UICollectionViewCell? in
             guard let self = self else { return nil }
+            
+            //let dataSource = collectionView.dataSource as? DataSource
             guard let section = self.dataSource.findSection(at: indexPath) else {
                 fatalError("Couldn't find section at index: \(indexPath)")
             }
+            //let section = Section.allCases[indexPath.row]
+            
             switch section {
             case .description:
                 let cell = collectionView.dequeueCell(DescriptionCell.self, for: indexPath)
@@ -313,8 +319,9 @@ extension MediaDetailsViewController {
         
         dataSource.supplementaryViewProvider = { [weak self] collectionView, kind, indexPath in
             guard let self = self else { return nil }
-            guard let section = dataSource.findSection(at: indexPath) else { return nil }
-            
+            guard let section = self.dataSource.findSection(at: indexPath) else { return nil }
+            //let section = Section.allCases[indexPath.row]
+
             if section == .description {
                 let backdrop = collectionView.dequeueHeader(BackdropView.self, for: indexPath)
                 self.mediaController.viewModel?.configure(backdrop)
@@ -366,7 +373,7 @@ extension MediaDetailsViewController  {
 }
 
 extension MediaDetailsViewController {
-    enum Section: String, Hashable {
+    enum Section: String, Hashable, CaseIterable {
         case description
         case trailer
         case credits = "Cast and Crew"
