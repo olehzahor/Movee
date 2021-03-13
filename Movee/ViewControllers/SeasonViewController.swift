@@ -28,7 +28,7 @@ class SeasonViewController: UIViewController, GenericCollectionViewController, C
         collectionView = createCollectionView()
         collectionView.contentInset.top = 16
         collectionView.delegate = self
-        registerCell(EpisodeCell.self)
+        collectionView.registerCell(EpisodeCell.self)
     }
     
     override func viewDidLoad() {
@@ -84,7 +84,7 @@ extension SeasonViewController {
             let episode = episodeContainer.episode
             let isExpanded = episodeContainer.isExpanded
             
-            let cell = self.dequeueCell(EpisodeCell.self, for: indexPath)
+            let cell = collectionView.dequeueCell(EpisodeCell.self, for: indexPath)
             episode.viewModel.configure(cell, isExpanded: isExpanded)
             return cell
         }

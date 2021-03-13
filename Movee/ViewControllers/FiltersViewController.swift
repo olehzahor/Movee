@@ -58,9 +58,9 @@ class FiltersViewController: UIViewController, GenericCollectionViewController, 
         collectionView.allowsMultipleSelection = true
         collectionView.delegate = self
         
-        registerCell(OptionCell.self)
-        registerFooter(HintFooter.self)
-        registerHeader(SectionHeader.self)
+        collectionView.registerCell(OptionCell.self)
+        collectionView.registerFooter(HintFooter.self)
+        collectionView.registerHeader(SectionHeader.self)
         
         
         dataSource.apply(createSnapshot())
@@ -87,7 +87,7 @@ extension FiltersViewController {
     
     func createDataSource() -> DataSource {
         let dataSource = DataSource(collectionView: collectionView) { (collectionView, indexPath, item) -> UICollectionViewCell? in
-            let cell = self.dequeueCell(OptionCell.self, for: indexPath)
+            let cell = collectionView.dequeueCell(OptionCell.self, for: indexPath)
             guard let item = item as? FilterController.Option else { return cell }
 
             cell.label.text = item.name
@@ -100,9 +100,9 @@ extension FiltersViewController {
         
         dataSource.supplementaryViewProvider = { [weak self] collectionView, kind, indexPath in
             guard let self = self else { return nil }
-            guard let section = self.findSection(at: indexPath, in: self.dataSource) else { return nil }
+            guard let section = dataSource.findSection(at: indexPath) else { return nil }
             
-            let header = self.dequeueHeader(SectionHeader.self, for: indexPath)
+            let header = collectionView.dequeueHeader(SectionHeader.self, for: indexPath)
             header.titleLabel.text = section.title
             
             if section == .genres {

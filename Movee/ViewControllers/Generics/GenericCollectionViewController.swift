@@ -7,7 +7,77 @@
 
 import UIKit
 
+extension UICollectionViewDiffableDataSource {
+    func findSection(at indexPath: IndexPath) -> SectionIdentifierType? {
+        return self.snapshot().sectionIdentifiers[indexPath.section]
+    }
+    
+    func findSection(at sectionIndex: Int) -> SectionIdentifierType? {
+        return self.snapshot().sectionIdentifiers[sectionIndex]
+    }
+    
+    func findSection(contains item: ItemIdentifierType) -> SectionIdentifierType? {
+        return self.snapshot().sectionIdentifier(containingItem: item)
+    }
+}
 
+extension UICollectionView {
+    func registerCell<T: SelfConfiguringView>(_ cellClass: T.Type) {
+        self.register(
+            cellClass,
+            forCellWithReuseIdentifier: cellClass.reuseIdentifier
+        )
+    }
+
+    func dequeueCell<T: SelfConfiguringView>(_ cellClass: T.Type, for indexPath: IndexPath) -> T {
+        guard let cell = self.dequeueReusableCell(
+                withReuseIdentifier: cellClass.reuseIdentifier,
+                for: indexPath
+        ) as? T else {
+            fatalError("Unable to dequeue \(cellClass)")
+        }
+        return cell
+    }
+    
+    func registerHeader<T: SelfConfiguringView>(_ viewClass: T.Type) {
+        self.register(
+            viewClass,
+            forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
+            withReuseIdentifier: viewClass.reuseIdentifier
+        )
+    }
+
+    func dequeueHeader<T: SelfConfiguringView>(_ viewClass: T.Type, for indexPath: IndexPath) -> T {
+        guard let header = self.dequeueReusableSupplementaryView(
+                ofKind: UICollectionView.elementKindSectionHeader,
+                withReuseIdentifier: viewClass.reuseIdentifier,
+                for: indexPath
+        ) as? T else {
+            fatalError("Unable to dequeue header \(viewClass)")
+        }
+        return header
+    }
+    
+    func registerFooter<T: SelfConfiguringView>(_ viewClass: T.Type) {
+        self.register(
+            viewClass,
+            forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter,
+            withReuseIdentifier: viewClass.reuseIdentifier
+        )
+    }
+    
+    func dequeueFooter<T: SelfConfiguringView>(_ viewClass: T.Type, for indexPath: IndexPath) -> T {
+        guard let header = self.dequeueReusableSupplementaryView(
+                ofKind: UICollectionView.elementKindSectionFooter,
+                withReuseIdentifier: viewClass.reuseIdentifier,
+                for: indexPath
+        ) as? T else {
+            fatalError("Unable to dequeue footer \(viewClass)")
+        }
+        return header
+    }
+
+}
 
 protocol GenericCollectionViewController: class {
 //    associatedtype SectionIdentifierType: Hashable
@@ -18,12 +88,12 @@ protocol GenericCollectionViewController: class {
     func createCollectionView() -> UICollectionView
     //func setupCollectionView()
     func createLayout() -> UICollectionViewLayout
-    func registerCell<T: SelfConfiguringView>(_ cellClass: T.Type)
-    func dequeueCell<T: SelfConfiguringView>(_ cellClass: T.Type, for indexPath: IndexPath) -> T
-    func registerHeader<T: SelfConfiguringView>(_ viewClass: T.Type)
-    func dequeueHeader<T: SelfConfiguringView>(_ viewClass: T.Type, for indexPath: IndexPath) -> T
-    func registerFooter<T: SelfConfiguringView>(_ viewClass: T.Type)
-    func dequeueFooter<T: SelfConfiguringView>(_ viewClass: T.Type, for indexPath: IndexPath) -> T
+//    func registerCell<T: SelfConfiguringView>(_ cellClass: T.Type)
+//    func dequeueCell<T: SelfConfiguringView>(_ cellClass: T.Type, for indexPath: IndexPath) -> T
+//    func registerHeader<T: SelfConfiguringView>(_ viewClass: T.Type)
+//    func dequeueHeader<T: SelfConfiguringView>(_ viewClass: T.Type, for indexPath: IndexPath) -> T
+//    func registerFooter<T: SelfConfiguringView>(_ viewClass: T.Type)
+//    func dequeueFooter<T: SelfConfiguringView>(_ viewClass: T.Type, for indexPath: IndexPath) -> T
 }
 
 extension GenericCollectionViewController where Self: UIViewController {
@@ -35,89 +105,89 @@ extension GenericCollectionViewController where Self: UIViewController {
         return collectionView
     }
     
-    func findSection<SectionIdentifierType: Hashable, ItemIdentifierType: Hashable>
-    (
-        at indexPath: IndexPath,
-        in dataSource: UICollectionViewDiffableDataSource<SectionIdentifierType, ItemIdentifierType>?
-    ) -> SectionIdentifierType? {
-        return dataSource?.snapshot().sectionIdentifiers[indexPath.section]
-        //return sections[indexPath.section]
-    }
-    
-    func findSection<SectionIdentifierType: Hashable, ItemIdentifierType: Hashable>
-    (
-        at sectionIndex: Int,
-        in dataSource: UICollectionViewDiffableDataSource<SectionIdentifierType, ItemIdentifierType>?
-    ) -> SectionIdentifierType? {
-        return dataSource?.snapshot().sectionIdentifiers[sectionIndex]
-        //return sections[indexPath.section]
-    }
-    
-    
-    func findSection<SectionIdentifierType: Hashable, ItemIdentifierType: Hashable>(
-        contains item: ItemIdentifierType,
-        in dataSource: UICollectionViewDiffableDataSource<SectionIdentifierType, ItemIdentifierType>?
-    ) -> SectionIdentifierType? {
-        return dataSource?.snapshot().sectionIdentifier(containingItem: item)
-    }
-    
-    func f<SectionIdentifierType: Hashable, ItemIdentifierType: Hashable>(dataSource: UITableViewDiffableDataSource<SectionIdentifierType, ItemIdentifierType>) {
-        
-    }
-    
-    func registerCell<T: SelfConfiguringView>(_ cellClass: T.Type) {
-        collectionView.register(
-            cellClass,
-            forCellWithReuseIdentifier: cellClass.reuseIdentifier
-        )
-    }
-
-    func dequeueCell<T: SelfConfiguringView>(_ cellClass: T.Type, for indexPath: IndexPath) -> T {
-        guard let cell = collectionView.dequeueReusableCell(
-                withReuseIdentifier: cellClass.reuseIdentifier,
-                for: indexPath
-        ) as? T else {
-            fatalError("Unable to dequeue \(cellClass)")
-        }
-        return cell
-    }
-    
-    func registerHeader<T: SelfConfiguringView>(_ viewClass: T.Type) {
-        collectionView.register(
-            viewClass,
-            forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
-            withReuseIdentifier: viewClass.reuseIdentifier
-        )
-    }
-
-    func dequeueHeader<T: SelfConfiguringView>(_ viewClass: T.Type, for indexPath: IndexPath) -> T {
-        guard let header = collectionView.dequeueReusableSupplementaryView(
-                ofKind: UICollectionView.elementKindSectionHeader,
-                withReuseIdentifier: viewClass.reuseIdentifier,
-                for: indexPath
-        ) as? T else {
-            fatalError("Unable to dequeue header \(viewClass)")
-        }
-        return header
-    }
-    
-    func registerFooter<T: SelfConfiguringView>(_ viewClass: T.Type) {
-        collectionView.register(
-            viewClass,
-            forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter,
-            withReuseIdentifier: viewClass.reuseIdentifier
-        )
-    }
-    
-    func dequeueFooter<T: SelfConfiguringView>(_ viewClass: T.Type, for indexPath: IndexPath) -> T {
-        guard let header = collectionView.dequeueReusableSupplementaryView(
-                ofKind: UICollectionView.elementKindSectionFooter,
-                withReuseIdentifier: viewClass.reuseIdentifier,
-                for: indexPath
-        ) as? T else {
-            fatalError("Unable to dequeue footer \(viewClass)")
-        }
-        return header
-    }
+//    func findSection<SectionIdentifierType: Hashable, ItemIdentifierType: Hashable>
+//    (
+//        at indexPath: IndexPath,
+//        in dataSource: UICollectionViewDiffableDataSource<SectionIdentifierType, ItemIdentifierType>?
+//    ) -> SectionIdentifierType? {
+//        return dataSource?.snapshot().sectionIdentifiers[indexPath.section]
+//        //return sections[indexPath.section]
+//    }
+//
+//    func findSection<SectionIdentifierType: Hashable, ItemIdentifierType: Hashable>
+//    (
+//        at sectionIndex: Int,
+//        in dataSource: UICollectionViewDiffableDataSource<SectionIdentifierType, ItemIdentifierType>?
+//    ) -> SectionIdentifierType? {
+//        return dataSource?.snapshot().sectionIdentifiers[sectionIndex]
+//        //return sections[indexPath.section]
+//    }
+//
+//
+//    func findSection<SectionIdentifierType: Hashable, ItemIdentifierType: Hashable>(
+//        contains item: ItemIdentifierType,
+//        in dataSource: UICollectionViewDiffableDataSource<SectionIdentifierType, ItemIdentifierType>?
+//    ) -> SectionIdentifierType? {
+//        return dataSource?.snapshot().sectionIdentifier(containingItem: item)
+//    }
+//
+////    func f<SectionIdentifierType: Hashable, ItemIdentifierType: Hashable>(dataSource: UITableViewDiffableDataSource<SectionIdentifierType, ItemIdentifierType>) {
+////
+////    }
+//
+//    func registerCell<T: SelfConfiguringView>(_ cellClass: T.Type) {
+//        collectionView.register(
+//            cellClass,
+//            forCellWithReuseIdentifier: cellClass.reuseIdentifier
+//        )
+//    }
+//
+//    func dequeueCell<T: SelfConfiguringView>(_ cellClass: T.Type, for indexPath: IndexPath) -> T {
+//        guard let cell = collectionView.dequeueReusableCell(
+//                withReuseIdentifier: cellClass.reuseIdentifier,
+//                for: indexPath
+//        ) as? T else {
+//            fatalError("Unable to dequeue \(cellClass)")
+//        }
+//        return cell
+//    }
+//
+//    func registerHeader<T: SelfConfiguringView>(_ viewClass: T.Type) {
+//        collectionView.register(
+//            viewClass,
+//            forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
+//            withReuseIdentifier: viewClass.reuseIdentifier
+//        )
+//    }
+//
+//    func dequeueHeader<T: SelfConfiguringView>(_ viewClass: T.Type, for indexPath: IndexPath) -> T {
+//        guard let header = collectionView.dequeueReusableSupplementaryView(
+//                ofKind: UICollectionView.elementKindSectionHeader,
+//                withReuseIdentifier: viewClass.reuseIdentifier,
+//                for: indexPath
+//        ) as? T else {
+//            fatalError("Unable to dequeue header \(viewClass)")
+//        }
+//        return header
+//    }
+//
+//    func registerFooter<T: SelfConfiguringView>(_ viewClass: T.Type) {
+//        collectionView.register(
+//            viewClass,
+//            forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter,
+//            withReuseIdentifier: viewClass.reuseIdentifier
+//        )
+//    }
+//
+//    func dequeueFooter<T: SelfConfiguringView>(_ viewClass: T.Type, for indexPath: IndexPath) -> T {
+//        guard let header = collectionView.dequeueReusableSupplementaryView(
+//                ofKind: UICollectionView.elementKindSectionFooter,
+//                withReuseIdentifier: viewClass.reuseIdentifier,
+//                for: indexPath
+//        ) as? T else {
+//            fatalError("Unable to dequeue footer \(viewClass)")
+//        }
+//        return header
+//    }
     
 }

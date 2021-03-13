@@ -49,8 +49,8 @@ class MovieCreditsController: UIViewController, GenericCollectionViewController,
         collectionView.backgroundColor = .systemBackground
         collectionView.delegate = self
         
-        registerCell(MovieListCell.self)
-        registerHeader(SectionHeader.self)
+        collectionView.registerCell(MovieListCell.self)
+        collectionView.registerHeader(SectionHeader.self)
     }
     
     func createLayout() -> UICollectionViewLayout {
@@ -76,16 +76,15 @@ class MovieCreditsController: UIViewController, GenericCollectionViewController,
     func createDataSource() {
         dataSource =  DataSource(collectionView: collectionView) {
             (collectionView, indexPath, movie) -> UICollectionViewCell? in
-            let cell = self.dequeueCell(MovieListCell.self, for: indexPath)
+            let cell = collectionView.dequeueCell(MovieListCell.self, for: indexPath)
             MovieViewModel(movie: movie).configure(cell)
             return cell
         }
         
         dataSource?.supplementaryViewProvider = { [weak self] collectionView, kind, indexPath in
-            guard let self = self else { return nil }
-            guard let section = self.findSection(at: indexPath, in: self.dataSource) else { return nil }
+            guard let section = self?.dataSource?.findSection(at: indexPath) else { return nil }
             
-            let header = self.dequeueHeader(SectionHeader.self, for: indexPath)
+            let header = collectionView.dequeueHeader(SectionHeader.self, for: indexPath)
             header.titleLabel.text = section
             return header
         }

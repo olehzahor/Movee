@@ -40,8 +40,8 @@ class HomeViewController: UIViewController, GenericCollectionViewController, Coo
         collectionView.delegate = self
         collectionView.contentInset.top = 10
         
-        registerCell(CompactMovieCell.self)
-        registerHeader(SectionHeader.self)
+        collectionView.registerCell(CompactMovieCell.self)
+        collectionView.registerHeader(SectionHeader.self)
     }
     
     fileprivate func addObserverForWatchlistUpdates() {
@@ -181,9 +181,9 @@ extension HomeViewController {
     func createDataSource() -> DataSource {
         let dataSource = DataSource(
             collectionView: collectionView,
-            cellProvider: { [self] (collectionView, indexPath, container) -> UICollectionViewCell? in
+            cellProvider: { (collectionView, indexPath, container) -> UICollectionViewCell? in
                 let media = container.media
-                let cell = dequeueCell(CompactMovieCell.self, for: indexPath)
+                let cell = collectionView.dequeueCell(CompactMovieCell.self, for: indexPath)
                 if let movie = media as? Movie {
                     movie.viewModel.configure(cell)
                 } else if let tvShow = media as? TVShow {
@@ -194,9 +194,9 @@ extension HomeViewController {
         
         dataSource.supplementaryViewProvider = { (collectionView, kind, indexPath) -> UICollectionReusableView? in
             
-            guard let sectionTitle = self.findSection(at: indexPath, in: self.dataSource) else { return nil }
+            guard let sectionTitle = dataSource.findSection(at: indexPath) else { return nil }
             
-            let header = self.dequeueHeader(SectionHeader.self, for: indexPath)
+            let header = collectionView.dequeueHeader(SectionHeader.self, for: indexPath)
             header.titleLabel.text = sectionTitle
             
             if sectionTitle == self.watchlistController?.title {

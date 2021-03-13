@@ -6,7 +6,7 @@
 //
 
 import Foundation
-
+//replace medias with view models
 protocol AnyMediaListController {
     typealias CompletionHandler = () -> Void
     func load(fromPage initialPage: Int, infiniteScroll: Bool, completion: @escaping CompletionHandler)

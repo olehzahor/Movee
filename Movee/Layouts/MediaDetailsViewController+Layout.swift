@@ -45,15 +45,15 @@ class StrechyHeaderCompositionalLayout: UICollectionViewCompositionalLayout {
 
 extension MediaDetailsViewController {
     func createLayout() -> UICollectionViewLayout {
-        return StrechyHeaderCompositionalLayout { (sectionIndex, layoutEnvironment) -> NSCollectionLayoutSection? in
-            guard let section = self.findSection(at: sectionIndex, in: self.dataSource)
+        return StrechyHeaderCompositionalLayout { [weak self] (sectionIndex, layoutEnvironment) -> NSCollectionLayoutSection? in
+            guard let section = self?.dataSource.findSection(at: sectionIndex)
             else { fatalError("Couldn't find section at index: \(sectionIndex)") }
             
             switch section {
             case .description:
-                return self.createDescriptionSection()
+                return self?.createDescriptionSection()
             case .credits:
-                return self.createCreditsSection()
+                return self?.createCreditsSection()
             case .related, .seasons:
                 return GenericLayouts.createHorizontalListSection(height: 188, width: 110, addHeader: true)
             case .trailer:

@@ -9,12 +9,12 @@ import UIKit
 
 extension PersonViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
-        let section = findSection(at: indexPath, in: dataSource)
+        let section = dataSource?.findSection(at: indexPath)
         return section == .knownFor
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let section = findSection(at: indexPath, in: dataSource)
+        let section = dataSource?.findSection(at: indexPath)
         if section == .knownFor {
             navigateToMovieDetails(from: indexPath)
         }
@@ -70,12 +70,12 @@ class PersonViewController: UIViewController, GenericCollectionViewController, C
         
         collectionView.delegate = self
         
-        registerCell(BiographyCell.self)
-        registerCell(PersonPhotoCell.self)
-        registerCell(KeyValueCell.self)
-        registerCell(CompactMovieCell.self)
+        collectionView.registerCell(BiographyCell.self)
+        collectionView.registerCell(PersonPhotoCell.self)
+        collectionView.registerCell(KeyValueCell.self)
+        collectionView.registerCell(CompactMovieCell.self)
         
-        registerHeader(SectionHeader.self)
+        collectionView.registerHeader(SectionHeader.self)
     }
     
     func findSection(at indexPath: IndexPath) -> Section? {
@@ -130,11 +130,12 @@ extension PersonViewController {
     
     func createDataSource() {
         dataSource =  DataSource(collectionView: collectionView) {
-            (collectionView, indexPath, item) -> UICollectionViewCell? in
+            [weak self] (collectionView, indexPath, item) -> UICollectionViewCell? in
+            guard let self = self else { return nil }
             guard let section = self.findSection(contains: item) else { return nil }
             switch section {
             case .photoAndName:
-                let cell = self.dequeueCell(PersonPhotoCell.self, for: indexPath)
+                let cell = collectionView.dequeueCell(PersonPhotoCell.self, for: indexPath)
                 self.personController.viewModel?.configure(cell)
                 return cell
             
@@ -143,7 +144,7 @@ extension PersonViewController {
                     return nil
                 }
                 
-                let cell = self.dequeueCell(KeyValueCell.self, for: indexPath)
+                let cell = collectionView.dequeueCell(KeyValueCell.self, for: indexPath)
                 
                 cell.keyLabel.text = item.key
                 cell.valueLabel.text = item.value
@@ -151,12 +152,12 @@ extension PersonViewController {
                 return cell
                 
             case .biography:
-                let cell = self.dequeueCell(BiographyCell.self, for: indexPath)
+                let cell = collectionView.dequeueCell(BiographyCell.self, for: indexPath)
                 self.personController.viewModel?.configure(cell)
                 return cell
                 
             case .knownFor:
-                let cell = self.dequeueCell(CompactMovieCell.self, for: indexPath)
+                let cell = collectionView.dequeueCell(CompactMovieCell.self, for: indexPath)
                 if let movie = item as? Movie {
                     let vm = MovieViewModel(movie: movie)
                     vm.configure(cell)
@@ -169,7 +170,7 @@ extension PersonViewController {
         dataSource?.supplementaryViewProvider = { [weak self] collectionView, kind, indexPath in
             guard let self = self else { return nil }
             guard let section = self.findSection(at: indexPath) else { return nil }
-            let header = self.dequeueHeader(SectionHeader.self, for: indexPath)
+            let header = collectionView.dequeueHeader(SectionHeader.self, for: indexPath)
             header.titleLabel.text = section.title
             if section == .knownFor {
                 header.setAction(title: "See All",
