@@ -1130,8 +1130,8 @@
             filePath = "Movee/ViewControllers/Generics/GenericCollectionViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "43"
-            endingLineNumber = "43"
+            startingLineNumber = "113"
+            endingLineNumber = "113"
             landmarkName = "findSection(at:in:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1664,8 +1664,8 @@
             filePath = "Movee/ViewControllers/MediaDetailsViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "217"
-            endingLineNumber = "217"
+            startingLineNumber = "221"
+            endingLineNumber = "221"
             landmarkName = "update(with:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1807,8 +1807,8 @@
             filePath = "Movee/ViewControllers/MediaDetailsViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "359"
-            endingLineNumber = "359"
+            startingLineNumber = "364"
+            endingLineNumber = "364"
             landmarkName = "navigateToSeason(from:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1823,8 +1823,8 @@
             filePath = "Movee/ViewControllers/MediaDetailsViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "360"
-            endingLineNumber = "360"
+            startingLineNumber = "365"
+            endingLineNumber = "365"
             landmarkName = "navigateToSeason(from:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1839,8 +1839,8 @@
             filePath = "Movee/ViewControllers/MediaDetailsViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "317"
-            endingLineNumber = "317"
+            startingLineNumber = "322"
+            endingLineNumber = "322"
             landmarkName = "createDataSource()"
             landmarkType = "7">
          </BreakpointContent>
@@ -1887,8 +1887,8 @@
             filePath = "Movee/ViewControllers/MediaDetailsViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "222"
-            endingLineNumber = "222"
+            startingLineNumber = "226"
+            endingLineNumber = "226"
             landmarkName = "createSnapshot(controller:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1903,8 +1903,8 @@
             filePath = "Movee/ViewControllers/MediaDetailsViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "252"
-            endingLineNumber = "252"
+            startingLineNumber = "256"
+            endingLineNumber = "256"
             landmarkName = "createSnapshot(controller:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1935,8 +1935,8 @@
             filePath = "Movee/ViewControllers/MediaDetailsViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "299"
-            endingLineNumber = "299"
+            startingLineNumber = "304"
+            endingLineNumber = "304"
             landmarkName = "createDataSource()"
             landmarkType = "7">
          </BreakpointContent>
@@ -2426,8 +2426,8 @@
             filePath = "Movee/ViewControllers/MediaListViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "99"
-            endingLineNumber = "99"
+            startingLineNumber = "100"
+            endingLineNumber = "100"
             landmarkName = "collectionView(_:didSelectItemAt:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -2506,8 +2506,8 @@
             filePath = "Movee/ViewControllers/MediaDetailsViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "224"
-            endingLineNumber = "224"
+            startingLineNumber = "228"
+            endingLineNumber = "228"
             landmarkName = "createSnapshot(controller:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -2970,8 +2970,8 @@
             filePath = "Movee/ViewControllers/MediaListViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "98"
-            endingLineNumber = "98"
+            startingLineNumber = "99"
+            endingLineNumber = "99"
             landmarkName = "collectionView(_:didSelectItemAt:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -2980,7 +2980,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "89BC043C-C417-418B-ADC0-DA513147D0E1"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Movee/Navigation/MainCoordinator.swift"
@@ -3012,7 +3012,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "2DA6DA13-EC68-4FC5-9AAF-BBED5C85819A"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Movee/ViewControllers/MediaListViewController.swift"
@@ -3028,7 +3028,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "17498D20-5D46-451A-AC04-F6C2CDE20FC0"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Movee/ViewControllers/MediaListViewController.swift"
@@ -3044,7 +3044,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "318E557A-C6F6-444D-B35E-D13309CD58E9"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Movee/ViewControllers/MediaListViewController.swift"
@@ -3076,7 +3076,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "68DE8503-E1B6-4FDD-B991-DAE176FFAEFF"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Movee/Navigation/MainCoordinator.swift"
@@ -3092,14 +3092,14 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "285E520D-1FFD-48AA-8813-0AA2AF7D3297"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Movee/ViewControllers/MediaListViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "102"
-            endingLineNumber = "102"
+            startingLineNumber = "103"
+            endingLineNumber = "103"
             landmarkName = "collectionView(_:didSelectItemAt:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -3216,7 +3216,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "CF6CCC0A-A709-440E-8A7B-8D58F5EEC074"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Movee/ViewModels/MediaViewModel/TVShowViewModel.swift"
@@ -3273,6 +3273,22 @@
             startingLineNumber = "49"
             endingLineNumber = "49"
             landmarkName = "createSnapshot()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "6C65747D-6D02-422A-8808-DB4985FE711E"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Movee/ViewControllers/MediaDetailsViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "142"
+            endingLineNumber = "142"
+            landmarkName = "deinit"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

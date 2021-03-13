@@ -35,9 +35,9 @@ class MediaListViewController: UIViewController, GenericCollectionViewController
         
         collectionView.delegate = self
         
-        registerCell(CharacterSearchCell.self)
-        registerCell(MovieCell.self)
-        registerCell(PlaceholderCell.self)
+        collectionView.registerCell(CharacterSearchCell.self)
+        collectionView.registerCell(MovieCell.self)
+        collectionView.registerCell(PlaceholderCell.self)
     }
     
     func setMediaController(_ controller: AnyMediaListController?) {
@@ -72,22 +72,23 @@ extension MediaListViewController {
     }
     
     func createDataSource() -> DataSource {
-        DataSource(collectionView: collectionView) { (collectionView, indexPath, item) -> UICollectionViewCell? in
+        DataSource(collectionView: collectionView) { [weak self] (collectionView, indexPath, item) -> UICollectionViewCell? in
             if let character = item as? Character, character != Character.placeholder {
-                let cell = self.dequeueCell(CharacterSearchCell.self, for: indexPath)
+                let cell = collectionView.dequeueCell(CharacterSearchCell.self, for: indexPath)
                 character.viewModel.configure(cell)
                 return cell
             } else if let movie = item as? Movie, movie != Movie.placeholder {
-                let cell = self.dequeueCell(MovieCell.self, for: indexPath)
+                let cell = collectionView.dequeueCell(MovieCell.self, for: indexPath)
                 movie.viewModel.configure(cell)
                 return cell
             } else if let tvShow = item as? TVShow, tvShow != TVShow.placeholder {
-                let cell = self.dequeueCell(MovieCell.self, for: indexPath)
+                let cell = collectionView.dequeueCell(MovieCell.self, for: indexPath)
                 tvShow.viewModel.configure(cell)
                 return cell
             } else {
+                guard let self = self else { return nil }
                 self.mediaController?.loadMore(completion: self.update)
-                return self.dequeueCell(PlaceholderCell.self, for: indexPath)
+                return collectionView.dequeueCell(PlaceholderCell.self, for: indexPath)
             }
         }
     }

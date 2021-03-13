@@ -39,8 +39,8 @@ class CreditsViewController: UIViewController, GenericCollectionViewController, 
 
         collectionView.contentInset = .init(top: 16, left: 0, bottom: 0, right: 0)
         
-        registerCell(CharacterHorizontalCell.self)
-        registerHeader(CreditsSectionHeader.self)
+        collectionView.registerCell(CharacterHorizontalCell.self)
+        collectionView.registerHeader(CreditsSectionHeader.self)
     }
 }
 
@@ -60,15 +60,15 @@ extension CreditsViewController {
     func createDataSource() -> DataSource {
         let dataSource = DataSource(collectionView: collectionView) {
             (collectionView, indexPath, character) -> UICollectionViewCell? in
-            let cell = self.dequeueCell(CharacterHorizontalCell.self, for: indexPath)
+            let cell = collectionView.dequeueCell(CharacterHorizontalCell.self, for: indexPath)
             character.viewModel.configure(cell)
             return cell
         }
         
         dataSource.supplementaryViewProvider = { [weak self] collectionView, kind, indexPath in
             guard let self = self else { return nil }
-            guard let section = self.findSection(at: indexPath, in: self.dataSource) else { return nil }
-            let header = self.dequeueHeader(CreditsSectionHeader.self, for: indexPath)
+            guard let section = self.dataSource.findSection(at: indexPath) else { return nil }
+            let header = collectionView.dequeueHeader(CreditsSectionHeader.self, for: indexPath)
             header.titleLabel.text = section
             return header
         }

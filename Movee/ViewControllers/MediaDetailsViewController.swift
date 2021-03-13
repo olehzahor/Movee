@@ -46,14 +46,14 @@ class MediaDetailsViewController<MediaType: Media>: UIViewController, GenericCol
         
         collectionView.delegate = self
         
-        registerHeader(BackdropView.self)
-        registerHeader(SectionHeader.self)
+        collectionView.registerHeader(BackdropView.self)
+        collectionView.registerHeader(SectionHeader.self)
         
-        registerCell(DescriptionCell.self)
-        registerCell(CharacterCell.self)
-        registerCell(CompactMovieCell.self)
-        registerCell(TrailerCell.self)
-        registerCell(KeyValueCell.self)
+        collectionView.registerCell(DescriptionCell.self)
+        collectionView.registerCell(CharacterCell.self)
+        collectionView.registerCell(CompactMovieCell.self)
+        collectionView.registerCell(TrailerCell.self)
+        collectionView.registerCell(KeyValueCell.self)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -99,7 +99,7 @@ class MediaDetailsViewController<MediaType: Media>: UIViewController, GenericCol
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let section = findSection(at: indexPath, in: dataSource)
+        let section = dataSource.findSection(at: indexPath)
         
         switch section {
         case .credits:
@@ -136,6 +136,10 @@ class MediaDetailsViewController<MediaType: Media>: UIViewController, GenericCol
     convenience init(_ mediaController: MediaController<MediaType>) {
         self.init()
         self.mediaController = mediaController
+    }
+    
+    deinit {
+        print("removed from memory: details vc")
     }
 }
 
@@ -252,20 +256,21 @@ extension MediaDetailsViewController {
         
         return snapshot
     }
-    
+    //TODO: move dequeueCell to collectionview ext
     func createDataSource() -> DataSource {
-        let dataSource = DataSource(collectionView: collectionView) {
+        let dataSource = DataSource(collectionView: collectionView) { [weak self]
             (collectionView, indexPath, item) -> UICollectionViewCell? in
-            guard let section = self.findSection(at: indexPath, in: self.dataSource) else {
+            guard let self = self else { return nil }
+            guard let section = self.dataSource.findSection(at: indexPath) else {
                 fatalError("Couldn't find section at index: \(indexPath)")
             }
             switch section {
             case .description:
-                let cell = self.dequeueCell(DescriptionCell.self, for: indexPath)
+                let cell = collectionView.dequeueCell(DescriptionCell.self, for: indexPath)
                 self.mediaController.viewModel?.configure(cell)
                 return cell
             case .trailer:
-                let cell = self.dequeueCell(TrailerCell.self, for: indexPath)
+                let cell = collectionView.dequeueCell(TrailerCell.self, for: indexPath)
                 if let video = item as? VideoResult {
                     cell.placeholder.sd_setImage(with: self.mediaController.viewModel?.backdropURL)
                     cell.trailerNameLabel.text = video.name
@@ -273,14 +278,14 @@ extension MediaDetailsViewController {
                 }
                 return cell
             case .credits:
-                let cell = self.dequeueCell(CharacterCell.self, for: indexPath)
+                let cell = collectionView.dequeueCell(CharacterCell.self, for: indexPath)
                 if let character = item as? Character {
                     character.viewModel.configure(cell)
                 }
                 return cell
                 
             case .related:
-                let cell = self.dequeueCell(CompactMovieCell.self, for: indexPath)
+                let cell = collectionView.dequeueCell(CompactMovieCell.self, for: indexPath)
                 if let movie = item as? Movie {
                     movie.viewModel.configure(cell)
                 } else if let tvShow = item as? TVShow {
@@ -289,14 +294,14 @@ extension MediaDetailsViewController {
                 return cell
             
             case .seasons:
-                let cell = self.dequeueCell(CompactMovieCell.self, for: indexPath)
+                let cell = collectionView.dequeueCell(CompactMovieCell.self, for: indexPath)
                 if let season = item as? Season {
                     season.viewModel.configure(cell)
                 }
                 return cell
                 
             case .info:
-                let cell = self.dequeueCell(KeyValueCell.self, for: indexPath)
+                let cell = collectionView.dequeueCell(KeyValueCell.self, for: indexPath)
                 if let row = (item as? [String: String])?.first {
                     cell.keyLabel.text = row.key
                     cell.valueLabel.text = row.value
@@ -308,26 +313,26 @@ extension MediaDetailsViewController {
         
         dataSource.supplementaryViewProvider = { [weak self] collectionView, kind, indexPath in
             guard let self = self else { return nil }
-            guard let section = self.findSection(at: indexPath, in: self.dataSource) else { return nil }
+            guard let section = dataSource.findSection(at: indexPath) else { return nil }
             
             if section == .description {
-                let backdrop = self.dequeueHeader(BackdropView.self, for: indexPath)
+                let backdrop = collectionView.dequeueHeader(BackdropView.self, for: indexPath)
                 self.mediaController.viewModel?.configure(backdrop)
                 return backdrop
             }
                         
-            let sectionHeader = self.dequeueHeader(SectionHeader.self, for: indexPath)
+            let sectionHeader = collectionView.dequeueHeader(SectionHeader.self, for: indexPath)
             sectionHeader.titleLabel.text = section.title
             print(section)
             
             switch section {
             case .related:
-                sectionHeader.setAction(title: "See All") {
-                    self.navigateToRelatedList()
+                sectionHeader.setAction(title: "See All") { [weak self] in
+                    self?.navigateToRelatedList()
                 }
             case .credits:
-                sectionHeader.setAction(title: "See All") {
-                    self.navigateToCredits()
+                sectionHeader.setAction(title: "See All") { [weak self] in
+                    self?.navigateToCredits()
                 }
             default:
                 break
