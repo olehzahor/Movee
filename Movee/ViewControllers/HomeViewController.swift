@@ -78,7 +78,7 @@ class HomeViewController: UIViewController, Coordinated {
     }
     
     fileprivate func manageMoviesControllers() {
-        if watchlistController != nil, watchlistController!.count > 0 {
+        if watchlistController != nil {
             loadWatchList() {
                 self.loadLists()
             }

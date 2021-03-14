@@ -10,7 +10,7 @@ import UIKit
 class MainTabBarController: UITabBarController {
     let coordinators: [Coordinator] = {
         let watchlistController = WatchlistController()
-
+        
         let mainCoordinator = MainCoordinator()
         mainCoordinator.watchlistController = watchlistController
         

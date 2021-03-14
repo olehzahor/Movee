@@ -10,6 +10,7 @@ import UIKit
 class WatchlistViewController: MediaListViewController {
     let placeholder: UILabel = {
         let label = UILabel()
+        label.backgroundColor = .red
         label.text = "Your watchlist is empty.\n\nMovies you add to your watchlist will appear here."
         label.textAlignment = .center
         label.numberOfLines = 0
@@ -35,6 +36,7 @@ class WatchlistViewController: MediaListViewController {
             if let watchlistController = watchlistController {
                 setMediaController(watchlistController)
                 NotificationCenter.default.addObserver(self, selector: #selector(watchlistUpdated), name: WatchlistController.ncUpdateName, object: nil)
+                NotificationCenter.default.addObserver(self, selector: #selector(watchlistUpdated), name: WatchlistController.ncLoadedName, object: nil)
             }
         }
     }

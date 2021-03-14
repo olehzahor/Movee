@@ -12,10 +12,7 @@ class SearchHistoryController: WatchlistController {
     
     convenience init(completion: @escaping () -> Void) {
         self.init()
-        DispatchQueue.global(qos: .background).async {
-            self.loadData()
-            DispatchQueue.main.async { completion() }
-        }
+        loadData(completion: completion)
     }
     
     convenience init() {

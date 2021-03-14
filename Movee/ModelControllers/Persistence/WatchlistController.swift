@@ -26,19 +26,39 @@ struct WatchlistItem: Codable, Equatable, Hashable {
     }
 }
 
-class WatchlistController: JSONPersistenceController<WatchlistItem>  {
+class WatchlistController: AsyncJSONPersistenceController<WatchlistItem>  {    
     static let ncUpdateName = Notification.Name("WatchlistUpdated")
-    
+    static let ncLoadedName = Notification.Name("WatchlistLoaded")
+
+    private var group = DispatchGroup()
+
     enum SortingKey { case date, title }
 
     public var sortingKey: SortingKey = .date
     public var sortAscending: Bool = true
         
-    override func saveData() {
-        super.saveData()
+    private func postUpdated() {
         NotificationCenter.default.post(name: Self.ncUpdateName, object: nil)
     }
+    
+    private func postLoaded() {
+        NotificationCenter.default.post(name: Self.ncLoadedName, object: nil)
+    }
+
+    override func saveData() {
+        super.saveData()
+        postUpdated()
+    }
        
+//    override func loadData(completion: (() -> Void)? = nil) {
+//        group.enter()
+//        super.loadData {
+//            completion?()
+//            self.postUpdate()
+//            self.group.leave()
+//        }
+//    }
+    
     func addMedia<T: Media>(_ media: T) {
         switch media.mediaType {
         case .movie:
@@ -84,13 +104,21 @@ class WatchlistController: JSONPersistenceController<WatchlistItem>  {
         }
     }
     
+//    convenience init() {
+//        self.init(filename: "watchlist.json")
+//        loadData()
+//    }
+    
     convenience init() {
         self.init(filename: "watchlist.json")
-    }
-    
-    override init(filename: String) {
-        super.init(filename: filename)
-        loadData()
+        print("watchlist: controller created")
+        group.enter()
+        print("watchlist: started loading data")
+        super.loadData {
+            print("watchlist: data loaded")
+            self.postLoaded()
+            self.group.leave()
+        }
     }
 }
 
@@ -99,10 +127,16 @@ extension WatchlistController: AnyMediaListController {
     @objc var title: String { return "Watchlist" }
 
     func load(fromPage initialPage: Int, infiniteScroll: Bool, completion: @escaping CompletionHandler) {
-        DispatchQueue.global().async {
-            if !self.isDataLoaded { self.loadData() }
-            DispatchQueue.main.async {
-                completion()
+        print("watchlist: vc requested items")
+        DispatchQueue.global(qos: .utility).async {
+            if self.dataState == .loading {
+                print("watchlist: items not loaded yet; waiting")
+                self.group.notify(queue: .main) {
+                    print("watchlist: items loaded; calling back to vc")
+                    completion() }
+            } else if self.dataState == .loaded {
+                print("watchlist: calling back to vc")
+                DispatchQueue.main.async { completion() }
             }
         }
     }
