@@ -136,7 +136,7 @@ extension DiscoverViewController: UISearchControllerDelegate, UISearchResultsUpd
         searchController?.searchBar.autocapitalizationType = .none
         searchController?.searchBar.delegate = self
         searchController?.searchBar.scopeButtonTitles = SearchResultType.titles
-        searchController?.searchBar.placeholder = "Search for Movies, TV Shows and People"
+        searchController?.searchBar.placeholder = "Movies, TV Shows and People"
         navigationItem.hidesSearchBarWhenScrolling = false
         navigationItem.searchController = searchController
         
