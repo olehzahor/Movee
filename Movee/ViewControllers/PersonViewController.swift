@@ -7,7 +7,7 @@
 
 import UIKit
 
-class PersonViewController: UIViewController, GenericCollectionViewController, Coordinated {
+class PersonViewController: UIViewController, Coordinated {
     weak var coordinator: MainCoordinator?
     
     typealias DataSource = UICollectionViewDiffableDataSource<Section, AnyHashable>
@@ -43,7 +43,7 @@ class PersonViewController: UIViewController, GenericCollectionViewController, C
     }
         
     func setupCollectionView() {
-        collectionView = createCollectionView()
+        collectionView = createCollectionView(layout: createLayout())
         
         collectionView.delegate = self
         

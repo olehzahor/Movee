@@ -27,8 +27,6 @@ enum SearchResultType: String, CaseIterable {
             return MediaListController<TVShow>.tvShowsSearchResult(query: query)
         case .people:
             return MediaListController<Character>.peopleSearchResult(query: query)
-        default:
-            return nil
         }
     }
 }

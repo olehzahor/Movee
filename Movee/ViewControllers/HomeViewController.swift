@@ -7,7 +7,7 @@
 
 import UIKit
 
-class HomeViewController: UIViewController, GenericCollectionViewController, Coordinated {
+class HomeViewController: UIViewController, Coordinated {
     typealias DataSource = UICollectionViewDiffableDataSource<String, MediaContainer>
     typealias Snapshot = NSDiffableDataSourceSnapshot<String, MediaContainer>
     
@@ -35,7 +35,7 @@ class HomeViewController: UIViewController, GenericCollectionViewController, Coo
     }
     
     fileprivate func setupCollectionView() {
-        collectionView = createCollectionView()
+        collectionView = createCollectionView(layout: createLayout())
         
         collectionView.delegate = self
         collectionView.contentInset.top = 10

@@ -7,7 +7,7 @@
 
 import UIKit
 
-class MediaListViewController: UIViewController, GenericCollectionViewController, Coordinated {
+class MediaListViewController: UIViewController, Coordinated {
     var collectionView: UICollectionView!
     var mediaController: AnyMediaListController? {
         didSet { title = mediaController?.title }
@@ -30,7 +30,7 @@ class MediaListViewController: UIViewController, GenericCollectionViewController
     private lazy var dataSource = createDataSource()
     
     fileprivate func configureCollectionView() {
-        collectionView = createCollectionView()
+        collectionView = createCollectionView(layout: createLayout())
         collectionView.contentInset.top = 16
         
         collectionView.delegate = self

@@ -32,31 +32,6 @@ class DiscoverListItem: Codable {
 }
 
 extension DiscoverListItem {
-//    var anyMediaListController: TMDBMediaListController<AnyMedia> {
-//        return TMDBMediaListController<AnyMedia>.customList(title: name, path: path ?? "", query: query ?? "")
-//    }
-    
-//    var movieController: TMDBMediaListController<Movie> {
-//        return TMDBMediaListController<Movie>.customList(title: name, path: path ?? "", query: query ?? "")
-//    }
-//
-//    func mediaC<T: Media>() -> TMDBMediaListController<T> {
-//        return TMDBMediaListController<T>.customList(title: name, path: path ?? "", query: query ?? "")
-//    }
-//
-//    var anyMediaController: TMDBMediaListController<AnyMedia> {
-//        return TMDBMediaListController<TVShow>.customList(title: name, path: path ?? "", query: query ?? "")
-//    }
-    
-//    var mediaController: some MediaListController {
-//        return TMDBMediaListController<Movie>.customList(title: name, path: path ?? "", query: query ?? "")
-//    }
-//
-    
-    //var moviesController: MoviesListController? { return nil }
-    
-    //var mediaCon
-    
     var mediaController: AnyMediaListController? {
         guard let path = path, let query = query else { return nil }
         switch mediaType {

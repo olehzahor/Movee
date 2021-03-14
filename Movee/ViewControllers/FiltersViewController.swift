@@ -8,7 +8,7 @@
 import UIKit
 
 
-class FiltersViewController: UIViewController, GenericCollectionViewController, Coordinated {
+class FiltersViewController: UIViewController, Coordinated {
     var coordinator: SearchCoordinator?
 
     typealias DataSource = UICollectionViewDiffableDataSource<FilterController.Section, AnyHashable>
@@ -54,7 +54,7 @@ class FiltersViewController: UIViewController, GenericCollectionViewController, 
         
         navigationItem.rightBarButtonItems = [findButton, resetButton]
         
-        collectionView = createCollectionView()
+        collectionView = createCollectionView(layout: createLayout())
         collectionView.allowsMultipleSelection = true
         collectionView.delegate = self
         

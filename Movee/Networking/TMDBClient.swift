@@ -8,7 +8,7 @@
 import Foundation
 
 class TMDBClient: ApiService {
-    typealias PagedReusltCompletionHandler = (Result<MoviesPagedResult, Error>) -> Void
+    //typealias PagedReusltCompletionHandler = (Result<MoviesPagedResult, Error>) -> Void
     var locale: String = "en_US"
     
     lazy var endpoints = Endpoints(apiKey: TMDB_API_KEY, locale: locale)
@@ -207,93 +207,3 @@ extension TMDBClient {
         return nil
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-//    func searchTVShows(query: String, page: Int,
-//                       completion: @escaping (Result<MediaPagedResult<TVShow>, Error>) -> Void) -> URLSessionTask? {
-//        return fetch(url: endpoints.searchTVShows(query: query, page: page),
-//              completion: completion)
-//    }
-//    //    func customList<MediaType: Media>(page: Int, path: String, query: String, completion: @escaping (Result<MediaPagedResult<MediaType>, Error>) -> Void) -> URLSessionTask? {
-    //        return fetch(url: endpoints.customList(page: page, path: path, params: query), completion: completion)
-    //    }
-    //
-        
-    //    func customList(page: Int, path: String, query: String, completion: @escaping PagedReusltCompletionHandler) -> URLSessionTask? {
-    //        return fetch(url: endpoints.customList(page: page, path: path, params: query), completion: completion)
-    //    }
-
-//    func getPopularMovies(page: Int,
-//                          completion: @escaping (Result<MoviesPagedResult, Error>) -> Void) -> URLSessionTask? {
-//        return fetch(url: endpoints.popularMovies(page: page),
-//                     completion: completion)
-//    }
-//
-
-    
-//    func getPopularTVShows(page: Int,
-//                          completion: @escaping (Result<MediaPagedResult<Media>, Error>) -> Void) -> URLSessionTask? {
-//        return fetch(url: endpoints.popularTVShows(page: page),
-//                     completion: completion)
-//    }
-
-//    func searchMovies<T: Media>(query: String, page: Int,
-//                      completion: @escaping (Result<PagedResult<T>, Error>) -> Void) -> URLSessionTask? {
-//        return fetch(url: endpoints.searchMovies(query: query, page: page),
-//              completion: completion)
-//    }
-//
-//
-//    func searchMovies(query: String, page: Int,
-//                      completion: @escaping (Result<MoviesPagedResult, Error>) -> Void) -> URLSessionTask? {
-//        return fetch(url: endpoints.searchMovies(query: query, page: page),
-//              completion: completion)
-//    }
-//
-//
-//    func searchMovies(query: String, page: Int,
-//                      completion: @escaping (Result<PagedSearchResult, Error>) -> Void) -> URLSessionTask? {
-//        return fetch(url: endpoints.searchMovies(query: query, page: page),
-//              completion: completion)
-//    }
-//
-
-//
-//    func searchTVShows(query: String, page: Int,
-//                       completion: @escaping (Result<PagedSearchResult, Error>) -> Void) -> URLSessionTask? {
-//        return fetch(url: endpoints.searchTVShows(query: query, page: page),
-//              completion: completion)
-//    }
-//
-//
-//
-//    func searchPeople(query: String, page: Int,
-//                      completion: @escaping (Result<PagedSearchResult, Error>) -> Void) -> URLSessionTask? {
-//        return fetch(url: endpoints.searchPeople(query: query, page: page),
-//              completion: completion)
-//    }
-//
-
-//
-//    func searchMulti(query: String, page: Int,
-//                      completion: @escaping (Result<PagedSearchResult, Error>) -> Void) -> URLSessionTask? {
-//        return fetch(url: endpoints.searchMulti(query: query, page: page),
-//              completion: completion)
-//    }
-//
-//    func searchMulti<T: Media>(query: String, page: Int,
-//                      completion: @escaping (Result<MediaPagedResult<T>, Error>) -> Void) -> URLSessionTask? {
-//        return fetch(url: endpoints.searchMulti(query: query, page: page),
-//              completion: completion)
-//    }
-//

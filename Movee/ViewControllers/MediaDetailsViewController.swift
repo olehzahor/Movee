@@ -1,7 +1,7 @@
 import UIKit
 import SDWebImage
 
-class MediaDetailsViewController<MediaType: Media>: UIViewController, GenericCollectionViewController, Coordinated, UICollectionViewDelegate {
+class MediaDetailsViewController<MediaType: Media>: UIViewController, Coordinated, UICollectionViewDelegate {
     typealias DataSource = UICollectionViewDiffableDataSource<Section, AnyHashable>
     typealias Snapshot = NSDiffableDataSourceSnapshot<Section, AnyHashable>
 

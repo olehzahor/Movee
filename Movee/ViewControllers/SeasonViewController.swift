@@ -12,7 +12,7 @@ struct EpisodeContainer: Hashable {
     var isExpanded: Bool
 }
 
-class SeasonViewController: UIViewController, GenericCollectionViewController, Coordinated {
+class SeasonViewController: UIViewController, Coordinated {
     weak var coordinator: MainCoordinator?
     
     typealias DataSource = UICollectionViewDiffableDataSource<Section, EpisodeContainer>
@@ -25,7 +25,7 @@ class SeasonViewController: UIViewController, GenericCollectionViewController, C
     var seasonController: SeasonController?
             
     private func setupCollectionView() {
-        collectionView = createCollectionView()
+        collectionView = createCollectionView(layout: createLayout())
         collectionView.contentInset.top = 16
         collectionView.delegate = self
         collectionView.registerCell(EpisodeCell.self)

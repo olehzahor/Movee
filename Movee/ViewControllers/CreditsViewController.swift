@@ -7,7 +7,7 @@
 
 import UIKit
 
-class CreditsViewController: UIViewController, GenericCollectionViewController, Coordinated {
+class CreditsViewController: UIViewController, Coordinated {
     weak var coordinator: MainCoordinator?
     
     typealias DataSource = UICollectionViewDiffableDataSource<String, Character>
@@ -34,7 +34,7 @@ class CreditsViewController: UIViewController, GenericCollectionViewController, 
     }
     
     func setupCollectionView() {
-        collectionView = createCollectionView()
+        collectionView = createCollectionView(layout: createLayout())
         collectionView.delegate = self
 
         collectionView.contentInset = .init(top: 16, left: 0, bottom: 0, right: 0)

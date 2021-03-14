@@ -20,7 +20,7 @@ extension MovieCreditsController: UICollectionViewDelegate {
     }
 }
 
-class MovieCreditsController: UIViewController, GenericCollectionViewController, Coordinated {
+class MovieCreditsController: UIViewController, Coordinated {
     weak var coordinator: MainCoordinator?
     
     typealias DataSource = UICollectionViewDiffableDataSource<String, Movie>
@@ -43,10 +43,11 @@ class MovieCreditsController: UIViewController, GenericCollectionViewController,
     
     
     func setupCollectionView() {
-        collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: createLayout())
-        view.addSubview(collectionView)
-        collectionView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
-        collectionView.backgroundColor = .systemBackground
+        collectionView = createCollectionView(layout: createLayout())
+//        collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: createLayout())
+//        view.addSubview(collectionView)
+//        collectionView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
+//        collectionView.backgroundColor = .systemBackground
         collectionView.delegate = self
         
         collectionView.registerCell(MovieListCell.self)

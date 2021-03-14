@@ -113,21 +113,3 @@ struct Filter: Codable {
     
     init() { }
 }
-
-//            "with_runtime.gte": string(runtimeLower),
-//            "with_runtime.lte": string(runtimeUpper)
-
-//            "vote_count.gte": string(voteCount?.lowerBound),
-//            "vote_count.lte": string(voteCount?.upperBound),
-//            "vote_average.gte": string(voteAverage?.lowerBound),
-//            "vote_average.lte": string(voteAverage?.upperBound),
-//    var minVotes: Int?
-//    var maxVotes: Int?
-//    var minRating: Int?
-//    var maxRating: Int?
-//    var minRuntime: Int?
-//    var maxRuntime: Int?
-    
-//    var voteCount: ClosedRange<Int>?
-//    var voteAverage: ClosedRange<Int>?
-    //var runtime: ClosedRange<Int>?

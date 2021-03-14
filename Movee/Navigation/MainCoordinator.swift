@@ -40,19 +40,6 @@ class MainCoordinator: Coordinator {
         default:
             return
         }
-//
-//        createAndPush(MediaDetailsViewController.self) {
-//            $0.mediaController = MediaController(media)
-//        }
-        
-//        switch media {
-//        case is Movie:
-//            showDetails(movie: media as! Movie)
-//        case is TVShow:
-//            showDetails(tvShow: media as! TVShow)
-//        default:
-//            return
-//        }
     }
         
     func showDetails(movie: Movie?) {
@@ -101,39 +88,12 @@ class MainCoordinator: Coordinator {
         }
     }
     
-//    func showRelated(to movie: Movie) {
-////        guard let moviesController = TMDBMoviesListController.relatedList(to: movie)
-////        else { return }
-////        let vc = MoviesListViewController(moviesController: moviesController)
-////        vc.coordinator = self
-////        navigationController.pushViewController(vc, animated: true)
-//    }
-//
-//    func showCustomMoviesList(moviesController: MoviesListController) {
-////        createAndPush(MoviesListViewController.self) {
-////            $0.setMoviesController(moviesController)
-////        }
-//    }
-//
     func showCustomMediaList(mediaController: AnyMediaListController?) {
         let vc = MediaListViewController()
         vc.setMediaController(mediaController)
         vc.coordinator = self
         navigationController.pushViewController(vc, animated: true)
-//        createAndPush(MediaListViewController.self) { $0.loadFromController(mediaController) }
     }
-//
-//    func showCustomMediaList(mediaController: MediaListController?) {
-//        if let moviesController = mediaController as? TMDBMediaListController<Movie> {
-//            createAndPush(MediaListViewController.self) {
-//                $0.setMediaController(moviesController)
-//            }
-//        } else if let tvShowsController = mediaController as? TMDBMediaListController<TVShow> {
-//            createAndPush(MediaListViewController.self) {
-//                $0.setMediaController(tvShowsController)
-//            }
-//        }
-//    }
     
     func showMovieCredits(_ controller: PersonController) {
         let vc = MovieCreditsController()
@@ -187,27 +147,3 @@ extension MainCoordinator {
 
     }
 }
-//{
-//        didSet {
-//            guard let navigationBarAppearance = navigationBarAppearance else { return }
-//            navigationController.navigationBar.standardAppearance = navigationBarAppearance
-//            navigationController.navigationBar.scrollEdgeAppearance = navigationBarAppearance
-//            navigationController.navigationBar.compactAppearance = navigationBarAppearance
-//
-//        }
-//    }
-
-
-//    func showDetails(movie: Movie) {
-//        let vc = MediaDetailsViewController(MediaController(movie))//MovieDetailsViewController()
-//        vc.coordinator = self
-//        //vc.movie = movie
-//        vc.watchlistController = watchlistController
-//        navigationController.pushViewController(vc, animated: true)
-//    }
-    
-//    func showMediaDetails<T: Media>(media: T) {
-//        createAndPush(MediaDetailsViewController.self) {
-//            $0.mediaController = MediaController(media)
-//        }
-//    }
