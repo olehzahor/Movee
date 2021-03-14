@@ -34,6 +34,7 @@ class MediaListViewController: UIViewController, GenericCollectionViewController
         collectionView.contentInset.top = 16
         
         collectionView.delegate = self
+        collectionView.keyboardDismissMode = .onDrag
         
         collectionView.registerCell(CharacterSearchCell.self)
         collectionView.registerCell(MovieCell.self)
@@ -53,8 +54,6 @@ class MediaListViewController: UIViewController, GenericCollectionViewController
         configureCollectionView()
         loadFromMediaController(mediaController)
     }
-    
-    deinit { print("media list vc deleted from memory")}
 }
 
 extension MediaListViewController {

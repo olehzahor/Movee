@@ -76,7 +76,7 @@ class MediaDetailsViewController<MediaType: Media>: UIViewController, GenericCol
         title = mediaController.viewModel?.title
         navigationItem.titleView?.alpha = 0
         navigationItem.largeTitleDisplayMode = .never
-        //setupNavigationBarButtons()
+        setupNavigationBarButtons()
         dataSource.apply(createSnapshot(controller: mediaController), animatingDifferences: true)
         
         mediaController.loadDetails(completion: update(with:))
@@ -141,7 +141,6 @@ class MediaDetailsViewController<MediaType: Media>: UIViewController, GenericCol
     
     deinit {
         print("removed from memory: details vc")
-        //collectionView.dataSource = nil
     }
 }
 

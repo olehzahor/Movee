@@ -65,6 +65,7 @@
 		049EC683259A41F80078CFD2 /* UIView+Overlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049EC682259A41F80078CFD2 /* UIView+Overlay.swift */; };
 		049EC686259A59900078CFD2 /* NSNumber+Dollars.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049EC685259A59900078CFD2 /* NSNumber+Dollars.swift */; };
 		04A09B65256435D4002CB6A2 /* Del-MovieDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A09B64256435D4002CB6A2 /* Del-MovieDetailsViewController.swift */; };
+		04A9777C25FD45FF00DD9C81 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 04A9777E25FD45FF00DD9C81 /* Localizable.strings */; };
 		04AB753225E820D3003B2D94 /* MediaController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AB753125E820D3003B2D94 /* MediaController.swift */; };
 		04AB753625E820DC003B2D94 /* MovieController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AB753525E820DC003B2D94 /* MovieController.swift */; };
 		04AB753925E820E8003B2D94 /* TVShowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AB753825E820E8003B2D94 /* TVShowController.swift */; };
@@ -197,6 +198,7 @@
 		049EC682259A41F80078CFD2 /* UIView+Overlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Overlay.swift"; sourceTree = "<group>"; };
 		049EC685259A59900078CFD2 /* NSNumber+Dollars.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSNumber+Dollars.swift"; sourceTree = "<group>"; };
 		04A09B64256435D4002CB6A2 /* Del-MovieDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Del-MovieDetailsViewController.swift"; sourceTree = "<group>"; };
+		04A9777D25FD45FF00DD9C81 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		04AB753125E820D3003B2D94 /* MediaController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaController.swift; sourceTree = "<group>"; };
 		04AB753525E820DC003B2D94 /* MovieController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieController.swift; sourceTree = "<group>"; };
 		04AB753825E820E8003B2D94 /* TVShowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TVShowController.swift; sourceTree = "<group>"; };
@@ -383,6 +385,7 @@
 			isa = PBXGroup;
 			children = (
 				04B99FB925E036A900197FFA /* MediaViewModel.swift */,
+				04A9777E25FD45FF00DD9C81 /* Localizable.strings */,
 				04AD72A725EEB41000DF2AC9 /* AnyMediaViewModel.swift */,
 				042A09E0255B0C110040AD3E /* MovieViewModel.swift */,
 				04B99FBC25E036FC00197FFA /* TVShowViewModel.swift */,
@@ -753,6 +756,7 @@
 				04E84D6D25ACEA990007C96A /* home.json in Resources */,
 				04DD6D3825484E6E005FBA8C /* LaunchScreen.storyboard in Resources */,
 				04C0579725AA1EB600C5C0DB /* lists.json in Resources */,
+				04A9777C25FD45FF00DD9C81 /* Localizable.strings in Resources */,
 				04DD6D3525484E6E005FBA8C /* Assets.xcassets in Resources */,
 				0439906025D2D9AB00BE0577 /* .gitignore in Resources */,
 				04DD6D3325484E6C005FBA8C /* Main.storyboard in Resources */,
@@ -936,6 +940,14 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
+		04A9777E25FD45FF00DD9C81 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				04A9777D25FD45FF00DD9C81 /* en */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
 		04DD6D3125484E6C005FBA8C /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
