@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SDWebImage
 
 class MediaListViewController: UIViewController, Coordinated {
     var collectionView: UICollectionView!
@@ -53,6 +54,10 @@ class MediaListViewController: UIViewController, Coordinated {
     override func viewDidLoad() {
         configureCollectionView()
         loadFromMediaController(mediaController)
+    }
+    
+    deinit {
+        SDImageCache.shared.clearMemory()
     }
 }
 

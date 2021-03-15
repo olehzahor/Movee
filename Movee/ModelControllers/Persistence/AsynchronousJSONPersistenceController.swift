@@ -36,7 +36,6 @@ class AsynchronousJSONPersistenceController<T: Codable&Hashable>: PersistenceCon
         print("started loading data")
         dataState = .loading
         DispatchQueue.global(qos: .background).async {
-            sleep(10)
             self._loadData()
             DispatchQueue.main.async { completion?() }
         }
@@ -60,7 +59,7 @@ class AsynchronousJSONPersistenceController<T: Codable&Hashable>: PersistenceCon
         }
     }
     
-    init(filename: String) {
+    internal init(filename: String) {
         self.filename = filename
     }
 }

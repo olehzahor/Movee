@@ -37,7 +37,6 @@ class WatchlistViewController: MediaListViewController {
             tabBarItem?.badgeValue = String(watchlistCount)
         } else { tabBarItem?.badgeValue = nil }
     }
-
     
     func setupBadge() {
         NotificationCenter.default.addObserver(self, selector: #selector(self.updateBadgeCount), name: WatchlistController.ncUpdatedName, object: nil)
@@ -48,21 +47,11 @@ class WatchlistViewController: MediaListViewController {
         loadFromMediaController(WatchlistController.shared)
         NotificationCenter.default.addObserver(self, selector: #selector(watchlistUpdated), name: WatchlistController.ncUpdatedName, object: nil)
     }
-//    var watchlistController: WatchlistController? {
-//        didSet {
-//            if let watchlistController = watchlistController {
-//                setMediaController(watchlistController)
-//                NotificationCenter.default.addObserver(self, selector: #selector(watchlistUpdated), name: WatchlistController.ncUpdatedName, object: nil)
-//            }
-//        }
-//    }
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupEmptyListPlaceholder()
         setupWatchlist()
-        //setupBadge()
     }
     
 }

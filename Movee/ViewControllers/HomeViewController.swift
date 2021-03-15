@@ -17,7 +17,8 @@ class HomeViewController: UIViewController, Coordinated {
     weak var coordinator: MainCoordinator?
     var collectionView: UICollectionView!
     
-    var discoverController = DiscoverController(lists: Bundle.main.decode(from: "home"))
+    var discoverController: DiscoverController = DiscoverController(fromBundle: "home")
+    
     var watchlistController: WatchlistController? = WatchlistController.shared
     
         
@@ -93,7 +94,8 @@ class HomeViewController: UIViewController, Coordinated {
         
         setupCollectionView()
         addObserverForWatchlistUpdates()
-        manageMoviesControllers()
+        
+        discoverController.loadData(completion: manageMoviesControllers)
         
         title = "Explore"
     }

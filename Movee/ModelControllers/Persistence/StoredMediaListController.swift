@@ -42,16 +42,6 @@ class StoredMediaListController: AsynchronousJSONPersistenceController<StoredMed
         postUpdated()
     }
     
-//    func loadData2(completion: (() -> Void)? = nil) {
-//        group.enter()
-//        super.loadData() {
-//            self.group.leave()
-//            self.postLoaded()
-//            completion?()
-//        }
-//    }
-
-    
     override func loadData(completion: (() -> Void)? = nil) {
         group.enter()
         super.loadData() {
@@ -122,14 +112,6 @@ extension StoredMediaListController: AnyMediaListController {
             default:
                 return
             }
-            
-//
-//            if self.dataState == .loading {
-//                self.group.notify(queue: .main) {
-//                    completion() }
-//            } else if self.dataState == .loaded {
-//                DispatchQueue.main.async { completion() }
-//            } else if self.dataState ==
         }
     }
     

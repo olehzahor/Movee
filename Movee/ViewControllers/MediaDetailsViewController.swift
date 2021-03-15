@@ -141,6 +141,7 @@ class MediaDetailsViewController<MediaType: Media>: UIViewController, Coordinate
     
     deinit {
         print("removed from memory: details vc")
+        SDImageCache.shared.clearMemory()
     }
 }
 
