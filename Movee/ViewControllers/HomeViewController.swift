@@ -45,7 +45,7 @@ class HomeViewController: UIViewController, Coordinated {
     }
     
     fileprivate func addObserverForWatchlistUpdates() {
-        NotificationCenter.default.addObserver(self, selector: #selector(self.updateWatchlist), name: WatchlistController.ncUpdateName, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.updateWatchlist), name: WatchlistController.ncUpdatedName, object: nil)
     }
     
     fileprivate func loadWatchList(completion: (() -> Void)? = nil) {

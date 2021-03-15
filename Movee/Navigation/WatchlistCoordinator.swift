@@ -15,7 +15,7 @@ class WatchlistCoordinator: MainCoordinator {
     private var watchlistTabBarItem: UITabBarItem?
     
     @objc func updateWatchlistCount() {
-        guard let watchlistCount = self.watchlistController?.watchlist().count
+        guard let watchlistCount = self.watchlistController?.list().count
         else { return }
         
         if watchlistCount > 0 {
@@ -33,7 +33,9 @@ class WatchlistCoordinator: MainCoordinator {
             
             self.updateWatchlistCount()
             
-            NotificationCenter.default.addObserver(self, selector: #selector(self.updateWatchlistCount), name: WatchlistController.ncUpdateName, object: nil)
+            NotificationCenter.default.addObserver(self, selector: #selector(self.updateWatchlistCount), name: WatchlistController.ncUpdatedName, object: nil)
+            NotificationCenter.default.addObserver(self, selector: #selector(self.updateWatchlistCount), name: WatchlistController.ncLoadedName, object: nil)
+
         }
     }
 }

@@ -17,16 +17,18 @@ class SearchCoordinator: MainCoordinator {
     override func start() {
         let vc = DiscoverViewController()
         vc.coordinator = self
+        vc.discoverController = DiscoverController(fromBundle: "lists")
+        //vc.searchHistoryController = SearchHistoryController.shared
         vc.tabBarItem = .init(tabBarSystemItem: .search, tag: 2)
         navigationController.pushViewController(vc, animated: false)
         
-        DispatchQueue.global(qos: .background).async {
-            let lists: [DiscoverListItem] = Bundle.main.decode(from: "lists")
-            DispatchQueue.main.async {
-                vc.discoverController = DiscoverController(
-                    lists: lists)
-            }
-        }
+//        DispatchQueue.global(qos: .background).async {
+//            let lists: [DiscoverListItem] = Bundle.main.decode(from: "lists")
+//            DispatchQueue.main.async {
+//                vc.discoverController = DiscoverController(
+//                    lists: lists)
+//            }
+//        }
         
 //        createAndPush(SearchViewController.self) { vc in
 //            DispatchQueue.global(qos: .background).async {

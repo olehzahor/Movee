@@ -7,53 +7,21 @@
 
 import Foundation
 
-class SearchHistoryController: WatchlistController {
+class SearchHistoryController: StoredMediaListController {
     @objc override var title: String { return "Search History" }
+        
+    static var shared: SearchHistoryController = SearchHistoryController()
     
-    convenience init(completion: @escaping () -> Void) {
+    convenience private init(completion: @escaping () -> Void) {
         self.init()
         loadData(completion: completion)
     }
     
-    convenience init() {
+    convenience private init() {
         self.init(filename: "search_history.json")
     }
     
-    override init(filename: String) {
+    override private init(filename: String) {
         super.init(filename: filename)
     }
 }
-
-
-//class SearchHistoryController: JSONPersistenceController<Movie>, MoviesListController {
-//    var title: String { return "Search History" }
-//    
-//    func addMovie(_ movie: Movie) {
-//        guard !items.contains(where: {$0.id == movie.id}) else { return }
-//        addItem(movie.short)
-//    }
-//    
-//    func load(fromPage initialPage: Int, infiniteScroll: Bool, completion: @escaping CompletionHandler) {
-//        DispatchQueue.global().async {
-//            if !self.isDataLoaded { self.loadData() }
-//            DispatchQueue.main.async {
-//                completion(self)
-//            }
-//        }
-//    }
-//    
-//    var movies: [Movie] {
-//        return items.reversed()
-//    }
-//    
-//    func loadMore(completion: CompletionHandler) { }
-//    func stop() { }
-//
-//    
-//    convenience init() {
-//        self.init(filename: "search_history.json")
-//        loadData()
-//    }
-//
-//}
-//

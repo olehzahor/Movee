@@ -41,11 +41,16 @@ class DiscoverViewController: UITableViewController, Coordinated {
             if discoverController.isNested {
                 navigationItem.largeTitleDisplayMode = .never
             }
-            if isViewLoaded { tableView.reloadData() }
+            discoverController.loadData(completion: update)
         }
     }
     
-    var searchHistoryController: SearchHistoryController?
+    var searchHistoryController: SearchHistoryController? {
+        didSet {
+            guard let searchHistoryController = searchHistoryController else { return }
+            searchHistoryController.loadData(completion: update)
+        }
+    }
     
     var isSearchBarVisible = true
     var isTopSectionVisible = true
@@ -55,9 +60,7 @@ class DiscoverViewController: UITableViewController, Coordinated {
     
         
     override func viewDidLoad() {
-        searchHistoryController = SearchHistoryController {
-            self.tableView?.reloadData()
-        }
+        searchHistoryController = SearchHistoryController.shared
         
         navigationController?.navigationBar.prefersLargeTitles = true
         title = discoverController?.name ?? "Search"
@@ -72,6 +75,10 @@ class DiscoverViewController: UITableViewController, Coordinated {
 }
 
 extension DiscoverViewController {
+    private func update() {
+        if isViewLoaded { tableView.reloadData() }
+    }
+    
     override func numberOfSections(in tableView: UITableView) -> Int {
         var numberOfSections = 0
         

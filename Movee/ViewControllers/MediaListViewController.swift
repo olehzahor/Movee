@@ -27,12 +27,12 @@ class MediaListViewController: UIViewController, Coordinated {
     
     typealias DataSource = UICollectionViewDiffableDataSource<Section, AnyHashable>
     typealias Snapshot = NSDiffableDataSourceSnapshot<Section, AnyHashable>
-    private lazy var dataSource = createDataSource()
+    private(set) lazy var dataSource = createDataSource()
     
     fileprivate func configureCollectionView() {
         collectionView = createCollectionView(layout: createLayout())
         collectionView.contentInset.top = 16
-        
+
         collectionView.delegate = self
         collectionView.keyboardDismissMode = .onDrag
         

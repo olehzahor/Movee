@@ -40,6 +40,8 @@
 		045B46ED25BB476900DFA2FD /* UIColor+Components.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045B46EC25BB476900DFA2FD /* UIColor+Components.swift */; };
 		046426EE25DD60AC0056B182 /* CharacterSearchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 046426ED25DD60AC0056B182 /* CharacterSearchCell.swift */; };
 		046426F325DD869D0056B182 /* SearchResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 046426F225DD869D0056B182 /* SearchResult.swift */; };
+		0466E7BD25FFAC2E001754F3 /* AsynchronousJSONPersistenceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0466E7BC25FFAC2E001754F3 /* AsynchronousJSONPersistenceController.swift */; };
+		0466E7C525FFB2D7001754F3 /* StoredMediaListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0466E7C425FFB2D7001754F3 /* StoredMediaListController.swift */; };
 		04676F242585049D004DE20F /* FiltersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04676F232585049D004DE20F /* FiltersViewController.swift */; };
 		0473784425BF2FAF00C50D6C /* WatchHistoryController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0473784325BF2FAF00C50D6C /* WatchHistoryController.swift */; };
 		04760955254886E900D87C34 /* TMDBClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04760954254886E900D87C34 /* TMDBClient.swift */; };
@@ -163,6 +165,8 @@
 		045B46EC25BB476900DFA2FD /* UIColor+Components.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Components.swift"; sourceTree = "<group>"; };
 		046426ED25DD60AC0056B182 /* CharacterSearchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterSearchCell.swift; sourceTree = "<group>"; };
 		046426F225DD869D0056B182 /* SearchResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResult.swift; sourceTree = "<group>"; };
+		0466E7BC25FFAC2E001754F3 /* AsynchronousJSONPersistenceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsynchronousJSONPersistenceController.swift; sourceTree = "<group>"; };
+		0466E7C425FFB2D7001754F3 /* StoredMediaListController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoredMediaListController.swift; sourceTree = "<group>"; };
 		04676F232585049D004DE20F /* FiltersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FiltersViewController.swift; sourceTree = "<group>"; };
 		0473784325BF2FAF00C50D6C /* WatchHistoryController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchHistoryController.swift; sourceTree = "<group>"; };
 		04760954254886E900D87C34 /* TMDBClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMDBClient.swift; sourceTree = "<group>"; };
@@ -525,9 +529,11 @@
 			children = (
 				04D57F6F25BDEE7B00B6EB92 /* PersistenceController.swift */,
 				04D57F7325BDEE9D00B6EB92 /* JSONPersistenceController.swift */,
+				0466E7BC25FFAC2E001754F3 /* AsynchronousJSONPersistenceController.swift */,
+				0466E7C425FFB2D7001754F3 /* StoredMediaListController.swift */,
 				04D57F7725BDEEB800B6EB92 /* SearchHistoryController.swift */,
-				0473784325BF2FAF00C50D6C /* WatchHistoryController.swift */,
 				0488195925FBBC5A00703052 /* WatchlistController.swift */,
+				0473784325BF2FAF00C50D6C /* WatchHistoryController.swift */,
 			);
 			path = Persistence;
 			sourceTree = "<group>";
@@ -820,6 +826,7 @@
 				040FD9C4257D48CF005EDF25 /* MovieListCell.swift in Sources */,
 				04C5A8362597B14D00D96314 /* AccumulativeFilter.swift in Sources */,
 				04C5A8472597B1ED00D96314 /* ReleaseDateFilter.swift in Sources */,
+				0466E7C525FFB2D7001754F3 /* StoredMediaListController.swift in Sources */,
 				04F380A825FA99640032996F /* PagedResult.swift in Sources */,
 				0401D830257805110087072F /* CompactMovieCell.swift in Sources */,
 				04D57F7025BDEE7B00B6EB92 /* PersistenceController.swift in Sources */,
@@ -828,6 +835,7 @@
 				0401D82D2577F6090087072F /* Array+Unique.swift in Sources */,
 				0488195D25FBC91600703052 /* MultiSearchResultsController.swift in Sources */,
 				04EB5B492575571A002CA369 /* PersonViewController.swift in Sources */,
+				0466E7BD25FFAC2E001754F3 /* AsynchronousJSONPersistenceController.swift in Sources */,
 				0400B470256D676100B164B7 /* HorizontalMovieCell.swift in Sources */,
 				04C621D825597B53002B52A6 /* BackdropView.swift in Sources */,
 				04676F242585049D004DE20F /* FiltersViewController.swift in Sources */,
