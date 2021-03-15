@@ -11,7 +11,7 @@ class MainCoordinator: Coordinator {
     var childCoordinators = [Coordinator]()
     var navigationController: UINavigationController
     var navigationBarAppearance: UINavigationBarAppearance?
-    var watchlistController: WatchlistController?
+    //var watchlistController: WatchlistController?
     
     convenience init() {
         self.init(navigationController: UINavigationController())
@@ -26,7 +26,7 @@ class MainCoordinator: Coordinator {
     func start() {
         navigationController.navigationBar.prefersLargeTitles = true
         createAndPush(HomeViewController.self, animated: false) {
-            $0.watchlistController = self.watchlistController
+            //$0.watchlistController = self.watchlistController
             $0.tabBarItem = UITabBarItem(title: "Home", image: UIImage(systemName: "house"), tag: 0)
         }
     }
@@ -45,7 +45,7 @@ class MainCoordinator: Coordinator {
     func showDetails(movie: Movie?) {
         guard let movie = movie else { return }
         createAndPush(MediaDetailsViewController<Movie>.self) {
-            $0.watchlistController = self.watchlistController
+            //$0.watchlistController = self.watchlistController
             $0.mediaController = MovieController(movie)
         }
     }
@@ -53,7 +53,7 @@ class MainCoordinator: Coordinator {
     func showDetails(tvShow: TVShow?) {
         guard let tvShow = tvShow else { return }
         createAndPush(MediaDetailsViewController<TVShow>.self) {
-            $0.watchlistController = self.watchlistController
+            //$0.watchlistController = self.watchlistController
             $0.mediaController = TVShowController(tvShow)
         }
     }

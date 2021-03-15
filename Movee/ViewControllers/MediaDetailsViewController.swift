@@ -10,7 +10,7 @@ class MediaDetailsViewController<MediaType: Media>: UIViewController, Coordinate
     var collectionView: UICollectionView!
     internal var mediaController: MediaController<MediaType>!
     
-    var watchlistController: WatchlistController?
+    var watchlistController: WatchlistController? = WatchlistController.shared
         
     private(set) lazy var dataSource = createDataSource()
 

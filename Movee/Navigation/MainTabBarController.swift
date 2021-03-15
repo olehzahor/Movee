@@ -9,16 +9,16 @@ import UIKit
 
 class MainTabBarController: UITabBarController {
     let coordinators: [Coordinator] = {
-        let watchlistController = WatchlistController()
+//        let watchlistController = WatchlistController()
 
         let mainCoordinator = MainCoordinator()
-        mainCoordinator.watchlistController = watchlistController
+//        mainCoordinator.watchlistController = watchlistController
         
         let watchlistCoordinator = WatchlistCoordinator()
-        watchlistCoordinator.watchlistController = watchlistController
+//        watchlistCoordinator.watchlistController = watchlistController
         
         let searchCoordinator = SearchCoordinator()
-        searchCoordinator.watchlistController = watchlistController
+//        searchCoordinator.watchlistController = watchlistController
         
         return [mainCoordinator, watchlistCoordinator, searchCoordinator]
     }()

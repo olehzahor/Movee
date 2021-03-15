@@ -45,12 +45,7 @@ class DiscoverViewController: UITableViewController, Coordinated {
         }
     }
     
-    var searchHistoryController: SearchHistoryController? {
-        didSet {
-            guard let searchHistoryController = searchHistoryController else { return }
-            searchHistoryController.loadData(completion: update)
-        }
-    }
+    var searchHistoryController: SearchHistoryController? = SearchHistoryController.shared
     
     var isSearchBarVisible = true
     var isTopSectionVisible = true
@@ -60,8 +55,6 @@ class DiscoverViewController: UITableViewController, Coordinated {
     
         
     override func viewDidLoad() {
-        searchHistoryController = SearchHistoryController.shared
-        
         navigationController?.navigationBar.prefersLargeTitles = true
         title = discoverController?.name ?? "Search"
         

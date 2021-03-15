@@ -18,31 +18,51 @@ class WatchlistViewController: MediaListViewController {
     }()
 
     func setupEmptyListPlaceholder() {
-        guard let watchlistController = watchlistController,
-              watchlistController.dataState == .loaded else { return }
+        let watchlistController = WatchlistController.shared
+        guard watchlistController.dataState == .loaded else { return }
         collectionView.backgroundView = watchlistController.count > 0 ? nil : placeholder
         collectionView.isScrollEnabled = watchlistController.count > 0 ? true : false
     }
     
     @objc func watchlistUpdated() {
         if isViewLoaded {
-            watchlistController?.load { self.update() }
+            mediaController?.load { self.update() }
             setupEmptyListPlaceholder()
         }
     }
     
-    var watchlistController: WatchlistController? {
-        didSet {
-            if let watchlistController = watchlistController {
-                setMediaController(watchlistController)
-                NotificationCenter.default.addObserver(self, selector: #selector(watchlistUpdated), name: WatchlistController.ncUpdatedName, object: nil)
-            }
-        }
+    @objc func updateBadgeCount() {
+        let watchlistCount = WatchlistController.shared.count
+        if watchlistCount > 0 {
+            tabBarItem?.badgeValue = String(watchlistCount)
+        } else { tabBarItem?.badgeValue = nil }
     }
+
+    
+    func setupBadge() {
+        NotificationCenter.default.addObserver(self, selector: #selector(self.updateBadgeCount), name: WatchlistController.ncUpdatedName, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.updateBadgeCount), name: WatchlistController.ncLoadedName, object: nil)
+    }
+    
+    func setupWatchlist() {
+        loadFromMediaController(WatchlistController.shared)
+        NotificationCenter.default.addObserver(self, selector: #selector(watchlistUpdated), name: WatchlistController.ncUpdatedName, object: nil)
+    }
+//    var watchlistController: WatchlistController? {
+//        didSet {
+//            if let watchlistController = watchlistController {
+//                setMediaController(watchlistController)
+//                NotificationCenter.default.addObserver(self, selector: #selector(watchlistUpdated), name: WatchlistController.ncUpdatedName, object: nil)
+//            }
+//        }
+//    }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupEmptyListPlaceholder()
+        setupWatchlist()
+        //setupBadge()
     }
     
 }

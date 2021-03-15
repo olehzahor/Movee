@@ -18,7 +18,7 @@ class HomeViewController: UIViewController, Coordinated {
     var collectionView: UICollectionView!
     
     var discoverController = DiscoverController(lists: Bundle.main.decode(from: "home"))
-    var watchlistController: WatchlistController?
+    var watchlistController: WatchlistController? = WatchlistController.shared
     
         
     var mediaControllers: [AnyMediaListController] = []

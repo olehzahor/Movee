@@ -8,35 +8,23 @@
 import Foundation
 
 class WatchlistController: StoredMediaListController {
+    static var shared: WatchlistController = WatchlistController()
+    
     @objc override var title: String { return "Watchlist" }
     
     static let ncUpdatedName = Notification.Name("WatchlistUpdated")
     static let ncLoadedName = Notification.Name("WatchlistLoaded")
     
-    internal func postUpdated() {
+    override internal func postUpdated() {
         NotificationCenter.default.post(name: Self.ncUpdatedName, object: nil)
     }
 
-    internal func postLoaded() {
+    override internal func postLoaded() {
         NotificationCenter.default.post(name: Self.ncLoadedName, object: nil)
     }
-
-    override func saveData() {
-        super.saveData()
-        postUpdated()
-    }
     
-    override func loadData() {
-        //group.enter()
-        super.loadData {
-            self.postLoaded()
-            //self.group.leave()
-        }
-    }
-
-    convenience init() {
+    private convenience init() {
         self.init(filename: "watchlist.json")
-        loadData()
     }
 }
 //
