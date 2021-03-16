@@ -8,5 +8,5 @@ target 'Movee' do
   # Pods for Movee
   pod 'youtube-ios-player-helper'
   pod 'SDWebImage'
-  pod 'YouTubePlayer'
+  pod 'MarkdownKit'
 end

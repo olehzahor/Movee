@@ -32,16 +32,29 @@ class AsynchronousJSONPersistenceController<T: Codable&Hashable>: PersistenceCon
         saveData()
     }
     
+    private var isFileExists: Bool {
+        let path = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as String
+        let url = NSURL(fileURLWithPath: path)
+        if let pathComponent = url.appendingPathComponent(filename) {
+            let filePath = pathComponent.path
+            let fileManager = FileManager.default
+            return fileManager.fileExists(atPath: filePath)
+        } else {
+            return false
+        }
+    }
+    
     internal func loadData(completion: (() -> Void)? = nil) {
         print("started loading data")
         dataState = .loading
-        DispatchQueue.global(qos: .background).async {
+        DispatchQueue.global(qos: .utility).async {
             self._loadData()
             DispatchQueue.main.async { completion?() }
         }
     }
     
     private func _loadData() {
+        guard isFileExists else { dataState = .loaded; return }
         if let savedItems = Data.load(fromFile: filename) {
             if let loadedItems = try? decoder.decode([ItemType].self, from: savedItems) {
                 self.items = loadedItems
@@ -53,7 +66,7 @@ class AsynchronousJSONPersistenceController<T: Codable&Hashable>: PersistenceCon
     internal func saveData() {
         guard dataState == .loaded else { return }
         if let encoded = try? encoder.encode(items) {
-            DispatchQueue.global(qos: .background).async {
+            DispatchQueue.global(qos: .utility).async {
                 encoded.save(toFile: self.filename)
             }
         }

@@ -27,6 +27,8 @@ struct Movie: Media {
     var original_language: String?
     var tagline: String?
     var videos: Video?
+    var reviews: PagedResult<Review>?
+
     
     static var placeholder = Movie()
     

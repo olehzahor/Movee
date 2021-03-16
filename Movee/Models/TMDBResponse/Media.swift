@@ -36,6 +36,16 @@ protocol Media: MediaListItem {
     var original_language: String? { get set }
     var tagline: String? { get set }
     var videos: Video? { get set }
+    var reviews: PagedResult<Review>? { get set }
+}
+
+struct Review: MediaListItem {
+    static var placeholder: Review = Review()
+    var id: String?
+    var author: String?
+    var updated_at: String?
+    var content: String?
+    var url: String?
 }
 
 struct MediaPlaceholder: MediaListItem {

@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 51;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -13,6 +13,7 @@
 		0401D830257805110087072F /* CompactMovieCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0401D82F257805110087072F /* CompactMovieCell.swift */; };
 		0401D83325780D0F0087072F /* MovieCreditsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0401D83225780D0F0087072F /* MovieCreditsController.swift */; };
 		0405EAF42549B3C2007C76DB /* Genre.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0405EAF32549B3C2007C76DB /* Genre.swift */; };
+		0407212A25FFFF14001604BA /* Ink in Frameworks */ = {isa = PBXBuildFile; productRef = 0407212925FFFF14001604BA /* Ink */; };
 		040FD9B2257D4749005EDF25 /* SelfConfiguringView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040FD9B1257D4749005EDF25 /* SelfConfiguringView.swift */; };
 		040FD9B7257D47AE005EDF25 /* ProgrammaticCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040FD9B6257D47AE005EDF25 /* ProgrammaticCollectionReusableView.swift */; };
 		040FD9BC257D47F4005EDF25 /* ProgrammaticCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040FD9BB257D47F4005EDF25 /* ProgrammaticCollectionViewCell.swift */; };
@@ -42,6 +43,10 @@
 		046426F325DD869D0056B182 /* SearchResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 046426F225DD869D0056B182 /* SearchResult.swift */; };
 		0466E7BD25FFAC2E001754F3 /* AsynchronousJSONPersistenceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0466E7BC25FFAC2E001754F3 /* AsynchronousJSONPersistenceController.swift */; };
 		0466E7C525FFB2D7001754F3 /* StoredMediaListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0466E7C425FFB2D7001754F3 /* StoredMediaListController.swift */; };
+		0466E7CB25FFC838001754F3 /* ReviewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0466E7CA25FFC838001754F3 /* ReviewCell.swift */; };
+		0466E7CE25FFCB0F001754F3 /* ReviewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0466E7CD25FFCB0F001754F3 /* ReviewViewModel.swift */; };
+		0466E7D125FFD5E4001754F3 /* ReviewScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0466E7D025FFD5E4001754F3 /* ReviewScrollView.swift */; };
+		0466E7D425FFD70C001754F3 /* ReviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0466E7D325FFD70C001754F3 /* ReviewViewController.swift */; };
 		04676F242585049D004DE20F /* FiltersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04676F232585049D004DE20F /* FiltersViewController.swift */; };
 		0473784425BF2FAF00C50D6C /* WatchHistoryController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0473784325BF2FAF00C50D6C /* WatchHistoryController.swift */; };
 		04760955254886E900D87C34 /* TMDBClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04760954254886E900D87C34 /* TMDBClient.swift */; };
@@ -167,6 +172,10 @@
 		046426F225DD869D0056B182 /* SearchResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResult.swift; sourceTree = "<group>"; };
 		0466E7BC25FFAC2E001754F3 /* AsynchronousJSONPersistenceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsynchronousJSONPersistenceController.swift; sourceTree = "<group>"; };
 		0466E7C425FFB2D7001754F3 /* StoredMediaListController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoredMediaListController.swift; sourceTree = "<group>"; };
+		0466E7CA25FFC838001754F3 /* ReviewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewCell.swift; sourceTree = "<group>"; };
+		0466E7CD25FFCB0F001754F3 /* ReviewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewViewModel.swift; sourceTree = "<group>"; };
+		0466E7D025FFD5E4001754F3 /* ReviewScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewScrollView.swift; sourceTree = "<group>"; };
+		0466E7D325FFD70C001754F3 /* ReviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewViewController.swift; sourceTree = "<group>"; };
 		04676F232585049D004DE20F /* FiltersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FiltersViewController.swift; sourceTree = "<group>"; };
 		0473784325BF2FAF00C50D6C /* WatchHistoryController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchHistoryController.swift; sourceTree = "<group>"; };
 		04760954254886E900D87C34 /* TMDBClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMDBClient.swift; sourceTree = "<group>"; };
@@ -267,6 +276,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				35944751597091747A5A07B2 /* Pods_Movee.framework in Frameworks */,
+				0407212A25FFFF14001604BA /* Ink in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -305,6 +315,7 @@
 				04EB5B4E2575641E002CA369 /* PersonViewModel.swift */,
 				04811D5F25E18590002B59C1 /* SeasonViewModel.swift */,
 				04D120B325E6D7AA001F4EA9 /* EpisodeViewModel.swift */,
+				0466E7CD25FFCB0F001754F3 /* ReviewViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -434,6 +445,7 @@
 				04EB5B482575571A002CA369 /* PersonViewController.swift */,
 				0401D83225780D0F0087072F /* MovieCreditsController.swift */,
 				04D7F2C825F9494700E46BE2 /* MediaListViewController.swift */,
+				0466E7D325FFD70C001754F3 /* ReviewViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -456,6 +468,8 @@
 				04D120BD25E6E30A001F4EA9 /* RatingView.swift */,
 				044A2C662598F053000D1355 /* PosterView.swift */,
 				04FD559825EFDCFD00B6F941 /* ReminderCell.swift */,
+				0466E7CA25FFC838001754F3 /* ReviewCell.swift */,
+				0466E7D025FFD5E4001754F3 /* ReviewScrollView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -664,6 +678,9 @@
 			dependencies = (
 			);
 			name = Movee;
+			packageProductDependencies = (
+				0407212925FFFF14001604BA /* Ink */,
+			);
 			productName = Movee;
 			productReference = 04DD6D2825484E6C005FBA8C /* Movee.app */;
 			productType = "com.apple.product-type.application";
@@ -691,6 +708,9 @@
 				Base,
 			);
 			mainGroup = 04DD6D1F25484E6C005FBA8C;
+			packageReferences = (
+				0407212825FFFF13001604BA /* XCRemoteSwiftPackageReference "ink" */,
+			);
 			productRefGroup = 04DD6D2925484E6C005FBA8C /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -782,6 +802,7 @@
 				04EB5B4625754DA5002CA369 /* BiographyCell.swift in Sources */,
 				049EC686259A59900078CFD2 /* NSNumber+Dollars.swift in Sources */,
 				049EAA5425FE4A2B006D1E11 /* DataSource+Sections.swift in Sources */,
+				0466E7CE25FFCB0F001754F3 /* ReviewViewModel.swift in Sources */,
 				040FD9C7257D48E0005EDF25 /* KeyValueCell.swift in Sources */,
 				0450F0A225AB8DF300C97AA3 /* Data+Storage.swift in Sources */,
 				04B99FC225E0393D00197FFA /* MediaDetailsViewController+Layout.swift in Sources */,
@@ -824,12 +845,15 @@
 				040FD9B2257D4749005EDF25 /* SelfConfiguringView.swift in Sources */,
 				04F5118025DEE70200CEB0F5 /* MediaDetailsViewController.swift in Sources */,
 				040FD9C4257D48CF005EDF25 /* MovieListCell.swift in Sources */,
+				0466E7CB25FFC838001754F3 /* ReviewCell.swift in Sources */,
 				04C5A8362597B14D00D96314 /* AccumulativeFilter.swift in Sources */,
 				04C5A8472597B1ED00D96314 /* ReleaseDateFilter.swift in Sources */,
+				0466E7D425FFD70C001754F3 /* ReviewViewController.swift in Sources */,
 				0466E7C525FFB2D7001754F3 /* StoredMediaListController.swift in Sources */,
 				04F380A825FA99640032996F /* PagedResult.swift in Sources */,
 				0401D830257805110087072F /* CompactMovieCell.swift in Sources */,
 				04D57F7025BDEE7B00B6EB92 /* PersistenceController.swift in Sources */,
+				0466E7D125FFD5E4001754F3 /* ReviewScrollView.swift in Sources */,
 				049A2B042576C60A00028CBD /* PersonViewController+Layout.swift in Sources */,
 				04C0BC1D257E77D100DBB274 /* PersonController.swift in Sources */,
 				0401D82D2577F6090087072F /* Array+Unique.swift in Sources */,
@@ -1034,12 +1058,12 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.0;
+				MARKETING_VERSION = 1.1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = me.myself.i.Movee;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTS_MACCATALYST = NO;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -1058,12 +1082,12 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.0;
+				MARKETING_VERSION = 1.1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = me.myself.i.Movee;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTS_MACCATALYST = NO;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};
@@ -1089,6 +1113,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		0407212825FFFF13001604BA /* XCRemoteSwiftPackageReference "ink" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/johnsundell/ink.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.5.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		0407212925FFFF14001604BA /* Ink */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0407212825FFFF13001604BA /* XCRemoteSwiftPackageReference "ink" */;
+			productName = Ink;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 04DD6D2025484E6C005FBA8C /* Project object */;
 }

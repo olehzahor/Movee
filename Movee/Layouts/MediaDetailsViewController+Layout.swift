@@ -60,6 +60,8 @@ extension MediaDetailsViewController {
                 return GenericLayouts.createFullWidthSection(addHeader: false)
             case .info:
                 return GenericLayouts.createFullWidthSection(addHeader: true)
+            case .reviews:
+                return self?.createReviewsSection()
             }
             
         }
@@ -156,4 +158,34 @@ extension MediaDetailsViewController {
         
         return section
     }
+    
+    func createReviewsSection() -> NSCollectionLayoutSection {
+        let itemSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(1.0),
+            heightDimension: .estimated(194))
+        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+        //item.contentInsets.trailing = 16
+        
+        let groupSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(0.93),
+            heightDimension: .estimated(194))
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+        group.contentInsets.trailing = 16
+        
+        let section = NSCollectionLayoutSection(group: group)
+        
+        section.orthogonalScrollingBehavior = .groupPaging
+        
+        let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
+                                                heightDimension: .estimated(30.0))
+        let header = NSCollectionLayoutBoundarySupplementaryItem(
+            layoutSize: headerSize,
+            elementKind: UICollectionView.elementKindSectionHeader,
+            alignment: .top)
+        section.contentInsets = .init(top: 16, leading: 16, bottom: 16, trailing: 16)
+        section.boundarySupplementaryItems = [header]
+        
+        return section
+    }
+
 }

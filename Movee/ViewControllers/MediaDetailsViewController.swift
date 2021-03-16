@@ -55,6 +55,7 @@ class MediaDetailsViewController<MediaType: Media>: UIViewController, Coordinate
         collectionView.registerCell(CompactMovieCell.self)
         collectionView.registerCell(TrailerCell.self)
         collectionView.registerCell(KeyValueCell.self)
+        collectionView.registerCell(ReviewCell.self)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -109,6 +110,8 @@ class MediaDetailsViewController<MediaType: Media>: UIViewController, Coordinate
             navigateToMediaDetails(from: indexPath)
         case .seasons:
             navigateToSeason(from: indexPath)
+        case .reviews:
+            navigateToReview(from: indexPath)
         default:
             return
         }
@@ -249,26 +252,26 @@ extension MediaDetailsViewController {
             snapshot.appendItems(related, toSection: .related)
         }
         
-
-        
         if controller.isDetailsLoaded, let facts = controller.viewModel?.facts, !facts.isEmpty {
             snapshot.appendSections([.info])
             snapshot.appendItems(facts, toSection: .info)
         }
         
+        if !controller.reviews.isEmpty {
+            snapshot.appendSections([.reviews])
+            snapshot.appendItems(controller.reviews, toSection: .reviews)
+        }
+        
         return snapshot
     }
-    //TODO: move dequeueCell to collectionview ext
     func createDataSource() -> DataSource {
         let dataSource = DataSource(collectionView: collectionView) { [weak self]
             (collectionView, indexPath, item) -> UICollectionViewCell? in
             guard let self = self else { return nil }
             
-            //let dataSource = collectionView.dataSource as? DataSource
             guard let section = self.dataSource.findSection(at: indexPath) else {
                 fatalError("Couldn't find section at index: \(indexPath)")
             }
-            //let section = Section.allCases[indexPath.row]
             
             switch section {
             case .description:
@@ -313,8 +316,14 @@ extension MediaDetailsViewController {
                     cell.valueLabel.text = row.value
                 }
                 return cell
+                
+            case .reviews:
+                let cell = collectionView.dequeueCell(ReviewCell.self, for: indexPath)
+                if let review = item as? Review {
+                    review.viewModel.configure(cell)
+                }
+                return cell
             }
-        
         }
         
         dataSource.supplementaryViewProvider = { [weak self] collectionView, kind, indexPath in
@@ -370,6 +379,12 @@ extension MediaDetailsViewController  {
               let tvShowId = mediaController.media.id else { return }
         coordinator?.showSeasonDetails(season: season, tvShowId: tvShowId)
     }
+    
+    func navigateToReview(from indexPath: IndexPath) {
+        guard let review = dataSource.itemIdentifier(for: indexPath) as? Review
+        else { return }
+        coordinator?.showFullReview(review: review)
+    }
 }
 
 extension MediaDetailsViewController {
@@ -380,6 +395,7 @@ extension MediaDetailsViewController {
         case related = "Related"
         case seasons = "Seasons"
         case info = "Facts"
+        case reviews = "Reviews"
         
         var title: String {
             return self.rawValue

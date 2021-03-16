@@ -50,8 +50,8 @@ class WatchlistViewController: MediaListViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupEmptyListPlaceholder()
         setupWatchlist()
+        setupEmptyListPlaceholder()
     }
     
 }

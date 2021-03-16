@@ -126,6 +126,7 @@ extension MediaViewModel {
         }
         
         view.titleLabel.text = title
+        
         view.originalTitleLabel.text = originalTitle
         view.infoLabel.text = infoString.long
         view.taglineLabel.text = tagline
@@ -133,7 +134,7 @@ extension MediaViewModel {
         view.poster.imageView.sd_setImage(with: posterURL,
                                          placeholderImage: posterPlaceholder)
     }
-    
+        
     func configure(_ view: CompactMovieCell) {
         view.titleLabel.text = title
         view.poster.imageView.sd_setImage(with: posterURL, placeholderImage: posterPlaceholder)

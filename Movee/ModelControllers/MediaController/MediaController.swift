@@ -25,7 +25,10 @@ class MediaController<T: Media> {
             return videos.first(where: { $0.site == "YouTube" && $0.type == "Trailer" })
         } else { return nil }
     }
-
+    
+    var reviews: [Review] {
+        return media.reviews?.results ?? []
+    }
     
     var credits: Credits? {
         return media.credits

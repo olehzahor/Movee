@@ -22,6 +22,7 @@ import Foundation
 //original_name string
 
 struct TVShow: Media {
+    
     var id: Int?
     var title: String?
     var original_title: String?
@@ -41,6 +42,8 @@ struct TVShow: Media {
     var original_language: String?
     var tagline: String?
     var videos: Video?
+    var reviews: PagedResult<Review>?
+
     
     static var placeholder = TVShow()
 
@@ -65,7 +68,7 @@ struct TVShow: Media {
     
     enum CodingKeys: String, CodingKey {
         case title = "name", original_title = "original_name", release_date = "first_air_date"
-        case id, poster_path, backdrop_path, popularity, vote_count, vote_average, overview, genre_ids, media_type, adult, genres, credits, production_countries, original_language, tagline, videos, episode_run_time, last_air_date, next_episode_to_air, in_production, status, networks, seasons, recommendations
+        case id, poster_path, backdrop_path, popularity, vote_count, vote_average, overview, genre_ids, media_type, adult, genres, credits, production_countries, original_language, tagline, videos, episode_run_time, last_air_date, next_episode_to_air, in_production, status, networks, seasons, recommendations, reviews
     }
 }
 

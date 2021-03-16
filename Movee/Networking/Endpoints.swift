@@ -30,6 +30,7 @@ struct Endpoints {
         var components = baseComponents
         components.path = path
         components.queryItems?.append(contentsOf: queryItems ?? [])
+        print(components.url)
         return components.url
     }
     
@@ -45,7 +46,7 @@ struct Endpoints {
     func movieDetails(movieId: Int) -> URL? {
         let queryItems = URLQueryItem(
             name: "append_to_response",
-            value: "credits,recommendations,videos")
+            value: "credits,recommendations,videos,reviews")
         
         return constructURL(
             path: "/3/movie/\(movieId)",
@@ -55,7 +56,7 @@ struct Endpoints {
     func tvShowDetails(tvShowId: Int) -> URL? {
         let queryItems = URLQueryItem(
             name: "append_to_response",
-            value: "credits,recommendations,videos")
+            value: "credits,recommendations,videos,reviews")
         
         return constructURL(
             path: "/3/tv/\(tvShowId)",

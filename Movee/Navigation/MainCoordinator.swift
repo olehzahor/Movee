@@ -29,6 +29,8 @@ class MainCoordinator: Coordinator {
             //$0.watchlistController = self.watchlistController
             $0.tabBarItem = UITabBarItem(title: "Home", image: UIImage(systemName: "house"), tag: 0)
         }
+        
+        
     }
         
     func showDetails<T: Media>(media: T) {
@@ -126,6 +128,13 @@ class MainCoordinator: Coordinator {
             $0.seasonController = seasonController
         }
     }
+    
+    func showFullReview(review: Review) {
+        let vc = ReviewViewController()
+        vc.review = review
+        vc.coordinator = self
+        navigationController.present(vc, animated: true)
+     }
 }
 
 extension MainCoordinator {

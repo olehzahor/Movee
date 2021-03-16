@@ -1,26 +1,26 @@
 PODS:
+  - MarkdownKit (1.6)
   - SDWebImage (5.9.4):
     - SDWebImage/Core (= 5.9.4)
   - SDWebImage/Core (5.9.4)
   - youtube-ios-player-helper (1.0.2)
-  - YouTubePlayer (0.7.2)
 
 DEPENDENCIES:
+  - MarkdownKit
   - SDWebImage
   - youtube-ios-player-helper
-  - YouTubePlayer
 
 SPEC REPOS:
   trunk:
+    - MarkdownKit
     - SDWebImage
     - youtube-ios-player-helper
-    - YouTubePlayer
 
 SPEC CHECKSUMS:
+  MarkdownKit: 6aa4aee263c7efae3de570cded0767f85c38fc78
   SDWebImage: b69257f4ab14e9b6a2ef53e910fdf914d8f757c1
   youtube-ios-player-helper: 40b96e52c22445f0fdc43731cefa32c67075ff81
-  YouTubePlayer: 2b5f2830d8f9b2cde942083211291e382c9e6bd5
 
-PODFILE CHECKSUM: bc2a038c74d00708addca3a92a0fd441837c7aec
+PODFILE CHECKSUM: 5092da555cb2f79c1e047baff626893d1b54e35f
 
 COCOAPODS: 1.10.0

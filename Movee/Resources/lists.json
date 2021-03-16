@@ -170,6 +170,123 @@
       ]
    },
    {
+       "name":"Top TV Shows by Genre",
+       "nestedLists":[
+           {
+             "query": "with_genres=10759&sort_by=vote_count.desc",
+             "path":"discover/tv",
+             "nestedLists": [],
+             "mediaType": "tv",
+             "name": "Top Action & Adventure TV Shows"
+           },
+           {
+             "query": "with_genres=16&sort_by=vote_count.desc",
+             "path":"discover/tv",
+             "nestedLists": [],
+             "mediaType": "tv",
+             "name": "Top Animation TV Shows"
+           },
+           {
+             "query": "with_genres=35&sort_by=vote_count.desc",
+             "path":"discover/tv",
+             "nestedLists": [],
+             "mediaType": "tv",
+             "name": "Top Comedy TV Shows"
+           },
+           {
+             "query": "with_genres=80&sort_by=vote_count.desc",
+             "path":"discover/tv",
+             "nestedLists": [],
+             "mediaType": "tv",
+             "name": "Top Crime TV Shows"
+           },
+           {
+             "query": "with_genres=99&sort_by=vote_count.desc",
+             "path":"discover/tv",
+             "nestedLists": [],
+             "mediaType": "tv",
+             "name": "Top Documentary TV Shows"
+           },
+           {
+             "query": "with_genres=18&sort_by=vote_count.desc",
+             "path":"discover/tv",
+             "nestedLists": [],
+             "mediaType": "tv",
+             "name": "Top Drama TV Shows"
+           },
+           {
+             "query": "with_genres=10751&sort_by=vote_count.desc",
+             "path":"discover/tv",
+             "nestedLists": [],
+             "mediaType": "tv",
+             "name": "Top Family TV Shows"
+           },
+           {
+             "query": "with_genres=10762&sort_by=vote_count.desc",
+             "path":"discover/tv",
+             "nestedLists": [],
+             "mediaType": "tv",
+             "name": "Top Kids TV Shows"
+           },
+           {
+             "query": "with_genres=9648&sort_by=vote_count.desc",
+             "path":"discover/tv",
+             "nestedLists": [],
+             "mediaType": "tv",
+             "name": "Top Mystery TV Shows"
+           },
+           {
+             "query": "with_genres=10763&sort_by=vote_count.desc",
+             "path":"discover/tv",
+             "nestedLists": [],
+             "mediaType": "tv",
+             "name": "Top News TV Shows"
+           },
+           {
+             "query": "with_genres=10764&sort_by=vote_count.desc",
+             "path":"discover/tv",
+             "nestedLists": [],
+             "mediaType": "tv",
+             "name": "Top Reality TV Shows"
+           },
+           {
+             "query": "with_genres=10765&sort_by=vote_count.desc",
+             "path":"discover/tv",
+             "nestedLists": [],
+             "mediaType": "tv",
+             "name": "Top Sci-Fi & Fantasy TV Shows"
+           },
+           {
+             "query": "with_genres=10766&sort_by=vote_count.desc",
+             "path":"discover/tv",
+             "nestedLists": [],
+             "mediaType": "tv",
+             "name": "Top Soap TV Shows"
+           },
+           {
+             "query": "with_genres=10767&sort_by=vote_count.desc",
+             "path":"discover/tv",
+             "nestedLists": [],
+             "mediaType": "tv",
+             "name": "Top Talk TV Shows"
+           },
+           {
+             "query": "with_genres=10768&sort_by=vote_count.desc",
+             "path":"discover/tv",
+             "nestedLists": [],
+             "mediaType": "tv",
+             "name": "Top War & Politics TV Shows"
+           },
+           {
+             "query": "with_genres=37&sort_by=vote_count.desc",
+             "path":"discover/tv",
+             "nestedLists": [],
+             "mediaType": "tv",
+             "name": "Top Western TV Shows"
+           }
+       ]
+   },
+   {
       "path":"discover/movie",
       "nestedLists":[],
       "query":"primary_release_date.lte=2021-12-31&vote_average.gte=6&primary_release_date.gte=2021-01-01&sort_by=vote_count.desc",
