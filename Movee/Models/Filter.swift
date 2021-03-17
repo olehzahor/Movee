@@ -49,6 +49,7 @@ struct Filter: Codable {
     
     var primaryReleaseDate: ClosedRange<Date>?
     var releaseDate: ClosedRange<Date>?
+    var airDate: ClosedRange<Date>?
     
     var votes = Range<Int>()
     var rating = Range<Int>()
@@ -103,7 +104,9 @@ struct Filter: Codable {
             "vote_average.gte": string(rating.min),
             "vote_average.lte": string(rating.max),
             "with_runtime.gte": string(runtime.min),
-            "with_runtime.lte": string(runtime.max)
+            "with_runtime.lte": string(runtime.max),
+            "air_date.gte": string(airDate?.lowerBound),
+            "air_date.lte": string(airDate?.upperBound)
         ].filter { $0.value != nil }
     }
     

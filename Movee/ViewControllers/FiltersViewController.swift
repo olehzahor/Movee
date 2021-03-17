@@ -11,11 +11,12 @@ import UIKit
 class FiltersViewController: UIViewController, Coordinated {
     var coordinator: SearchCoordinator?
 
-    typealias DataSource = UICollectionViewDiffableDataSource<FilterController.Section, AnyHashable>
-    typealias Snapshot = NSDiffableDataSourceSnapshot<FilterController.Section, AnyHashable>
+    typealias DataSource = UICollectionViewDiffableDataSource<MoviesFilterController.Section, AnyHashable>
+    typealias Snapshot = NSDiffableDataSourceSnapshot<MoviesFilterController.Section, AnyHashable>
     
     private(set) lazy var dataSource = createDataSource()
-    private(set) var filterController = FilterController()
+    var filterController: MoviesFilterController!
+    var mediaType: MediaType = .unknown
 
     var collectionView: UICollectionView!
     
@@ -27,8 +28,14 @@ class FiltersViewController: UIViewController, Coordinated {
     }
         
     @objc func navigateToResults() {
-        coordinator?.showFilteredMovies(
-            filter: filterController.filter)
+        switch mediaType {
+        case .movie:
+            coordinator?.showFilteredMovies(filter: filterController.filter)
+        case .tvShow:
+            coordinator?.showFilteredTVShows(filter: filterController.filter)
+        default:
+            return
+        }
     }
     
     @objc func resetOptions() {
@@ -36,10 +43,21 @@ class FiltersViewController: UIViewController, Coordinated {
         update(animated: true)
     }
 
+    func createTitle() -> String {
+        var string = "Advanced "
+        if mediaType == .movie {
+            string.append("Movies ")
+        } else if mediaType == .tvShow {
+            string.append("TV Shows ")
+        }
+        
+        string.append("Search")
+        return string
+    }
     
     override func viewDidLoad() {
         navigationItem.largeTitleDisplayMode = .never
-        title = "Advanced Search"
+        title = createTitle()
         
         
         let findButton = UIBarButtonItem(
@@ -55,6 +73,7 @@ class FiltersViewController: UIViewController, Coordinated {
         navigationItem.rightBarButtonItems = [findButton, resetButton]
         
         collectionView = createCollectionView(layout: createLayout())
+        collectionView.contentInset.top = 16
         collectionView.allowsMultipleSelection = true
         collectionView.delegate = self
         
@@ -71,7 +90,7 @@ class FiltersViewController: UIViewController, Coordinated {
 extension FiltersViewController:  UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 
-        if let option = dataSource.itemIdentifier(for: indexPath) as? FilterController.Option {
+        if let option = dataSource.itemIdentifier(for: indexPath) as? MoviesFilterController.Option {
             option.pick()
         }
         collectionView.deselectItem(at: indexPath, animated: false)
@@ -88,7 +107,7 @@ extension FiltersViewController {
     func createDataSource() -> DataSource {
         let dataSource = DataSource(collectionView: collectionView) { (collectionView, indexPath, item) -> UICollectionViewCell? in
             let cell = collectionView.dequeueCell(OptionCell.self, for: indexPath)
-            guard let item = item as? FilterController.Option else { return cell }
+            guard let item = item as? MoviesFilterController.Option else { return cell }
 
             cell.label.text = item.name
             cell.option = item.name
@@ -121,7 +140,7 @@ extension FiltersViewController {
     func createSnapshot() -> Snapshot {
         var snapshot = Snapshot()
         
-        for section in FilterController.Section.allCases {
+        for section in MoviesFilterController.Section.allCases {
             snapshot.appendSections([section])
             snapshot.appendItems(
                 filterController.options(forSection: section),

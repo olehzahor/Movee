@@ -11,9 +11,9 @@ class AccumulativeFilter<ValueType: Comparable & Hashable>: FilterCategory {
     private var _options: [ValueType]
     private(set) var selectedOptions: [ValueType] = []
     
-    var options: [FilterController.Option] {
+    var options: [MoviesFilterController.Option] {
         _options.compactMap {
-            FilterController.Option(
+            MoviesFilterController.Option(
                 name: "\($0)+", value: $0,
                 state: state(option: $0),
                 picker: pick(option:)
@@ -21,7 +21,7 @@ class AccumulativeFilter<ValueType: Comparable & Hashable>: FilterCategory {
         }
     }
     
-    func pick(option: FilterController.Option) {
+    func pick(option: MoviesFilterController.Option) {
         guard let option = option.value as? ValueType else { return }
         
         if selectedOptions.contains(option) {
@@ -33,7 +33,7 @@ class AccumulativeFilter<ValueType: Comparable & Hashable>: FilterCategory {
         }
     }
     
-    func state(option: ValueType) -> FilterController.Option.State {
+    func state(option: ValueType) -> MoviesFilterController.Option.State {
         selectedOptions.contains(option) ? .checked : .ignored
     }
     

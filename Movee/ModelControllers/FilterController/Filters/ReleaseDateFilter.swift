@@ -7,9 +7,17 @@
 
 import Foundation
 
+class TVShowReleaseDateFilter: ReleaseDateFilter {
+    override func update(filter: inout Filter) {
+        if let minDate = selectionMinValue,
+           let maxDate = selectionMaxValue {
+            filter.airDate = minDate ... maxDate
+        }
+    }
+}
+
 class ReleaseDateFilter: RangeFilter<Date> {
     override func update(filter: inout Filter) {
-        
         if let minDate = selectionMinValue,
            let maxDate = selectionMaxValue {
             filter.primaryReleaseDate = minDate ... maxDate

@@ -17,9 +17,9 @@ class RangeFilter<ValueType: Comparable & Hashable>: FilterCategory {
     private var _options: [Range]
     private(set) var selectedOptions: [Range] = []
 
-    var options: [FilterController.Option] {
+    var options: [MoviesFilterController.Option] {
         _options.compactMap {
-            FilterController.Option(
+            MoviesFilterController.Option(
                 name: $0.name,
                 value: $0,
                 state: state(option: $0),
@@ -66,7 +66,7 @@ class RangeFilter<ValueType: Comparable & Hashable>: FilterCategory {
             .max()
     }
     
-    func pick(option: FilterController.Option) {
+    func pick(option: MoviesFilterController.Option) {
         guard let option = option.value as? Range
         else { return }
         
@@ -89,7 +89,7 @@ class RangeFilter<ValueType: Comparable & Hashable>: FilterCategory {
         }
     }
     
-    func state(option: Range) -> FilterController.Option.State {
+    func state(option: Range) -> MoviesFilterController.Option.State {
         selectedOptions.contains(option) ? .checked : .ignored
     }
     

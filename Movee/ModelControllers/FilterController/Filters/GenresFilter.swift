@@ -14,16 +14,16 @@ class GenresFilter: FilterCategory {
     private(set) var selectedOptions: [Genre] = []
     private(set) var excludedOptions: [Genre] = []
     
-    var options: [FilterController.Option] {
+    var options: [MoviesFilterController.Option] {
         _options.compactMap {
-            return FilterController.Option(
+            return MoviesFilterController.Option(
                 name: $0.name, value: $0,
                 state: state(option: $0),
                 picker: pick(option:))
         }
     }
 
-    func pick(option: FilterController.Option) {
+    func pick(option: MoviesFilterController.Option) {
         guard let option = option.value as? Genre else { return }
         
         if selectedOptions.contains(option) {
@@ -36,7 +36,7 @@ class GenresFilter: FilterCategory {
         }
     }
     
-    func state(option: Genre) -> FilterController.Option.State {
+    func state(option: Genre) -> MoviesFilterController.Option.State {
         selectedOptions.contains(option) ? .checked
             : (excludedOptions.contains(option) ? .excluded : .ignored)
     }

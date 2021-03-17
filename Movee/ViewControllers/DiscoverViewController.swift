@@ -14,10 +14,14 @@ private extension DiscoverViewController {
     }
     
     var topSectionItems: [TopSectionItem] {
-        let advancedSearchItem =
-            TopSectionItem(title: "Advanced Search",
-                           action: { self.coordinator?.showAdvancedSearch() })
-        var items = [advancedSearchItem]
+        let advancedMoviesSearchItem =
+            TopSectionItem(title: "Advanced Movies Search",
+                           action: { self.coordinator?.showMoviesAdvancedSearch() })
+        let advancedTVShowsSearchItem =
+            TopSectionItem(title: "Advanced TV Shows Search",
+                           action: { self.coordinator?.showTVShowsAdvancedSearch() })
+
+        var items = [advancedMoviesSearchItem, advancedTVShowsSearchItem]
         
         if searchHistoryController.count > 0 {
             let searchHistoryItem = TopSectionItem(

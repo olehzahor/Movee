@@ -54,7 +54,7 @@ class OptionCell: ProgrammaticCollectionViewCell, SelfConfiguringView {
 }
 
 extension OptionCell {
-    func setState(_ state: FilterController.Option.State) {
+    func setState(_ state: MoviesFilterController.Option.State) {
         switch state {
         case .checked, .included:
             include()

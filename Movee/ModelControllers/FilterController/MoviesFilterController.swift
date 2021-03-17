@@ -7,12 +7,12 @@
 
 import Foundation
 
-class FilterController {
-    private var genresFilter: GenresFilter?
-    private var ratingFilter = RatingFilter()
-    private var votesFilter = VotesFilter()
-    private var runtimesFilter = RuntimeFilter()
-    private var datesFilter = ReleaseDateFilter()
+class MoviesFilterController {
+    internal var genresFilter: GenresFilter?
+    internal var ratingFilter = RatingFilter()
+    internal var votesFilter = VotesFilter()
+    internal var runtimesFilter = MovieRuntimeFilter()
+    internal var datesFilter = ReleaseDateFilter()
     
     lazy var categories: [Section: FilterCategory?] = {
         [.genres: genresFilter,
@@ -23,7 +23,7 @@ class FilterController {
     }()
     
     var shortGenres = true
-    var updateHandler: ((FilterController) -> Void)?
+    var updateHandler: ((MoviesFilterController) -> Void)?
     
     var filter: Filter {
         var filter = Filter()
@@ -31,7 +31,7 @@ class FilterController {
         return filter
     }
     
-    func options(forSection section: Section) -> [FilterController.Option] {
+    func options(forSection section: Section) -> [MoviesFilterController.Option] {
         if section == .genres {
             if let genreOptions = genresFilter?.options {
                 return shortGenres ? Array(genreOptions[..<9]) : genreOptions
@@ -45,7 +45,7 @@ class FilterController {
         categories.forEach { $0.value?.reset() }
     }
     
-    fileprivate func createGenresFilter() {
+    internal func createGenresFilter() {
         if let genres = TMDBClient.shared.genres.movie {
             self.genresFilter = GenresFilter(genres: genres)
         } else {
@@ -62,7 +62,7 @@ class FilterController {
     }
 }
 
-extension FilterController {
+extension MoviesFilterController {
     enum Section: String, CaseIterable {
         case genres = "Genres"
         case rating = "Rating"
@@ -83,13 +83,13 @@ extension FilterController {
         var name: String
         var value: AnyHashable
         var state: State
-        var picker: (FilterController.Option) -> Void
+        var picker: (MoviesFilterController.Option) -> Void
         
         func pick() {
             picker(self)
         }
         
-        static func == (lhs: FilterController.Option, rhs: FilterController.Option) -> Bool {
+        static func == (lhs: MoviesFilterController.Option, rhs: MoviesFilterController.Option) -> Bool {
             lhs.hashValue == rhs.hashValue
         }
         

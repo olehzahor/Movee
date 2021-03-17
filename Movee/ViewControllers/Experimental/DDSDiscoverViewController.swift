@@ -144,7 +144,7 @@ extension DDSDiscoverViewController {
     var topSectionItems: [TopSectionItem] {
         let advancedSearchItem =
             TopSectionItem(title: "Advanced Search",
-                           action: { self.coordinator?.showAdvancedSearch() })
+                           action: { self.coordinator?.showMoviesAdvancedSearch() })
         var items = [advancedSearchItem]
         
         if searchHistoryController.count > 0 {
