@@ -53,17 +53,7 @@ class PersonViewController: UIViewController, Coordinated {
         collectionView.registerCell(CompactMovieCell.self)
         
         collectionView.registerHeader(SectionHeader.self)
-    }
-    
-    deinit { print("person vc has gone") }
-//    func findSection(at indexPath: IndexPath) -> Section? {
-//        return dataSource.snapshot().sectionIdentifiers[indexPath.section]
-//    }
-//
-//    func findSection(contains item: AnyHashable) -> Section? {
-//        return dataSource.snapshot().sectionIdentifier(containingItem: item)
-//    }
-    
+    }    
 }
 
 extension PersonViewController {

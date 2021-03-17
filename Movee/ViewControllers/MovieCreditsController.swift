@@ -44,10 +44,6 @@ class MovieCreditsController: UIViewController, Coordinated {
     
     func setupCollectionView() {
         collectionView = createCollectionView(layout: createLayout())
-//        collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: createLayout())
-//        view.addSubview(collectionView)
-//        collectionView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
-//        collectionView.backgroundColor = .systemBackground
         collectionView.delegate = self
         
         collectionView.registerCell(MovieListCell.self)
