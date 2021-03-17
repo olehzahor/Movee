@@ -24,12 +24,26 @@ class TMDBClient: ApiService {
             url: endpoints.customList(page: page, path: path, params: query),
             completion: completion, loadGenres: .unknown)
     }
+    
+    func customSinglePageList<T: SinglePageMediaListContainer>(
+        path: String, completion: @escaping (Result<T, Error>) -> Void) -> URLSessionTask? {
+        return fetch(url: endpoints.customSinglePageList(path: path), completion: completion)
+    }
+    
+    func themedMoviesList(listId: String, completion: @escaping (Result<ThemedList, Error>) -> Void) -> URLSessionTask? {
+        return fetch(url: endpoints.themedList(id: listId), completion: completion, loadGenres: .movie)
+    }
 
     func discoverMovies<T: Media>(filter: Filter, page: Int, completion: @escaping (Result<PagedResult<T>, Error>) -> Void) -> URLSessionTask? {
-        return fetch(url: endpoints.discover(page: page, filter: filter),
+        return fetch(url: endpoints.discoverMovies(page: page, filter: filter),
                      completion: completion)
     }
     
+    func discoverTVShows<T: Media>(filter: Filter, page: Int, completion: @escaping (Result<PagedResult<T>, Error>) -> Void) -> URLSessionTask? {
+        return fetch(url: endpoints.discoverTVShows(page: page, filter: filter),
+                     completion: completion)
+    }
+
     func getPersonDetails(personId: Int, completion: @escaping (Result<Person, Error>) -> Void) -> URLSessionTask? {
         return fetch(url: endpoints.personDetails(personId: personId), completion: completion)
     }

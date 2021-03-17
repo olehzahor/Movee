@@ -68,12 +68,30 @@ struct Endpoints {
             path: "/3/tv/\(tvShowId)/season/\(seasonNumber)")
     }
     
-    func discover(page: Int = 1, filter: Filter) -> URL? {
+    func discoverMovies(page: Int = 1, filter: Filter) -> URL? {
         var queryItems = filter.queryItems
         queryItems.append(queryItem(forPage: page))
         
         return constructURL(path: "/3/discover/movie",
                             queryItems: queryItems)
+    }
+    
+    func discoverTVShows(page: Int = 1, filter: Filter) -> URL? {
+        var queryItems = filter.queryItems
+        queryItems.append(queryItem(forPage: page))
+        
+        return constructURL(path: "/3/discover/tv",
+                            queryItems: queryItems)
+    }
+    
+    func themedList(id: String) -> URL? {
+        return constructURL(path: "/3/list/\(id)")
+    }
+    
+    func customSinglePageList(path: String) -> URL? {
+        var components = self.baseComponents
+        components.path = "/3/\(path)"
+        return components.url
     }
     
     func customList(page: Int, path: String, params: String) -> URL? {

@@ -37,6 +37,8 @@ extension DiscoverListItem {
         switch mediaType {
         case "tv":
             return MediaListController<TVShow>.customTVShowsList(title: name, path: path, query: query)
+        case "themedList":
+            return SinglePageMediaListController<ThemedList>.customSinglePageList(title: name, path: path)
         default:
             return MediaListController<Movie>.customMoviesList(title: name, path: path, query: query)
         }
