@@ -222,7 +222,6 @@ extension MediaDetailsViewController {
 //MARK: - Data Source
 extension MediaDetailsViewController {
     func update(with controller: MediaController<MediaType>) {
-        //self.movie = controller.movie
         dataSource.apply(createSnapshot(controller: controller))
     }
     
