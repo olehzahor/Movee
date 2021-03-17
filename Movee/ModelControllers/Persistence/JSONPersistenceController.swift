@@ -7,8 +7,6 @@
 
 import Foundation
 
-
-
 class JSONPersistenceController<T: Codable&Hashable>: PersistenceController {
     lazy private var encoder = JSONEncoder()
     lazy private var decoder = JSONDecoder()

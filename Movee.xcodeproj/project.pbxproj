@@ -51,7 +51,6 @@
 		0466E7D125FFD5E4001754F3 /* ReviewScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0466E7D025FFD5E4001754F3 /* ReviewScrollView.swift */; };
 		0466E7D425FFD70C001754F3 /* ReviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0466E7D325FFD70C001754F3 /* ReviewViewController.swift */; };
 		04676F242585049D004DE20F /* FiltersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04676F232585049D004DE20F /* FiltersViewController.swift */; };
-		0473784425BF2FAF00C50D6C /* WatchHistoryController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0473784325BF2FAF00C50D6C /* WatchHistoryController.swift */; };
 		04760955254886E900D87C34 /* TMDBClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04760954254886E900D87C34 /* TMDBClient.swift */; };
 		047662DB257D2FAD00DD1959 /* CreditsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047662DA257D2FAD00DD1959 /* CreditsController.swift */; };
 		04811D6025E18590002B59C1 /* SeasonViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04811D5F25E18590002B59C1 /* SeasonViewModel.swift */; };
@@ -183,7 +182,6 @@
 		0466E7D025FFD5E4001754F3 /* ReviewScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewScrollView.swift; sourceTree = "<group>"; };
 		0466E7D325FFD70C001754F3 /* ReviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewViewController.swift; sourceTree = "<group>"; };
 		04676F232585049D004DE20F /* FiltersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FiltersViewController.swift; sourceTree = "<group>"; };
-		0473784325BF2FAF00C50D6C /* WatchHistoryController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchHistoryController.swift; sourceTree = "<group>"; };
 		04760954254886E900D87C34 /* TMDBClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMDBClient.swift; sourceTree = "<group>"; };
 		047662DA257D2FAD00DD1959 /* CreditsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreditsController.swift; sourceTree = "<group>"; };
 		04811D5F25E18590002B59C1 /* SeasonViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeasonViewModel.swift; sourceTree = "<group>"; };
@@ -563,7 +561,6 @@
 				0466E7C425FFB2D7001754F3 /* StoredMediaListController.swift */,
 				04D57F7725BDEEB800B6EB92 /* SearchHistoryController.swift */,
 				0488195925FBBC5A00703052 /* WatchlistController.swift */,
-				0473784325BF2FAF00C50D6C /* WatchHistoryController.swift */,
 			);
 			path = Persistence;
 			sourceTree = "<group>";
@@ -901,7 +898,6 @@
 				0439906325D2DA7900BE0577 /* Constants.swift in Sources */,
 				04C0579325AA1CFE00C5C0DB /* Bundle+Decoding.swift in Sources */,
 				04E0E37825E5611900425AAA /* EpisodeCell.swift in Sources */,
-				0473784425BF2FAF00C50D6C /* WatchHistoryController.swift in Sources */,
 				04DD6D2E25484E6C005FBA8C /* SceneDelegate.swift in Sources */,
 				04EB5B4F2575641E002CA369 /* PersonViewModel.swift in Sources */,
 				04D7F2C925F9494700E46BE2 /* MediaListViewController.swift in Sources */,
