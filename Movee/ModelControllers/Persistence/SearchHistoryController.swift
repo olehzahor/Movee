@@ -9,6 +9,12 @@ import Foundation
 
 class SearchHistoryController: StoredMediaListController {
     @objc override var title: String { return "Search History" }
+    
+    static let ncUpdatedName = Notification.Name("SearchHistoryUpdated")
+    
+    override func postUpdated() {
+        NotificationCenter.default.post(name: Self.ncUpdatedName, object: nil)
+    }
         
     static var shared: SearchHistoryController = SearchHistoryController()
     

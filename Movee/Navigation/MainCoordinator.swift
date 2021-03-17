@@ -11,7 +11,6 @@ class MainCoordinator: Coordinator {
     var childCoordinators = [Coordinator]()
     var navigationController: UINavigationController
     var navigationBarAppearance: UINavigationBarAppearance?
-    //var watchlistController: WatchlistController?
     
     convenience init() {
         self.init(navigationController: UINavigationController())
@@ -21,7 +20,10 @@ class MainCoordinator: Coordinator {
         self.navigationController = navigationController
         setupNavigationBar()
     }
-
+    
+    func getBack() {
+        navigationController.popViewController(animated: true)
+    }
     
     func start() {
         navigationController.navigationBar.prefersLargeTitles = true
@@ -47,7 +49,6 @@ class MainCoordinator: Coordinator {
     func showDetails(movie: Movie?) {
         guard let movie = movie else { return }
         createAndPush(MediaDetailsViewController<Movie>.self) {
-            //$0.watchlistController = self.watchlistController
             $0.mediaController = MovieController(movie)
         }
     }

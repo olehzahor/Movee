@@ -19,12 +19,12 @@ private extension DiscoverViewController {
                            action: { self.coordinator?.showAdvancedSearch() })
         var items = [advancedSearchItem]
         
-        if let searchHistoryController = searchHistoryController {
+        if searchHistoryController.count > 0 {
             let searchHistoryItem = TopSectionItem(
                 title: "Search History",
                 action: {
                     self.coordinator?.showSearchHistory(
-                        controller: searchHistoryController) })
+                        controller: self.searchHistoryController) })
             items += [searchHistoryItem]
         }
         return items
@@ -45,7 +45,7 @@ class DiscoverViewController: UITableViewController, Coordinated {
         }
     }
     
-    var searchHistoryController: SearchHistoryController? = SearchHistoryController.shared
+    var searchHistoryController = SearchHistoryController.shared
     
     var isSearchBarVisible = true
     var isTopSectionVisible = true
@@ -53,6 +53,13 @@ class DiscoverViewController: UITableViewController, Coordinated {
     private var searchController: UISearchController?
     private var resultsController: MediaListViewController?
     
+    func setupSearchHistoryController() {
+        if searchHistoryController.dataState == .notLoaded {
+            searchHistoryController.loadData { self.update() }
+        }
+        NotificationCenter.default.addObserver(self, selector: #selector(self.update), name: SearchHistoryController.ncUpdatedName, object: nil)
+    }
+
         
     override func viewDidLoad() {
         navigationController?.navigationBar.prefersLargeTitles = true
@@ -60,7 +67,9 @@ class DiscoverViewController: UITableViewController, Coordinated {
         
         tableView.separatorStyle = .none
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
-
+        
+        setupSearchHistoryController()
+        
         if isSearchBarVisible {
             setupSearchController()
         }
@@ -68,7 +77,7 @@ class DiscoverViewController: UITableViewController, Coordinated {
 }
 
 extension DiscoverViewController {
-    private func update() {
+    @objc private func update() {
         if isViewLoaded { tableView.reloadData() }
     }
     

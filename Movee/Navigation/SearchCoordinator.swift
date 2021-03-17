@@ -6,10 +6,11 @@
 //
 
 import Foundation
+import FirebaseDatabase
 
 class SearchCoordinator: MainCoordinator {
     func showSearchHistory(controller: SearchHistoryController) {
-        createAndPush(MediaListViewController.self) {
+        createAndPush(SearchHistoryViewController.self) {
             $0.setMediaController(controller)
         }
     }
@@ -17,28 +18,9 @@ class SearchCoordinator: MainCoordinator {
     override func start() {
         let vc = DiscoverViewController()
         vc.coordinator = self
-        vc.discoverController = DiscoverController(fromBundle: "lists")
-        //vc.searchHistoryController = SearchHistoryController.shared
+        let database = Database.database().reference()
+        vc.discoverController = RemoteDiscoverController(database: database, path: "discoverLists")
         vc.tabBarItem = .init(tabBarSystemItem: .search, tag: 2)
         navigationController.pushViewController(vc, animated: false)
-        
-//        DispatchQueue.global(qos: .background).async {
-//            let lists: [DiscoverListItem] = Bundle.main.decode(from: "lists")
-//            DispatchQueue.main.async {
-//                vc.discoverController = DiscoverController(
-//                    lists: lists)
-//            }
-//        }
-        
-//        createAndPush(SearchViewController.self) { vc in
-//            DispatchQueue.global(qos: .background).async {
-//                let lists: [DiscoverListItem] = Bundle.main.decode(from: "lists")
-//                DispatchQueue.main.async {
-//                    vc.discoverController = DiscoverController(
-//                        lists: lists)
-//                }
-//            }
-//            vc.tabBarItem = .init(tabBarSystemItem: .search, tag: 2)
-//        }
     }
 }

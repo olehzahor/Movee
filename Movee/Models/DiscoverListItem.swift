@@ -11,7 +11,7 @@ class DiscoverListItem: Codable {
     let name: String
     let path: String?
     let query: String?
-    let nestedLists: [DiscoverListItem]
+    let nestedLists: [DiscoverListItem]?
     let mediaType: String?
     
     init(name: String, path: String, query: String, mediaType: String! = nil) {

@@ -20,3 +20,18 @@ extension UICollectionViewDiffableDataSource {
         return self.snapshot().sectionIdentifier(containingItem: item)
     }
 }
+
+
+extension UITableViewDiffableDataSource {
+    func findSection(at indexPath: IndexPath) -> SectionIdentifierType? {
+        return self.snapshot().sectionIdentifiers[indexPath.section]
+    }
+    
+    func findSection(at sectionIndex: Int) -> SectionIdentifierType? {
+        return self.snapshot().sectionIdentifiers[sectionIndex]
+    }
+    
+    func findSection(contains item: ItemIdentifierType) -> SectionIdentifierType? {
+        return self.snapshot().sectionIdentifier(containingItem: item)
+    }
+}

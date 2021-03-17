@@ -51,6 +51,11 @@ class StoredMediaListController: AsynchronousJSONPersistenceController<StoredMed
         }
     }
     
+    func clear() {
+        items = []
+        saveData()
+    }
+    
     func addMedia<T: Media>(_ media: T) {
         switch media.mediaType {
         case .movie:

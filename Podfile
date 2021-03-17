@@ -9,4 +9,6 @@ target 'Movee' do
   pod 'youtube-ios-player-helper'
   pod 'SDWebImage'
   pod 'MarkdownKit'
+  pod 'Firebase/Core'
+  pod 'Firebase/Database'
 end

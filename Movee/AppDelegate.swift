@@ -8,6 +8,7 @@
 import UIKit
 import SDWebImage
 import youtube_ios_player_helper
+import Firebase
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -16,6 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         //SDImageCache.shared.config.maxMemoryCost = 16 * 1024 * 1024
+        FirebaseApp.configure()
         return true
     }
 
