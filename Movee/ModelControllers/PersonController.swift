@@ -8,12 +8,8 @@
 import Foundation
 
 class PersonController {
-    typealias UpdateHandler = (PersonController) -> ()
-    typealias ErrorHandler = (Error) -> ()
-
-    //var errorHandler: ErrorHandler?
-    //var updateHandler: UpdateHandler?
-
+    typealias UpdateHandler = (PersonController) -> Void
+    
     private(set) var person: Person! {
         didSet {
             viewModel = PersonViewModel(person: person)
@@ -105,15 +101,9 @@ class PersonController {
                 self.person = person
                 DispatchQueue.main.async {
                     completion?(self)
-                    //updateHandler?(self)
                 }
-                
             case .failure(let error):
                 print(error)
-//                DispatchQueue.main.async {
-//                    completion(self)
-//                    //errorHandler?(error)
-//                }
             }
         }
     }

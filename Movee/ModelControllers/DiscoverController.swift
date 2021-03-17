@@ -74,6 +74,3 @@ extension DiscoverController {
         }
     }
 }
-
-extension DiscoverController {
-}

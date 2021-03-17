@@ -67,7 +67,6 @@ class MediaListController<T: MediaListItem>: AnyMediaListController {
     }
     
     private func genericCompletionHandler(result: Result<PagedResult<T>, Error>, completion: @escaping CompletionHandler) {
-        //print(result)
         switch result {
         case .success(let mediaPagedResult):
             self.list.update(with: mediaPagedResult)
@@ -78,7 +77,6 @@ class MediaListController<T: MediaListItem>: AnyMediaListController {
             self.lastError = error
             completion()
         }
-        //completion?()
     }
         
     private func reset() {
@@ -146,17 +144,13 @@ extension AnyMediaListController {
             TMDBClient.shared.discoverMovies(filter: filter, page: page, completion: completion)
         }
     }
+    
+    static func filteredTVShows(filter: Filter) -> MediaListController<TVShow> {
+        return .init { page, completion in
+            TMDBClient.shared.discoverTVShows(filter: filter, page: page, completion: completion)
+        }
+    }
+
 
 
 }
-
-//        let storedGenres = TMDBClient.shared.genres
-//        if T.self == Movie.self, storedGenres.movie == nil {
-//            TMDBClient.shared.loadMovieGenres { _ in
-//                self.fetch(page: initialPage, completion: completion)
-//            }
-//        } else if T.self == TVShow.self, storedGenres.tv == nil {
-//            TMDBClient.shared.loadTVGenres { _ in
-//                self.fetch(page: initialPage, completion: completion)
-//            }
-//        } else { self.fetch(page: initialPage, completion: completion) }

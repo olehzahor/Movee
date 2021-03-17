@@ -36,24 +36,10 @@ class CreditsController {
     var long: [Dictionary<String?, [Character]>.Element] {
         return groupedByDepartment
     }
-    
-//    lazy var sections: [Section] = {
-//        return credits.groupedByDepartment
-//            .compactMap { Section(title: $0, items: $1) }
-//    }()
-//
-//    static func viewModels(for list: [Character]) -> [CharacterViewModel] {
-//        return list.compactMap { CharacterViewModel(character: $0) }
-//    }
-    
+        
     init(credits: Credits) {
         self.credits = credits
     }
-        
-    //TODO: create more initializers
-//    init(movieId: Int) {
-//
-//    }
 }
 
 extension Credits {

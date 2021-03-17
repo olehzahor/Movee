@@ -28,11 +28,8 @@ class MainCoordinator: Coordinator {
     func start() {
         navigationController.navigationBar.prefersLargeTitles = true
         createAndPush(HomeViewController.self, animated: false) {
-            //$0.watchlistController = self.watchlistController
             $0.tabBarItem = UITabBarItem(title: "Home", image: UIImage(systemName: "house"), tag: 0)
         }
-        
-        
     }
         
     func showDetails<T: Media>(media: T) {
@@ -56,7 +53,6 @@ class MainCoordinator: Coordinator {
     func showDetails(tvShow: TVShow?) {
         guard let tvShow = tvShow else { return }
         createAndPush(MediaDetailsViewController<TVShow>.self) {
-            //$0.watchlistController = self.watchlistController
             $0.mediaController = TVShowController(tvShow)
         }
     }
@@ -104,25 +100,7 @@ class MainCoordinator: Coordinator {
         vc.personController = controller
         navigationController.pushViewController(vc, animated: true)
     }
-    
-    func showFilteredMovies(filter: Filter) {
-        createAndPush(MediaListViewController.self) {
-            $0.setMediaController(
-                MediaListController<Movie>.filteredMovies(filter: filter))
-        }
-    }
-    
-    func showAdvancedSearch() {
-        createAndPush(FiltersViewController.self)
-    }
-    
-    func showNestedDiscoverList(discoverController: DiscoverController?) {
-        guard let discoverController = discoverController else { return }
-        createAndPush(DiscoverViewController.self) {
-            $0.discoverController = discoverController
-        }
-    }
-    
+        
     func showSeasonDetails(season: Season, tvShowId: Int) {
         createAndPush(SeasonViewController.self) {
             let seasonController = SeasonController(tvShowId: tvShowId, season: season)
