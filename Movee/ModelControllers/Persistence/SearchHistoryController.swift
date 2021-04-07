@@ -8,7 +8,7 @@
 import Foundation
 
 class SearchHistoryController: StoredMediaListController {
-    @objc override var title: String { return "Search History" }
+    @objc override var title: String { return "Search History".l10ed }
     
     static let ncUpdatedName = Notification.Name("SearchHistoryUpdated")
     

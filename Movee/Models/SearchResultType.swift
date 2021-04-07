@@ -14,7 +14,7 @@ enum SearchResultType: String, CaseIterable {
     case people = "People"
     
     static var titles: [String] {
-        return self.allCases.compactMap { $0.rawValue }
+        return self.allCases.compactMap { $0.rawValue.l10ed }
     }
     
     func listController(query: String) -> AnyMediaListController? {

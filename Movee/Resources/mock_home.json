@@ -1,0 +1,20 @@
+[
+    {
+        "mediaType" : "themedList",
+        "name" : "Popular Movies ",
+        "path" : "list/7082456",
+        "query" : ""
+    },
+    {
+        "mediaType" : "themedList",
+        "name" : "Trending Movies ",
+        "path" : "list/7082457",
+        "query" : ""
+    },
+    {
+        "mediaType" : "tv",
+        "name" : "Popular TV Shows  ",
+        "path" : "tv/top_rated",
+        "query" : ""
+    },
+]

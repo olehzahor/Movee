@@ -7,7 +7,51 @@
 
 import UIKit
 
+extension PersonViewController {
+    class TitleView: UIView {
+        var title: String? {
+            didSet { titleLabel.text = title }
+        }
+        
+        var subtitle: String? {
+            didSet { subtitleLabel.text = subtitle }
+        }
+        
+        let titleLabel: UILabel = {
+            let label = UILabel()
+            label.font = .preferredFont(forTextStyle: .headline)
+            label.textColor = .label
+            label.textAlignment = .center
+            return label
+        }()
+        
+        let subtitleLabel: UILabel = {
+            let label = UILabel()
+            label.font = .preferredFont(forTextStyle: .subheadline)
+            label.textColor = .secondaryLabel
+            label.textAlignment = .center
+            return label
+
+        }()
+                
+        override init(frame: CGRect) {
+            super.init(frame: frame)
+            let vStack = UIStackView(arrangedSubviews: [titleLabel, subtitleLabel])
+            addSubview(vStack)
+            vStack.axis = .vertical
+            vStack.fillSuperview()
+        }
+        
+        required init?(coder: NSCoder) {
+            fatalError("init(coder:) has not been implemented")
+        }
+    }
+}
+
 class PersonViewController: UIViewController, Coordinated {
+    override var title: String? { didSet { titleView.title = title } }
+    var subtitle: String? { didSet { self.titleView.subtitle = self.subtitle } }
+    
     weak var coordinator: MainCoordinator?
     
     typealias DataSource = UICollectionViewDiffableDataSource<Section, AnyHashable>
@@ -19,6 +63,42 @@ class PersonViewController: UIViewController, Coordinated {
     private(set) lazy var dataSource = createDataSource()
     var collectionView: UICollectionView!
     
+    private var titleView = TitleView()
+    
+    private var wikiPageTitle: String? {
+        didSet {
+            if let wikiPageTitle = wikiPageTitle, !wikiPageTitle.isEmpty {
+                UIView.transition(with: titleView, duration: 5, options: .curveEaseInOut) {
+                    self.titleView.subtitleLabel.text = wikiPageTitle
+                    //if wikiPageTitle != self.title { self.subtitle = wikiPageTitle }
+                } completion: { _ in
+                    //self.addWikipediaButton()
+                    
+                }
+
+                
+            }
+        }
+    }
+    
+    fileprivate func addWikipediaButton() {
+        let wikiButton = UIBarButtonItem(image: UIImage(named: "icons8-wikipedia"),
+                               style: .plain, target: self,
+                               action: #selector(self.showWikiPage))
+        self.navigationItem.setRightBarButton(wikiButton, animated: false)
+    }
+    
+    fileprivate func setupWikipedia() {
+        guard let query = character?.name else { return }
+        WikipediaClient.shared.findPage(withTitle: query) { title in
+            self.wikiPageTitle = title
+        }
+    }
+    
+    fileprivate func setupNavigationItem() {
+        navigationItem.largeTitleDisplayMode = .never
+    }
+    
     override func viewDidLoad() {
         guard let character = character else {
             fatalError()
@@ -27,7 +107,7 @@ class PersonViewController: UIViewController, Coordinated {
         
         super.viewDidLoad()
         
-        navigationItem.largeTitleDisplayMode = .never
+        setupNavigationItem()
         
         personController = PersonController(character: character)
         //personController.updateHandler = update(with:)
@@ -39,8 +119,13 @@ class PersonViewController: UIViewController, Coordinated {
             animatingDifferences: true)
         
         personController.load(completion: update(with:))
+        
         title = personController.person.name
+        navigationItem.titleView = titleView
+        
+        setupWikipedia()
     }
+    
         
     func setupCollectionView() {
         collectionView = createCollectionView(layout: createLayout())
@@ -142,7 +227,7 @@ extension PersonViewController {
             let header = collectionView.dequeueHeader(SectionHeader.self, for: indexPath)
             header.titleLabel.text = section.title
             if section == .knownFor {
-                header.setAction(title: "See All",
+                header.setAction(title: NSLocalizedString("See All", comment: ""),
                                  action: { [weak self] in self?.navigateToMovieCredits() })
             }
             return header
@@ -173,27 +258,23 @@ extension PersonViewController: UICollectionViewDelegate {
     func navigateToMovieCredits() {
         coordinator?.showMovieCredits(personController)
     }
+    
+    @objc func showWikiPage() {
+        guard let title = wikiPageTitle else { return }
+        coordinator?.showWikiPage(title: title)
+    }
 }
 
 
 extension PersonViewController {   
-    enum Section: Hashable {
-        case photoAndName
-        case personalInfo
-        case biography
-        case knownFor
+    enum Section: String, Hashable {
+        case photoAndName = ""
+        case personalInfo = "Personal Information"
+        case biography = "Biography"
+        case knownFor = "Known For"
         
         var title: String {
-            switch self {
-            case .personalInfo:
-                return "Personal Information"
-            case .biography:
-                return "Biography"
-            case .knownFor:
-                return "Known For"
-            default:
-                return ""
-            }
+            NSLocalizedString(rawValue, comment: "")
         }
     }
 }

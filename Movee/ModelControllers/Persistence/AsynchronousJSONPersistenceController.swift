@@ -8,6 +8,8 @@
 import Foundation
 
 class AsynchronousJSONPersistenceController<T: Codable&Hashable>: PersistenceController {
+    internal var taskQueue = DispatchQueue.global(qos: .userInteractive)
+    
     func loadData() {
         loadData(completion: nil)
     }
@@ -47,10 +49,15 @@ class AsynchronousJSONPersistenceController<T: Codable&Hashable>: PersistenceCon
     internal func loadData(completion: (() -> Void)? = nil) {
         print("started loading data")
         dataState = .loading
-        DispatchQueue.global(qos: .utility).async {
+        taskQueue.async {
             self._loadData()
             DispatchQueue.main.async { completion?() }
         }
+        
+//        DispatchQueue.global(qos: .utility).async {
+//            self._loadData()
+//            DispatchQueue.main.async { completion?() }
+//        }
     }
     
     private func _loadData() {
@@ -66,7 +73,7 @@ class AsynchronousJSONPersistenceController<T: Codable&Hashable>: PersistenceCon
     internal func saveData() {
         guard dataState == .loaded else { return }
         if let encoded = try? encoder.encode(items) {
-            DispatchQueue.global(qos: .utility).async {
+            taskQueue.async {
                 encoded.save(toFile: self.filename)
             }
         }

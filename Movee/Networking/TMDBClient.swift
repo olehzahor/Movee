@@ -9,7 +9,7 @@ import Foundation
 
 class TMDBClient: ApiService {
     //typealias PagedReusltCompletionHandler = (Result<MoviesPagedResult, Error>) -> Void
-    var locale: String = "en_US"
+    var locale: String = Locale.current.languageCode ?? "en_US"
     
     lazy var endpoints = Endpoints(apiKey: TMDB_API_KEY, locale: locale)
 

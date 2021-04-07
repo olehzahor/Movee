@@ -120,10 +120,10 @@ extension DDSDiscoverViewController {
 
 extension DDSDiscoverViewController {
     class DiscoverViewControllerDataSource: UITableViewDiffableDataSource<Section, AnyHashable> {
-        override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-            if snapshot().numberOfSections < 2 { return "" }
-            return snapshot().sectionIdentifiers[section].rawValue
-        }
+//        override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+//            if snapshot().numberOfSections < 2 { return "" }
+//            return snapshot().sectionIdentifiers[section].rawValue
+//        }
     }
     
     enum Section: String { case top = "", discover = "Discover" }

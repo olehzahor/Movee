@@ -71,7 +71,7 @@ extension MoviesFilterController {
         case dates = "Release Date"
         
         var title: String {
-            return self.rawValue
+            return self.rawValue.l10ed
         }
     }
     

@@ -48,7 +48,7 @@ class DiscoverController {
     private(set) var name: String?
     
     func moved(to list: DiscoverListItem) -> DiscoverController? {
-        return DiscoverController(lists: list.nestedLists ?? [], isNested: true, name: list.name)
+        return DiscoverController(lists: list.nestedLists ?? [], isNested: true, name: list.localizedName)
     }
     
     init(lists: [DiscoverListItem], isNested: Bool = false, name: String? = nil) {
@@ -66,7 +66,10 @@ class DiscoverController {
 
 extension DiscoverController {
     @objc func loadData(completion: (() -> Void)? = nil) {
-        guard let filename = filename else { return }
+        guard let filename = filename else {
+            completion?()
+            return
+        }
         
         DispatchQueue.global(qos: .utility).async {
             self.lists = Bundle.main.decode(from: filename)

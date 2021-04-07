@@ -33,31 +33,32 @@ class PersonController {
         var items: [Movie]
     }
         
+    
     var personalInfoDictionary: [PersonalInfo] {
         var personalInfo = [PersonalInfo]()
         guard let viewModel = viewModel else { return personalInfo }
         
         if let knownFor = person?.known_for_department {
-            personalInfo.append(.init(key: "Known for", value: knownFor))
+            personalInfo.append(.init(key: "Known for".l10ed, value: knownFor))
         }
         
         if person?.birthdayDate != nil {
             personalInfo.append(
-                .init(key: "Birthday", value: viewModel.birthdayString))
+                .init(key: "Birthday".l10ed, value: viewModel.birthdayString))
         }
         
         if person?.deathdayDate != nil {
              personalInfo.append(
-                .init(key: "Deathday", value: viewModel.deathdayString))
+                .init(key: "Deathday".l10ed, value: viewModel.deathdayString))
         }
         
         if person?.place_of_birth != nil {
             personalInfo.append(
-                .init(key: "Place of birth", value: viewModel.placeOfBirth))
+                .init(key: "Place of birth".l10ed, value: viewModel.placeOfBirth))
         }
         
         if let gender = person?.gender, gender > 0 {
-            personalInfo.append(.init(key: "Gender", value: viewModel.gender))
+            personalInfo.append(.init(key: "Gender".l10ed, value: viewModel.gender))
         }
                 
         return personalInfo

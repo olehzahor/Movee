@@ -15,13 +15,28 @@ class SearchCoordinator: MainCoordinator {
         }
     }
     
+    func showSearchHistory() {
+        showSearchHistory(controller: SearchHistoryController.shared)
+    }
+
+    
     override func start() {
-        let vc = DiscoverViewController()
-        vc.coordinator = self
-        let database = Database.database().reference()
-        vc.discoverController = RemoteDiscoverController(database: database, path: "discoverLists")
-        vc.tabBarItem = .init(tabBarSystemItem: .search, tag: 2)
-        navigationController.pushViewController(vc, animated: false)
+        createAndPush(SearchViewController.self) {
+//            $0.discoverController = DiscoverController(fromBundle: "mowee-542f8-default-rtdb-export")
+            $0.discoverController = RemoteDiscoverController(
+                database: Database.database().reference(), path: "discoverLists")
+            $0.tabBarItem = .init(tabBarSystemItem: .search, tag: 2)
+        }
+//        let vc = DiscoverViewController()
+//        vc.coordinator = self
+//        let database = Database.database().reference()
+//        vc.discoverController = RemoteDiscoverController(database: database, path: "discoverLists")
+        //vc.tabBarItem = .init(tabBarSystemItem: .search, tag: 2)
+        //navigationController.pushViewController(vc, animated: false)
+    }
+    
+    func showSmartFilters() {
+        createAndPush(SmartFiltersViewController.self)
     }
     
     func showMoviesAdvancedSearch() {
@@ -56,7 +71,7 @@ class SearchCoordinator: MainCoordinator {
         
     func showNestedDiscoverList(discoverController: DiscoverController?) {
         guard let discoverController = discoverController else { return }
-        createAndPush(DiscoverViewController.self) {
+        createAndPush(CVDiscoverVC.self) {
             $0.discoverController = discoverController
         }
     }

@@ -27,8 +27,7 @@ struct StoredMediaListItem: Codable, Equatable, Hashable {
 }
 
 class StoredMediaListController: AsynchronousJSONPersistenceController<StoredMediaListItem> {
-    
-    internal var group = DispatchGroup()
+    internal var tasksGroup = DispatchGroup()
     enum SortingKey { case date, title }
 
     public var sortingKey: SortingKey = .date
@@ -43,9 +42,9 @@ class StoredMediaListController: AsynchronousJSONPersistenceController<StoredMed
     }
     
     override func loadData(completion: (() -> Void)? = nil) {
-        group.enter()
+        tasksGroup.enter()
         super.loadData() {
-            self.group.leave()
+            self.tasksGroup.leave()
             self.postLoaded()
             completion?()
         }
@@ -106,10 +105,10 @@ extension StoredMediaListController: AnyMediaListController {
     @objc var title: String { return "" }
 
     func load(fromPage initialPage: Int, infiniteScroll: Bool, completion: @escaping CompletionHandler) {
-        DispatchQueue.global(qos: .utility).async {
+        DispatchQueue.global(qos: .userInteractive).async {
             switch self.dataState {
             case .loading:
-                self.group.notify(queue: .main) { completion() }
+                self.tasksGroup.notify(queue: .main) { completion() }
             case .loaded:
                 DispatchQueue.main.async { completion() }
             case .notLoaded:

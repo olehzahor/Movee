@@ -97,7 +97,7 @@ class HomeViewController: UIViewController, Coordinated {
         
         discoverController.loadData(completion: manageMoviesControllers)
         
-        title = "Explore"
+        title = "Explore".l10ed
     }
     
 }
@@ -124,7 +124,7 @@ extension HomeViewController: UICollectionViewDelegate {
     func seeAllMoviesInList(listTitle: String?) {
         guard let listTitle = listTitle else { return }
         if let list = discoverController.lists.first(
-            where: { $0.name == listTitle }) {
+            where: { $0.localizedName == listTitle }) {
             coordinator?.showCustomMediaList(mediaController: list.mediaController)
         }
 
@@ -202,11 +202,11 @@ extension HomeViewController {
             header.titleLabel.text = sectionTitle
             
             if sectionTitle == self.watchlistController?.title {
-                header.titleLabel.text! += ": Up Next"
+                header.titleLabel.text! += ": " + "Up Next".l10ed
                 return header
             }
             
-            header.setAction(title: "See All") {
+            header.setAction(title: "See All".l10ed) {
                 self.seeAllMoviesInList(listTitle: sectionTitle)
             }
             return header

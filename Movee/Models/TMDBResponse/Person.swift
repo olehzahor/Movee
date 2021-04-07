@@ -25,6 +25,7 @@ struct Person: MediaListItem {
     var imdb_id: String?
     var homepage: String?
     var movie_credits: MovieCredits?
+    var also_known_as: [String]?
 }
 
 
@@ -32,11 +33,11 @@ extension Person {
     var genderString: String {
         switch gender {
         case 1:
-            return "Female"
+            return "Female".l10ed
         case 2:
-            return "Male"
+            return "Male".l10ed
         default:
-            return "Unknown"
+            return "Unknown".l10ed
         }
     }
     

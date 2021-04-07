@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import WebKit
 
 class MainCoordinator: Coordinator {
     var childCoordinators = [Coordinator]()
@@ -25,10 +26,44 @@ class MainCoordinator: Coordinator {
         navigationController.popViewController(animated: true)
     }
     
+    
+    struct MockListItem: Codable {
+        let name: String
+        let localizedNames: [String: String]?
+        let path: String?
+        let query: String?
+        let mediaType: String?
+    }
+    
     func start() {
+        TMDBClient.shared.loadAllGenres {
+            let genres = TMDBClient.shared.genres.tv
+            let ruGenres = ["Боевик и приключения","Мультфильм","Комедия","Криминал","Документальный","Драма","Семейный","Детский","Детектив","Новости","Реалити-шоу","НФ и Фэнтези","Мыльная опера","Ток-шоу","Война и Политика","Вестерн"]
+            let esGenres = ["Acción y Aventura","Animación","Comedia","Crimen","Documental","Drama","Familia","Kids","Misterio","Noticias","Reality","Ciencia ficción y fantasía","Soap","Talk","Guerra y política","Western"]
+            var list = [MockListItem]()
+            var index = 0
+            genres?.genres.forEach { genre in
+                let localizedNames = ["ru": ruGenres[index], "es": esGenres[index]]
+                let item = MockListItem(
+                    name: "Top \(genre.name) TV Shows",
+                    localizedNames: localizedNames,
+                    path: "discover/tv",
+                    query: "with_genres=\(genre.id)&sort_by=vote_count.desc",
+                    mediaType: "tv")
+                list.append(item)
+                index += 1
+            }
+            let jsonEncoder = JSONEncoder()
+            let jsonData = try? jsonEncoder.encode(list)
+            let json = String(data: jsonData!, encoding: String.Encoding.utf8)
+            print(json)
+        }
+        
+        
+        
         navigationController.navigationBar.prefersLargeTitles = true
         createAndPush(HomeViewController.self, animated: false) {
-            $0.tabBarItem = UITabBarItem(title: "Home", image: UIImage(systemName: "house"), tag: 0)
+            $0.tabBarItem = UITabBarItem(title: NSLocalizedString("Explore", comment: ""), image: UIImage(systemName: "house"), tag: 0)
         }
     }
         
@@ -95,7 +130,7 @@ class MainCoordinator: Coordinator {
     }
     
     func showMovieCredits(_ controller: PersonController) {
-        let vc = MovieCreditsController()
+        let vc = TimelineViewController()
         vc.coordinator = self
         vc.personController = controller
         navigationController.pushViewController(vc, animated: true)
@@ -114,6 +149,17 @@ class MainCoordinator: Coordinator {
         vc.coordinator = self
         navigationController.present(vc, animated: true)
      }
+    
+    func showWikiPage(title: String) {
+        guard let pageUrl = WikipediaClient.shared.getPageUrl(title)
+        else { return }
+        
+        let vc = UIViewController()
+        let webView = WKWebView()
+        vc.view = webView
+        webView.load(URLRequest(url: pageUrl))
+        navigationController.present(vc, animated: true)
+    }
 }
 
 extension MainCoordinator {

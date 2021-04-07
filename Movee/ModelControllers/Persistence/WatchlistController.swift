@@ -10,7 +10,7 @@ import Foundation
 class WatchlistController: StoredMediaListController {
     static var shared: WatchlistController = WatchlistController()
     
-    @objc override var title: String { return "Watchlist" }
+    @objc override var title: String { return NSLocalizedString("Watchlist", comment: "") }
     
     static let ncUpdatedName = Notification.Name("WatchlistUpdated")
     static let ncLoadedName = Notification.Name("WatchlistLoaded")

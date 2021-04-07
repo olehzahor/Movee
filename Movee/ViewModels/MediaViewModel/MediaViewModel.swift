@@ -42,7 +42,7 @@ protocol MediaViewModel {
 
 extension MediaViewModel {
     var titleAndCharacter: NSAttributedString {
-        return createAttributedTitleSubtitleString(separator: " as ")
+        return createAttributedTitleSubtitleString(separator: " \("as".l10ed) ")
     }
 
     //var genres: Genres?

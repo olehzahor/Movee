@@ -7,24 +7,11 @@
 
 import UIKit
 
-extension MovieCreditsController: UICollectionViewDelegate {
-    func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
-        true
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let movie = dataSource?.itemIdentifier(for: indexPath)
-        else { return }
-        
-        coordinator?.showDetails(media: movie)
-    }
-}
-
-class MovieCreditsController: UIViewController, Coordinated {
+class TimelineViewController: UIViewController, Coordinated {
     weak var coordinator: MainCoordinator?
     
-    typealias DataSource = UICollectionViewDiffableDataSource<String, Movie>
-    typealias Snapshot = NSDiffableDataSourceSnapshot<String, Movie>
+    typealias DataSource = UICollectionViewDiffableDataSource<String, Movie.UniqueMovieContainer>
+    typealias Snapshot = NSDiffableDataSourceSnapshot<String, Movie.UniqueMovieContainer>
     var dataSource: DataSource?
 
     var collectionView: UICollectionView!
@@ -63,7 +50,7 @@ class MovieCreditsController: UIViewController, Coordinated {
         
         sections.forEach {
             snapshot?.appendSections([$0.department])
-            snapshot?.appendItems($0.items, toSection: $0.department)
+            snapshot?.appendItems($0.items.map({$0.unique}), toSection: $0.department)
         }
         
         return snapshot!
@@ -72,9 +59,9 @@ class MovieCreditsController: UIViewController, Coordinated {
     
     func createDataSource() {
         dataSource =  DataSource(collectionView: collectionView) {
-            (collectionView, indexPath, movie) -> UICollectionViewCell? in
+            (collectionView, indexPath, container) -> UICollectionViewCell? in
             let cell = collectionView.dequeueCell(MovieListCell.self, for: indexPath)
-            MovieViewModel(movie: movie).configure(cell)
+            MovieViewModel(movie: container.movie).configure(cell)
             return cell
         }
         
@@ -86,6 +73,29 @@ class MovieCreditsController: UIViewController, Coordinated {
             return header
         }
     }
+}
+
+
+extension TimelineViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
+        true
+    }
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let container = dataSource?.itemIdentifier(for: indexPath)
+        else { return }
+        
+        coordinator?.showDetails(media: container.movie)
+    }
+}
+
+extension Movie {
+    struct UniqueMovieContainer: Hashable {
+        let id = UUID()
+        let movie: Movie
+    }
     
+    var unique: UniqueMovieContainer {
+        return UniqueMovieContainer(movie: self)
+    }
 }

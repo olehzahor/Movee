@@ -10,7 +10,7 @@ import UIKit
 class WatchlistViewController: MediaListViewController {
     let placeholder: UILabel = {
         let label = UILabel()
-        label.text = "Your watchlist is empty.\n\nMovies you add to your watchlist will appear here."
+        label.text = NSLocalizedString("Your watchlist is empty.\n\nMovies you add to your watchlist will appear here.", comment: "")
         label.textAlignment = .center
         label.numberOfLines = 0
         label.textColor = .secondaryLabel

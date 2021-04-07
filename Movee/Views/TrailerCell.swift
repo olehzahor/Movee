@@ -14,7 +14,7 @@ class TrailerCell: ProgrammaticCollectionViewCell, SelfConfiguringView {
     }
     
     let playButton: UIButton = createView {
-        $0.setTitle("▶ Play Trailer", for: .normal)
+        $0.setTitle("▶ " + "Play Trailer".l10ed, for: .normal)
         $0.titleLabel?.font = .preferredFont(forTextStyle: .title2)
         $0.titleLabel?.textAlignment = .center
         $0.titleLabel?.textColor = .white

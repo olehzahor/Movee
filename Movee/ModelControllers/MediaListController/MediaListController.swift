@@ -126,14 +126,14 @@ extension AnyMediaListController {
     }
     
     static func relatedMoviesList(movieId: Int, name: String = "") -> MediaListController<Movie> {
-        let listTitle = "Similar to \(name)"
+        let listTitle = "Similar to".l10ed + " \(name)"
         return .init(title: listTitle) { page, completion in
             TMDBClient.shared.getRelatedMovies(movieId: movieId, page: page, completion: completion)
         }
     }
     
     static func relatedTVShowsList(tvShowId: Int, name: String = "") -> MediaListController<TVShow> {
-        let listTitle = "Similar to \(name)"
+        let listTitle = "Similar to".l10ed + " \(name)"
         return .init(title: listTitle) { page, completion in
             TMDBClient.shared.getRelatedTVShows(tvShowId: tvShowId, page: page, completion: completion)
         }

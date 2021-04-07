@@ -342,11 +342,11 @@ extension MediaDetailsViewController {
             
             switch section {
             case .related:
-                sectionHeader.setAction(title: "See All") { [weak self] in
+                sectionHeader.setAction(title: NSLocalizedString("See All", comment: "")) { [weak self] in
                     self?.navigateToRelatedList()
                 }
             case .credits:
-                sectionHeader.setAction(title: "See All") { [weak self] in
+                sectionHeader.setAction(title: NSLocalizedString("See All", comment: "")) { [weak self] in
                     self?.navigateToCredits()
                 }
             default:
@@ -396,8 +396,24 @@ extension MediaDetailsViewController {
         case info = "Facts"
         case reviews = "Reviews"
         
+        func dummy() {
+            let credits = NSLocalizedString("Cast and Crew", comment: "")
+            let related = NSLocalizedString("Related", comment: "")
+            let seasons = NSLocalizedString("Seasons", comment: "")
+            let info = NSLocalizedString("Facts", comment: "")
+            let reviews = NSLocalizedString("Reviews", comment: "")
+        }
+        
         var title: String {
-            return self.rawValue
+            return NSLocalizedString(self.rawValue, comment: "")
         }
     }
 }
+
+
+/*
+
+
+
+ 
+*/

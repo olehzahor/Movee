@@ -33,7 +33,7 @@ class TVShowViewModel: AnyMediaViewModel<TVShow> {
             if let lastAirDate = media.last_air_date, media.in_production == false {
                 resultString += TMDBDateFormatter.shared.year(fromDateString: lastAirDate)
             }
-            return "TV Series (\(resultString))"
+            return "TV Series".l10ed + " (\(resultString))"
         } else { return "" }
     }
     
@@ -54,25 +54,25 @@ class TVShowViewModel: AnyMediaViewModel<TVShow> {
         
         if let networks = media.networks, !networks.isEmpty {
             let networksStrings = networks.compactMap { $0.name }
-            topFacts.append(["Network": networksStrings.joined(separator: separator)])
+            topFacts.append([NSLocalizedString("Network", comment: ""): networksStrings.joined(separator: separator)])
         }
 
         if let status = media.status, !status.isEmpty {
-            topFacts.append(["Status": status])
+            topFacts.append([NSLocalizedString("Status", comment: ""): status])
         }
         
         if let firstAirDate = media.release_date, !firstAirDate.isEmpty {
             let dateString =
                 TMDBDateFormatter.shared.localizedDateString(fromDateString: firstAirDate,
                                                              style: .full)
-            topFacts.append(["Premiered": dateString])
+            topFacts.append([NSLocalizedString("Premiered", comment: ""): dateString])
         }
         
         if let lastAirDate = media.last_air_date, !lastAirDate.isEmpty {
             let dateString =
                 TMDBDateFormatter.shared.localizedDateString(fromDateString: lastAirDate,
                                                              style: .full)
-            topFacts.append(["Last Aired": dateString])
+            topFacts.append([NSLocalizedString("Last Aired", comment: ""): dateString])
         }
         
         if let nextEpisode = media.next_episode_to_air,
@@ -81,7 +81,7 @@ class TVShowViewModel: AnyMediaViewModel<TVShow> {
            let episodeNumber = nextEpisode.episode_number {
             var nextEpisodeString = "Episode \(episodeNumber) (Season \(seasonNumber))\n"
             nextEpisodeString += "\(TMDBDateFormatter.shared.localizedDateString(fromDateString: airDate, style: .full))"
-            topFacts.append(["Next Episode": nextEpisodeString ])
+            topFacts.append([NSLocalizedString("Next Episode", comment: ""): nextEpisodeString ])
         }
         
         facts = topFacts + facts

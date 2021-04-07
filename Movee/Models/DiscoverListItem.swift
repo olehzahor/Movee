@@ -9,6 +9,7 @@ import Foundation
 
 class DiscoverListItem: Codable {
     let name: String
+    let localizedNames: [String: String]?
     let path: String?
     let query: String?
     let nestedLists: [DiscoverListItem]?
@@ -20,6 +21,7 @@ class DiscoverListItem: Codable {
         self.query = query
         self.nestedLists = []
         self.mediaType = mediaType
+        self.localizedNames = [:]
     }
     
     init(name: String, nestedLists: [DiscoverListItem]) {
@@ -28,19 +30,29 @@ class DiscoverListItem: Codable {
         self.path = nil
         self.query = nil
         self.mediaType = nil
+        self.localizedNames = [:]
     }
 }
 
 extension DiscoverListItem {
+    var localizedName: String {
+        guard let locale = Locale.current.languageCode,
+              let localizedNames = localizedNames,
+              localizedNames.keys.contains(locale)
+        else { return name }
+        
+        return localizedNames[locale]!
+    }
+    
     var mediaController: AnyMediaListController? {
         guard let path = path, let query = query else { return nil }
         switch mediaType {
         case "tv":
-            return MediaListController<TVShow>.customTVShowsList(title: name, path: path, query: query)
+            return MediaListController<TVShow>.customTVShowsList(title: localizedName, path: path, query: query)
         case "themedList":
-            return SinglePageMediaListController<ThemedList>.customSinglePageList(title: name, path: path)
+            return SinglePageMediaListController<ThemedList>.customSinglePageList(title: localizedName, path: path)
         default:
-            return MediaListController<Movie>.customMoviesList(title: name, path: path, query: query)
+            return MediaListController<Movie>.customMoviesList(title: localizedName, path: path, query: query)
         }
     }
 }

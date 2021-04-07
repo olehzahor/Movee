@@ -60,12 +60,12 @@ class MovieViewModel: AnyMediaViewModel<Movie> {
         let releaseDateFullString = TMDBDateFormatter.shared.localizedDateString(fromDateString: media.release_date, style: .full)
         
         if !releaseDateFullString.isEmpty {
-            rows = [["Release Date": releaseDateFullString]] + rows
+            rows = [[NSLocalizedString("Release Date", comment: ""): releaseDateFullString]] + rows
         }
         
         var savedBudget: Double?
         if let budget = media.budget, budget > 0 {
-            rows.append(["Budget": NSNumber(value: budget).dollars])
+            rows.append([NSLocalizedString("Budget", comment: ""): NSNumber(value: budget).dollars])
             savedBudget = budget
         }
 
@@ -75,7 +75,7 @@ class MovieViewModel: AnyMediaViewModel<Movie> {
             if let budget = savedBudget {
                 prefix = revenue > budget ? "↑ " : "↓ "
             }
-            rows.append(["Revenue": "\(prefix)\(revenueStr)"])
+            rows.append([NSLocalizedString("Revenue", comment: ""): "\(prefix)\(revenueStr)"])
         }
 
         return rows

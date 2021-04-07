@@ -62,22 +62,31 @@ class AnyMediaViewModel<T: Media>: MediaViewModel {
         return TMDBClient.shared.fullBackdropUrl(path: backdropPath)
     }
     
+    var countries: [String] {
+        guard let countries = media.production_countries else { return [] }
+        
+        return countries.compactMap {
+            Locale.current.localizedString(forRegionCode: $0.iso_3166_1 ?? "") ?? nil
+        }
+    }
+    
     var facts: [[String: String]] {
         var rows = [[String: String]]()
         
-        if let countries = media.production_countries, !countries.isEmpty {
-            let countryStrings = countries.compactMap { $0.name }
-            rows.append(["Country": countryStrings.joined(separator: "\n")])
+        if !countries.isEmpty {
+            rows.append([NSLocalizedString("Country", comment: ""): countries.joined(separator: "\n")])
         }
         
         if let language = media.original_language, !language.isEmpty {
             if let localizedString = Locale.current.localizedString(forLanguageCode: language) {
-                rows.append(["Language": localizedString])
+                rows.append([NSLocalizedString("Language", comment: ""): localizedString])
             }
         }
         
         if let rating = media.vote_average, let votesCount = media.vote_count, rating > 0, votesCount > 0 {
-            rows.append(["Rating": "\(rating) (\(votesCount) votes)"])
+            rows.append(
+                [NSLocalizedString("Rating", comment: ""):
+                    "\(rating) (\(votesCount) \(NSLocalizedString("votes", comment: "")))"])
         }
         
         return rows

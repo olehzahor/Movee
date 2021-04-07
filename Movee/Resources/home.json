@@ -4,6 +4,11 @@
       "nestedLists":[],
       "query":"",
       "name":"Popular Movies",
+      "localizedNames": {
+          "ru": "Популярные фильмы",
+          "uk": "Популярні фільми",
+          "es": "Películas populares"
+      },
       "mediaType": "movie"
    },
    {
@@ -11,6 +16,11 @@
       "nestedLists":[],
       "query":"",
       "name":"Trending Movies",
+      "localizedNames": {
+          "ru": "Фильмы в тренде",
+          "uk": "Трендові фільми",
+          "es": "Películas de tendencia"
+      },
       "mediaType": "movie"
    },
    {
@@ -18,6 +28,11 @@
       "nestedLists":[],
       "query":"",
       "name":"Popular TV Shows",
+      "localizedNames": {
+          "ru": "Популярные сериалы",
+          "uk": "Популярні серіали",
+          "es": "Programas de TV populares"
+      },
       "mediaType": "tv"
    },
    {
@@ -25,6 +40,11 @@
       "nestedLists":[],
       "query":"",
       "name":"Now Playing Movies",
+      "localizedNames": {
+          "ru": "Фильмы в прокате",
+          "uk": "Фільми у прокаті",
+          "es": "Películas en cartelera"
+      },
       "mediaType": "movie"
    },
    {
@@ -32,6 +52,11 @@
        "nestedLists":[],
        "query":"",
        "name":"Currently Airing TV Shows",
+       "localizedNames": {
+           "ru": "Сериалы в эфире",
+           "uk": "Серіали в етері",
+           "es": "Programas de TV en el aire"
+       },
        "mediaType": "tv"
    },
 ]
