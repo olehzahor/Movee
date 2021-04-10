@@ -12,11 +12,11 @@ class TVShowViewModel: AnyMediaViewModel<TVShow> {
         return TMDBClient.shared.genres.tv
     }
     
-    override var originalTitle: String {
-        if let originalName = media.original_name, originalName != media.name {
-            return originalName
-        } else { return "" }
-    }
+//    override var originalTitle: String {
+//        if let originalName = media.original_name, originalName != media.name {
+//            return originalName
+//        } else { return "" }
+//    }
     
     override var runtime: String {
         guard let runtime = media.episode_run_time?.first, runtime > 0 else { return "" }

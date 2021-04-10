@@ -7,94 +7,22 @@
 
 import UIKit
 
-extension PersonViewController {
-    class TitleView: UIView {
-        var title: String? {
-            didSet { titleLabel.text = title }
-        }
-        
-        var subtitle: String? {
-            didSet { subtitleLabel.text = subtitle }
-        }
-        
-        let titleLabel: UILabel = {
-            let label = UILabel()
-            label.font = .preferredFont(forTextStyle: .headline)
-            label.textColor = .label
-            label.textAlignment = .center
-            return label
-        }()
-        
-        let subtitleLabel: UILabel = {
-            let label = UILabel()
-            label.font = .preferredFont(forTextStyle: .subheadline)
-            label.textColor = .secondaryLabel
-            label.textAlignment = .center
-            return label
-
-        }()
-                
-        override init(frame: CGRect) {
-            super.init(frame: frame)
-            let vStack = UIStackView(arrangedSubviews: [titleLabel, subtitleLabel])
-            addSubview(vStack)
-            vStack.axis = .vertical
-            vStack.fillSuperview()
-        }
-        
-        required init?(coder: NSCoder) {
-            fatalError("init(coder:) has not been implemented")
-        }
-    }
-}
-
 class PersonViewController: UIViewController, Coordinated {
-    override var title: String? { didSet { titleView.title = title } }
-    var subtitle: String? { didSet { self.titleView.subtitle = self.subtitle } }
-    
     weak var coordinator: MainCoordinator?
     
     typealias DataSource = UICollectionViewDiffableDataSource<Section, AnyHashable>
     var snapshot: NSDiffableDataSourceSnapshot<Section, AnyHashable>?
+    
+    override var title: String? { didSet { titleView.title = title } }
+    var subtitle: String? { didSet { self.titleView.subtitle = self.subtitle } }
+    private var titleView = TitleSubtitleView()
 
     private(set) var personController: PersonController!
     var character: Character?
     var photo: UIImage?
     private(set) lazy var dataSource = createDataSource()
     var collectionView: UICollectionView!
-    
-    private var titleView = TitleView()
-    
-    private var wikiPageTitle: String? {
-        didSet {
-            if let wikiPageTitle = wikiPageTitle, !wikiPageTitle.isEmpty {
-                UIView.transition(with: titleView, duration: 5, options: .curveEaseInOut) {
-                    self.titleView.subtitleLabel.text = wikiPageTitle
-                    //if wikiPageTitle != self.title { self.subtitle = wikiPageTitle }
-                } completion: { _ in
-                    //self.addWikipediaButton()
-                    
-                }
-
-                
-            }
-        }
-    }
-    
-    fileprivate func addWikipediaButton() {
-        let wikiButton = UIBarButtonItem(image: UIImage(named: "icons8-wikipedia"),
-                               style: .plain, target: self,
-                               action: #selector(self.showWikiPage))
-        self.navigationItem.setRightBarButton(wikiButton, animated: false)
-    }
-    
-    fileprivate func setupWikipedia() {
-        guard let query = character?.name else { return }
-        WikipediaClient.shared.findPage(withTitle: query) { title in
-            self.wikiPageTitle = title
-        }
-    }
-    
+        
     fileprivate func setupNavigationItem() {
         navigationItem.largeTitleDisplayMode = .never
     }
@@ -103,14 +31,12 @@ class PersonViewController: UIViewController, Coordinated {
         guard let character = character else {
             fatalError()
         }
-        
-        
+
         super.viewDidLoad()
         
         setupNavigationItem()
         
         personController = PersonController(character: character)
-        //personController.updateHandler = update(with:)
 
         setupCollectionView()
         
@@ -260,11 +186,39 @@ extension PersonViewController: UICollectionViewDelegate {
     }
     
     @objc func showWikiPage() {
-        guard let title = wikiPageTitle else { return }
-        coordinator?.showWikiPage(title: title)
+        if let subtitle = subtitle {
+            coordinator?.showWikiPage(title: subtitle)
+        }
     }
 }
 
+extension PersonViewController {
+    func setSubtitle(_ subtitle: String?, animated: Bool = true) {
+        guard let subtitle = subtitle else { return }
+        if !subtitle.isEmpty {
+            UIView.transition(with: titleView, duration: 0.2, options: .transitionCrossDissolve) {
+                self.subtitle = subtitle
+                self.titleView.layoutIfNeeded()
+            } completion: { _ in
+                self.addWikipediaButton()
+            }
+        }
+    }
+    
+    fileprivate func addWikipediaButton() {
+        let wikiButton = UIBarButtonItem(image: UIImage(named: "icons8-wikipedia"),
+                               style: .plain, target: self,
+                               action: #selector(self.showWikiPage))
+        self.navigationItem.setRightBarButton(wikiButton, animated: false)
+    }
+    
+    fileprivate func setupWikipedia() {
+        guard let query = character?.name else { return }
+        WikipediaClient.shared.findPage(withTitle: query) { wikiPageTitle in
+            self.setSubtitle(wikiPageTitle)
+        }
+    }
+}
 
 extension PersonViewController {   
     enum Section: String, Hashable {

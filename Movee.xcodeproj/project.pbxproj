@@ -29,6 +29,7 @@
 		042A09E1255B0C110040AD3E /* MovieViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042A09E0255B0C110040AD3E /* MovieViewModel.swift */; };
 		042EA5DF259651B8008899FF /* Date+Tommorow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042EA5DE259651B8008899FF /* Date+Tommorow.swift */; };
 		042EA5E225966076008899FF /* MoviesFilterController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042EA5E125966076008899FF /* MoviesFilterController.swift */; };
+		0436802926220E130021A1E3 /* TitleSubtitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0436802826220E130021A1E3 /* TitleSubtitleView.swift */; };
 		0439906025D2D9AB00BE0577 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 0439905F25D2D9AB00BE0577 /* .gitignore */; };
 		0439906325D2DA7900BE0577 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0439906225D2DA7900BE0577 /* Constants.swift */; };
 		043A84EF2594EDFC00574149 /* FiltersViewController+Layout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043A84EE2594EDFC00574149 /* FiltersViewController+Layout.swift */; };
@@ -172,6 +173,7 @@
 		042A09E0255B0C110040AD3E /* MovieViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieViewModel.swift; sourceTree = "<group>"; };
 		042EA5DE259651B8008899FF /* Date+Tommorow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Tommorow.swift"; sourceTree = "<group>"; };
 		042EA5E125966076008899FF /* MoviesFilterController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviesFilterController.swift; sourceTree = "<group>"; };
+		0436802826220E130021A1E3 /* TitleSubtitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleSubtitleView.swift; sourceTree = "<group>"; };
 		0439905F25D2D9AB00BE0577 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		0439906225D2DA7900BE0577 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		043A84EE2594EDFC00574149 /* FiltersViewController+Layout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FiltersViewController+Layout.swift"; sourceTree = "<group>"; };
@@ -516,6 +518,7 @@
 				0466E7CA25FFC838001754F3 /* ReviewCell.swift */,
 				0466E7D025FFD5E4001754F3 /* ReviewScrollView.swift */,
 				04063575260529C70043E9B1 /* DiscoverListItemCell.swift */,
+				0436802826220E130021A1E3 /* TitleSubtitleView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -896,6 +899,7 @@
 				04AB753925E820E8003B2D94 /* TVShowController.swift in Sources */,
 				04D57F7825BDEEB800B6EB92 /* SearchHistoryController.swift in Sources */,
 				04FD559C25F030BD00B6F941 /* MediaListController.swift in Sources */,
+				0436802926220E130021A1E3 /* TitleSubtitleView.swift in Sources */,
 				04E84D6A25ACE54D0007C96A /* LabelCell.swift in Sources */,
 				04E594B325879C97002D0ABE /* Filter.swift in Sources */,
 				04AD72BA25EEBF0600DF2AC9 /* MediaList.swift in Sources */,

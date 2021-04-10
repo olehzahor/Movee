@@ -82,7 +82,7 @@ extension MediaDetailsViewController {
         group.contentInsets.trailing = 5
         group.contentInsets.leading = 5
         let section = NSCollectionLayoutSection(group: group)
-        section.orthogonalScrollingBehavior = .paging
+        section.orthogonalScrollingBehavior = .continuous
         
         let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
                                                 heightDimension: .estimated(30.0))
