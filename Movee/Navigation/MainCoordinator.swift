@@ -36,31 +36,6 @@ class MainCoordinator: Coordinator {
     }
     
     func start() {
-        TMDBClient.shared.loadAllGenres {
-            let genres = TMDBClient.shared.genres.tv
-            let ruGenres = ["Боевик и приключения","Мультфильм","Комедия","Криминал","Документальный","Драма","Семейный","Детский","Детектив","Новости","Реалити-шоу","НФ и Фэнтези","Мыльная опера","Ток-шоу","Война и Политика","Вестерн"]
-            let esGenres = ["Acción y Aventura","Animación","Comedia","Crimen","Documental","Drama","Familia","Kids","Misterio","Noticias","Reality","Ciencia ficción y fantasía","Soap","Talk","Guerra y política","Western"]
-            var list = [MockListItem]()
-            var index = 0
-            genres?.genres.forEach { genre in
-                let localizedNames = ["ru": ruGenres[index], "es": esGenres[index]]
-                let item = MockListItem(
-                    name: "Top \(genre.name) TV Shows",
-                    localizedNames: localizedNames,
-                    path: "discover/tv",
-                    query: "with_genres=\(genre.id)&sort_by=vote_count.desc",
-                    mediaType: "tv")
-                list.append(item)
-                index += 1
-            }
-            let jsonEncoder = JSONEncoder()
-            let jsonData = try? jsonEncoder.encode(list)
-            let json = String(data: jsonData!, encoding: String.Encoding.utf8)
-            print(json)
-        }
-        
-        
-        
         navigationController.navigationBar.prefersLargeTitles = true
         createAndPush(HomeViewController.self, animated: false) {
             $0.tabBarItem = UITabBarItem(title: NSLocalizedString("Explore", comment: ""), image: UIImage(systemName: "house"), tag: 0)
@@ -126,6 +101,7 @@ class MainCoordinator: Coordinator {
         let vc = MediaListViewController()
         vc.setMediaController(mediaController)
         vc.coordinator = self
+        vc.navigationItem.largeTitleDisplayMode = .never
         navigationController.pushViewController(vc, animated: true)
     }
     

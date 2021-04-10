@@ -49,7 +49,7 @@ class MediaDetailsViewController<MediaType: Media>: UIViewController, Coordinate
         
         collectionView.registerHeader(BackdropView.self)
         collectionView.registerHeader(SectionHeader.self)
-        
+                
         collectionView.registerCell(DescriptionCell.self)
         collectionView.registerCell(CharacterCell.self)
         collectionView.registerCell(CompactMovieCell.self)
@@ -143,7 +143,6 @@ class MediaDetailsViewController<MediaType: Media>: UIViewController, Coordinate
     }
     
     deinit {
-        print("removed from memory: details vc")
         SDImageCache.shared.clearMemory()
     }
 }
@@ -328,7 +327,6 @@ extension MediaDetailsViewController {
         dataSource.supplementaryViewProvider = { [weak self] collectionView, kind, indexPath in
             guard let self = self else { return nil }
             guard let section = self.dataSource.findSection(at: indexPath) else { return nil }
-            //let section = Section.allCases[indexPath.row]
 
             if section == .description {
                 let backdrop = collectionView.dequeueHeader(BackdropView.self, for: indexPath)
@@ -342,11 +340,11 @@ extension MediaDetailsViewController {
             
             switch section {
             case .related:
-                sectionHeader.setAction(title: NSLocalizedString("See All", comment: "")) { [weak self] in
+                sectionHeader.setAction(title: "See All".l10ed) { [weak self] in
                     self?.navigateToRelatedList()
                 }
             case .credits:
-                sectionHeader.setAction(title: NSLocalizedString("See All", comment: "")) { [weak self] in
+                sectionHeader.setAction(title: "See All".l10ed) { [weak self] in
                     self?.navigateToCredits()
                 }
             default:
@@ -395,25 +393,9 @@ extension MediaDetailsViewController {
         case seasons = "Seasons"
         case info = "Facts"
         case reviews = "Reviews"
-        
-        func dummy() {
-            let credits = NSLocalizedString("Cast and Crew", comment: "")
-            let related = NSLocalizedString("Related", comment: "")
-            let seasons = NSLocalizedString("Seasons", comment: "")
-            let info = NSLocalizedString("Facts", comment: "")
-            let reviews = NSLocalizedString("Reviews", comment: "")
-        }
-        
+                
         var title: String {
-            return NSLocalizedString(self.rawValue, comment: "")
+            return self.rawValue.l10ed
         }
     }
 }
-
-
-/*
-
-
-
- 
-*/

@@ -7,7 +7,7 @@
 
 import UIKit
 
-class SearchViewController: CVDiscoverVC {
+class SearchViewController: DiscoverViewController {
     var searchHistoryController = SearchHistoryController.shared
     
     private var searchController: UISearchController?
@@ -33,7 +33,7 @@ class SearchViewController: CVDiscoverVC {
         NotificationCenter.default.addObserver(self, selector: #selector(self.update), name: SearchHistoryController.ncUpdatedName, object: nil)
     }
     
-    override func createSnapshot() -> CVDiscoverVC.Snapshot {
+    override func createSnapshot() -> DiscoverViewController.Snapshot {
         var snapshot = super.createSnapshot()
         let topSection = Section.custom("")
         snapshot.insertSections([topSection], beforeSection: .main)
@@ -47,11 +47,14 @@ class SearchViewController: CVDiscoverVC {
     }
     
     override func viewDidLoad() {
+        super.viewDidLoad()
+
         setupSearchHistoryController()
         setupSearchController()
         
-        super.viewDidLoad()
         title = "Search".l10ed
+        navigationItem.largeTitleDisplayMode = .always
+
     }
 }
 

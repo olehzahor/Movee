@@ -30,10 +30,10 @@
             filePath = "Movee/ViewControllers/DiscoverViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "46"
-            endingLineNumber = "46"
-            landmarkName = "discoverController"
-            landmarkType = "24">
+            startingLineNumber = "50"
+            endingLineNumber = "50"
+            landmarkName = "createSnapshot()"
+            landmarkType = "7">
             <Locations>
                <Location
                   uuid = "0BFB1D61-1F4E-4E9F-8AD4-DB5C2CA4DD4E - 5a7f9d8d9df20738"
@@ -654,8 +654,8 @@
             filePath = "Movee/Navigation/MainCoordinator.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "126"
-            endingLineNumber = "126"
+            startingLineNumber = "101"
+            endingLineNumber = "101"
             landmarkName = "showCustomMediaList(mediaController:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -670,10 +670,10 @@
             filePath = "Movee/ViewControllers/DiscoverViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "127"
-            endingLineNumber = "127"
-            landmarkName = "tableView(_:didSelectRowAt:)"
-            landmarkType = "7">
+            startingLineNumber = "99"
+            endingLineNumber = "99"
+            landmarkName = "title"
+            landmarkType = "24">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
