@@ -16,7 +16,6 @@
 		0406357026050FEE0043E9B1 /* DiscoverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0406356F26050FEE0043E9B1 /* DiscoverViewController.swift */; };
 		04063573260529610043E9B1 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04063572260529610043E9B1 /* SearchViewController.swift */; };
 		04063576260529C70043E9B1 /* DiscoverListItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04063575260529C70043E9B1 /* DiscoverListItemCell.swift */; };
-		04069C68260FA71500C5ED70 /* mowee-542f8-default-rtdb-export.json in Resources */ = {isa = PBXBuildFile; fileRef = 04069C67260FA71500C5ED70 /* mowee-542f8-default-rtdb-export.json */; };
 		040FD9B2257D4749005EDF25 /* SelfConfiguringView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040FD9B1257D4749005EDF25 /* SelfConfiguringView.swift */; };
 		040FD9B7257D47AE005EDF25 /* ProgrammaticCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040FD9B6257D47AE005EDF25 /* ProgrammaticCollectionReusableView.swift */; };
 		040FD9BC257D47F4005EDF25 /* ProgrammaticCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040FD9BB257D47F4005EDF25 /* ProgrammaticCollectionViewCell.swift */; };
@@ -158,7 +157,6 @@
 		0406356F26050FEE0043E9B1 /* DiscoverViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverViewController.swift; sourceTree = "<group>"; };
 		04063572260529610043E9B1 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		04063575260529C70043E9B1 /* DiscoverListItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverListItemCell.swift; sourceTree = "<group>"; };
-		04069C67260FA71500C5ED70 /* mowee-542f8-default-rtdb-export.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "mowee-542f8-default-rtdb-export.json"; sourceTree = "<group>"; };
 		040FD9B1257D4749005EDF25 /* SelfConfiguringView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelfConfiguringView.swift; sourceTree = "<group>"; };
 		040FD9B6257D47AE005EDF25 /* ProgrammaticCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgrammaticCollectionReusableView.swift; sourceTree = "<group>"; };
 		040FD9BB257D47F4005EDF25 /* ProgrammaticCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgrammaticCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -562,6 +560,14 @@
 			path = Layouts;
 			sourceTree = "<group>";
 		};
+		04D114A2262221B3003FAE9D /* Localization */ = {
+			isa = PBXGroup;
+			children = (
+				04F0CB34260E46CA000A5007 /* Localizable.strings */,
+			);
+			path = Localization;
+			sourceTree = "<group>";
+		};
 		04D21FFD25ED53FE00E39C7B /* TMDBResponse */ = {
 			isa = PBXGroup;
 			children = (
@@ -595,7 +601,6 @@
 			children = (
 				0491B44B26189DF200A62CC9 /* genres.py */,
 				0439905F25D2D9AB00BE0577 /* .gitignore */,
-				04069C67260FA71500C5ED70 /* mowee-542f8-default-rtdb-export.json */,
 				04DD6D2A25484E6C005FBA8C /* Movee */,
 				04DD6D2925484E6C005FBA8C /* Products */,
 				B90BF6D7019490A2D1C4DCF5 /* Pods */,
@@ -633,7 +638,7 @@
 				044A2CA225991459000D1355 /* YoutubePlayer.swift */,
 				04D120B625E6D861001F4EA9 /* TMDBDateFormatter.swift */,
 				044FA115260132B6007C0174 /* GoogleService-Info.plist */,
-				04F0CB34260E46CA000A5007 /* Localizable.strings */,
+				04D114A2262221B3003FAE9D /* Localization */,
 			);
 			path = Movee;
 			sourceTree = "<group>";
@@ -767,7 +772,6 @@
 			files = (
 				0481463B2603B65800A9BE53 /* mock_home.json in Resources */,
 				0491B44C26189DF200A62CC9 /* genres.py in Resources */,
-				04069C68260FA71500C5ED70 /* mowee-542f8-default-rtdb-export.json in Resources */,
 				04E84D6D25ACEA990007C96A /* home.json in Resources */,
 				04C0579725AA1EB600C5C0DB /* lists.json in Resources */,
 				04F0CB32260E46CA000A5007 /* Localizable.strings in Resources */,
