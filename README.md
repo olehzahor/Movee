@@ -1,5 +1,5 @@
 # Mowee: The Movie Guide
-[Avaiable on the AppStore](https://apps.apple.com/us/app/mowee-the-movie-guide/id1552887176)
+[Available on the AppStore](https://apps.apple.com/us/app/mowee-the-movie-guide/id1552887176)
 
 Looking for a movie to watch tonight or this weekend? This amazing app with a huge movie database is just what you need!
 
